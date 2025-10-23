@@ -1,0 +1,2534 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TM Unimal: Virtual Lab Fisika I</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        // Konfigurasi MathJax
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']], // $...$ atau \(...\)
+                displayMath: [['$$', '$$'], ['\\[', '\\]']], // $$...$$ atau \[...\]
+                tags: 'ams' // Penomoran persamaan otomatis
+            },
+            svg: {
+                fontCache: 'global'
+            },
+            loader: {
+                load: ['[tex]/ams'] // Memuat ekstensi AMS untuk math
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+    <style type="text/tailwindcss">
+        @layer base {
+            html {
+                font-family: 'Inter', system-ui, sans-serif;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+            body {
+                @apply bg-gray-900 text-gray-300;
+            }
+            /* Styling kustom untuk slider input */
+            input[type="range"] {
+                @apply w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer;
+            }
+            input[type="range"]::-webkit-slider-thumb {
+                @apply w-5 h-5 bg-blue-500 rounded-full appearance-none cursor-pointer shadow-md transition-transform hover:scale-110 active:scale-105;
+            }
+            input[type="range"]::-moz-range-thumb {
+                @apply w-5 h-5 bg-blue-500 rounded-full cursor-pointer border-0 shadow-md transition-transform hover:scale-110 active:scale-105;
+            }
+            /* Styling untuk progress bar (Energy) */
+            .progress-bar-bg {
+                @apply w-full bg-gray-700 rounded-full h-4;
+            }
+            .progress-bar-fill-k {
+                @apply bg-green-500 h-4 rounded-full text-xs font-medium text-black text-center p-0.5 leading-none;
+            }
+            .progress-bar-fill-u {
+                @apply bg-blue-500 h-4 rounded-full text-xs font-medium text-black text-center p-0.5 leading-none;
+            }
+             .progress-bar-fill-e {
+                @apply bg-gray-400 h-4 rounded-full text-xs font-medium text-black text-center p-0.5 leading-none;
+            }
+        }
+        @layer components {
+            .sidebar-link {
+                @apply flex items-center p-3 my-1 text-gray-300 rounded-lg transition-colors duration-200 hover:bg-gray-700 hover:text-white;
+            }
+            .sidebar-link-active {
+                @apply flex items-center p-3 my-1 rounded-lg bg-blue-600 text-white font-semibold shadow-lg;
+            }
+            .content-card {
+                @apply bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700;
+            }
+            .h-title {
+                @apply text-3xl font-bold text-white mb-6 border-b-2 border-blue-500 pb-2;
+            }
+            .h-subtitle {
+                @apply text-2xl font-semibold text-blue-300 mt-8 mb-4;
+            }
+            .h-subtitle-section {
+                /* Sub-judul untuk bagian A/B dalam modul ganda */
+                @apply text-xl font-bold text-gray-100 mt-6 mb-4 border-l-4 border-blue-400 pl-4;
+            }
+            .data-output-grid {
+                 /* Grid konsisten untuk output data simulasi */
+                @apply grid grid-cols-2 gap-x-4 gap-y-3 text-lg;
+            }
+            .data-label {
+                @apply text-gray-400;
+            }
+            .data-value {
+                @apply font-mono text-xl text-white text-right;
+            }
+            
+            /* Kelas untuk menyembunyikan/menampilkan modul (LOGIKA SPA) */
+            .module-content {
+                @apply absolute top-0 left-0 w-full p-8 md:p-12;
+                @apply opacity-0 pointer-events-none;
+                transform: translateY(20px);
+                transition: opacity 300ms ease-out, transform 300ms ease-out;
+            }
+            .module-content.active {
+                @apply opacity-100 pointer-events-auto;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="flex">
+
+    <aside class="fixed top-0 left-0 z-40 w-64 h-screen bg-gray-800 border-r border-gray-700 shadow-2xl">
+        <div class="h-full px-3 py-6 overflow-y-auto">
+            <h2 class="text-2xl font-bold text-white px-2 mb-6 text-center">
+                Virtual Lab<span class="text-blue-400"> Fisika I</span>
+            </h2>
+            <nav>
+                <ul class="space-y-2" id="sidebar-nav">
+                    <li>
+                        <a href="#" class="sidebar-link-active" data-target="content-rotasi">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <span class="ml-3">Gerak Rotasi</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-link" data-target="content-kesetimbangan">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3-1m0 0l3 1m-3-1v-2m0 2l3 9m-3-9l-3 9m6-9l3 1m6 0l-3 9m3-9l-3-1m0 0l-3 1m3-1V4m0 2L9 7m3 9l3-1m-3 1l-3 1m3-1v2m0-2l3-1m0 0l3 9m-3-9l-3 9"></path></svg>
+                            <span class="ml-3">Kesetimbangan Benda Tegar & Gravitasi</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-link" data-target="content-fluida">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h6v6H9V7z"></path></svg>
+                            <span class="ml-3">Fluida: Statis & Dinamis</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-link" data-target="content-periodik">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2.5m0 0V17m0-2.5a1.5 1.5 0 013 0v-6a1.5 1.5 0 01-3 0m3 6v-2.5m0 0a1.5 1.5 0 00-3 0m3 0a1.5 1.5 0 01-3 0m0 0V17m0-2.5a1.5 1.5 0 003 0v-6a1.5 1.5 0 00-3 0"></path></svg>
+                            <span class="ml-3">Gerak Periodik & Gelombang</span>
+                        </a>
+                    </li>
+                     <li>
+                        <a href="#" class="sidebar-link" data-target="content-bunyi">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .89-1.077 1.337-1.707.707L5.586 15z"></path></svg>
+                            <span class="ml-3">Gelombang Bunyi & Superposisi</span>
+                        </a>
+                    </li>
+                     <li>
+                        <a href="#" class="sidebar-link" data-target="content-kalor">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            <span class="ml-3">Suhu & Kalor</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </aside>
+
+    <main class="ml-64 w-full min-h-screen relative">
+        
+        <div id="content-rotasi" class="module-content active">
+            <h1 class="h-title">Gerak Rotasi</h1>
+
+            <h2 class="h-subtitle">Simulasi Virtual Lab: Disk Berputar</h2>
+            <div class="content-card">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <div class="lg:col-span-1 space-y-6">
+                        <div>
+                            <label for="torqueSlider" class="block mb-2 text-sm font-medium text-gray-200">Torsi ( $ \tau $ ) <span id="torqueValue" class="font-bold text-blue-300">5.0</span> N·m</label>
+                            <input id="torqueSlider" type="range" min="-20" max="20" value="5" step="0.5" class="w-full">
+                        </div>
+                        <div>
+                            <label for="inertiaSlider" class="block mb-2 text-sm font-medium text-gray-200">Momen Inersia ( $ I $ ) <span id="inertiaValue" class="font-bold text-blue-300">10.0</span> kg·m²</label>
+                            <input id="inertiaSlider" type="range" min="1" max="50" value="10" step="0.5" class="w-full">
+                        </div>
+                        <div>
+                            <label for="omegaSlider" class="block mb-2 text-sm font-medium text-gray-200">Kecepatan Sudut Awal ( $ \omega_0 $ ) <span id="omegaStartValue" class="font-bold text-blue-300">0.0</span> rad/s</label>
+                            <input id="omegaSlider" type="range" min="-10" max="10" value="0" step="0.1" class="w-full">
+                        </div>
+                        <div class="flex space-x-4">
+                            <button id="startButton" class="flex-1 bg-blue-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all duration-200 hover:bg-blue-700 active:scale-95">
+                                Mulai Simulasi
+                            </button>
+                            <button id="resetButton" class="flex-1 bg-gray-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all duration-200 hover:bg-gray-700 active:scale-95">
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-1 flex items-center justify-center">
+                        <canvas id="simCanvas" width="300" height="300" class="bg-gray-900 rounded-full border-2 border-gray-600"></canvas>
+                    </div>
+
+                    <div class="lg:col-span-1 space-y-4 bg-gray-900 p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold text-white mb-4">Data Real-Time</h3>
+                        <div class="data-output-grid">
+                            <span class="data-label">Waktu ( $ t $ ):</span>
+                            <span id="timeOutput" class="data-value">0.00 s</span>
+                            
+                            <span class="data-label">Percepatan Sudut ( $ \alpha $ ):</span>
+                            <span id="alphaOutput" class="data-value">0.00 rad/s²</span>
+                            
+                            <span class="data-label">Kecepatan Sudut ( $ \omega $ ):</span>
+                            <span id="omegaOutput" class="data-value">0.00 rad/s</span>
+                            
+                            <span class="data-label">Perpindahan Sudut ( $ \theta $ ):</span>
+                            <span id="thetaOutput" class="data-value">0.00 rad</span>
+                            
+                            <span class="data-label">Jumlah Putaran:</span>
+                            <span id="revOutput" class="data-value">0.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="h-subtitle">a. Konsep Teoritis</h2>
+            <div class="content-card space-y-4 text-lg leading-relaxed">
+                <p>
+                    <strong>Gerak Rotasi</strong> adalah pergerakan suatu benda tegar (yaitu benda yang bentuknya tidak berubah) di mana seluruh titik pada benda tersebut bergerak dalam lintasan melingkar mengelilingi satu garis lurus tetap yang disebut <strong>sumbu rotasi</strong>.
+                </p>
+                <p>
+                    Berbeda dengan gerak translasi di mana setiap titik pada benda bergerak dengan lintasan, kecepatan, dan percepatan linear yang sama, pada gerak rotasi, titik-titik yang berbeda memiliki kecepatan linear yang berbeda (tergantung jaraknya $ r $ ke sumbu rotasi, $v = \omega r$), namun semua titik memiliki <strong>kecepatan sudut</strong> ($ \omega $) dan <strong>percepatan sudut</strong> ($ \alpha $) yang sama.
+                </p>
+            </div>
+
+            <h2 class="h-subtitle">b. Penjabaran Fenomena Fisis</h2>
+            <div class="content-card space-y-4 text-lg leading-relaxed">
+                <p>
+                    Gerak rotasi murni terjadi ketika sumbu rotasi tetap diam. Penyebab perubahan gerak rotasi (yaitu, penyebab timbulnya percepatan sudut) adalah <strong>Torsi</strong> ( $ \tau $ ). Torsi adalah analog rotasional dari gaya pada gerak translasi.
+                </p>
+                <p>
+                    Sementara itu, keengganan atau resistansi suatu benda untuk berotasi (atau mengubah kecepatan rotasinya) diukur oleh besaran yang disebut <strong>Momen Inersia</strong> ( $ I $ ). Ini adalah analog rotasional dari massa ( $ m $ ) pada gerak translasi. Momen inersia tidak hanya bergantung pada massa benda, tetapi juga pada bagaimana massa tersebut terdistribusi relatif terhadap sumbu rotasi. Benda dengan massa yang sama dapat memiliki $I$ yang berbeda jika distribusinya berbeda (misal: silinder pejal vs silinder berongga).
+                </p>
+            </div>
+            
+            <h2 class="h-subtitle">c. Persamaan dan Parameter Terkait</h2>
+            <div class="content-card text-lg">
+                <ul class="list-none space-y-3">
+                    <li>$ \theta $ (theta) &nbsp;: <strong>Perpindahan Sudut</strong>, yaitu sudut yang telah ditempuh oleh benda. Satuan SI: radian (rad).</li>
+                    <li>$ \omega $ (omega) : <strong>Kecepatan Sudut</strong>, yaitu laju perubahan posisi sudut terhadap waktu ($ \omega = d\theta/dt $). Satuan SI: radian per sekon (rad/s).</li>
+                    <li>$ \alpha $ (alpha) &nbsp;: <strong>Percepatan Sudut</strong>, yaitu laju perubahan kecepatan sudut terhadap waktu ($ \alpha = d\omega/dt $). Satuan SI: radian per sekon kuadrat (rad/s²).</li>
+                    <li>$ \tau $ (tau) &nbsp;&nbsp;&nbsp;&nbsp;: <strong>Torsi (Momen Gaya)</strong>, yaitu "gaya putar" yang menyebabkan benda berotasi. Didefinisikan sebagai $ \vec{\tau} = \vec{r} \times \vec{F} $. Satuan SI: Newton-meter (N·m).</li>
+                    <li>$ I $ (I) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <strong>Momen Inersia</strong>, ukuran kelembaman rotasi benda. Untuk partikel tunggal, $ I = mr^2 $. Untuk benda tegar, $ I = \int r^2 dm $. Satuan SI: kilogram-meter kuadrat (kg·m²).</li>
+                </ul>
+            </div>
+            
+            <h2 class="h-subtitle">d. Rumus-Rumus Penting & Penurunan</h2>
+            <div class="content-card space-y-6 text-lg">
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-300 mb-2">Hukum II Newton untuk Rotasi</h3>
+                    <p>Analog dari Hukum II Newton ( $ \Sigma F = ma $ ) untuk gerak rotasi adalah:</p>
+                    $$ \sum \tau = I \alpha $$
+                    <p class="mt-2">Persamaan fundamental ini menyatakan bahwa total torsi eksternal yang bekerja pada suatu benda ( $ \sum \tau $ ) sama dengan momen inersia benda ( $ I $ ) dikalikan dengan percepatan sudutnya ( $ \alpha $ ). Simulasi di atas didasarkan langsung pada persamaan ini, di mana $ \alpha = \tau / I $.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-300 mb-2">Kinematika Rotasi (untuk $ \alpha $ konstan)</h3>
+                    <p>Jika percepatan sudut $ \alpha $ konstan (yang terjadi jika torsi $ \tau $ dan momen inersia $ I $ konstan), kita dapat menurunkan persamaan kinematika rotasi. Ini analog dengan persamaan GLBB pada gerak translasi.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                        <div class="bg-gray-900 p-4 rounded-lg">
+                            <h4 class="text-lg font-medium text-white">Translasi (GLBB)</h4>
+                            <ul class="list-none space-y-2 mt-2 font-mono">
+                                <li>$ v = v_0 + at $</li>
+                                <li>$ x = x_0 + v_0 t + \frac{1}{2} a t^2 $</li>
+                                <li>$ v^2 = v_0^2 + 2a(x - x_0) $</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-900 p-4 rounded-lg">
+                            <h4 class="text-lg font-medium text-white">Rotasi ($ \alpha $ konstan)</h4>
+                             <ul class="list-none space-y-2 mt-2 font-mono">
+                                <li>$ \omega = \omega_0 + \alpha t $</li>
+                                <li>$ \theta = \theta_0 + \omega_0 t + \frac{1}{2} \alpha t^2 $</li>
+                                <li>$ \omega^2 = \omega_0^2 + 2\alpha(\theta - \theta_0) $</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-300 mb-2">Energi Kinetik Rotasi & Momentum Sudut</h3>
+                    <p>Dua konsep ini sangat penting dalam analisis mesin.</p>
+                    <ul class="list-none space-y-4 mt-4">
+                        <li>
+                            <strong>Energi Kinetik Rotasi ($K_{rot}$):</strong> Energi yang dimiliki benda karena gerak rotasinya.
+                            $$ K_{rot} = \frac{1}{2} I \omega^2 $$
+                            <p class="text-sm mt-1">Analog dengan $K_{trans} = \frac{1}{2} m v^2$.</p>
+                        </li>
+                        <li>
+                            <strong>Momentum Sudut ($L$):</strong> Ukuran kelembaman rotasi "yang sedang bergerak".
+                            $$ L = I \omega $$
+                            <p class="text-sm mt-1">Analog dengan momentum linear $p = mv$.</p>
+                        </li>
+                        <li>
+                            <strong>Hukum Konservasi Momentum Sudut:</strong> Jika tidak ada torsi eksternal neto yang bekerja pada sistem ($ \sum \tau_{ext} = 0 $), maka momentum sudut total sistem tetap konstan ($L_{awal} = L_{akhir}$).
+                            $$ I_1 \omega_1 = I_2 \omega_2 $$
+                            <p class="text-sm mt-1">Prinsip ini menjelaskan mengapa penari balet berputar lebih cepat ketika mereka menarik lengan mereka ke dalam (mengurangi $I$, sehingga $ \omega $ meningkat).</p>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-300 mb-2">Penurunan (via Kalkulus)</h3>
+                    <p>Kita mulai dari definisi percepatan sudut konstan $ \alpha $:</p>
+                    $$ \alpha = \frac{d\omega}{dt} \implies d\omega = \alpha \, dt $$
+                    <p>Integralkan kedua sisi (dari $ t=0 $ dengan $ \omega = \omega_0 $ ke waktu $ t $ dengan $ \omega = \omega $ ):</p>
+                    $$ \int_{\omega_0}^{\omega} d\omega = \int_{0}^{t} \alpha \, dt \implies [\omega]_{\omega_0}^{\omega} = [\alpha t]_{0}^{t} $$
+                    $$ \omega - \omega_0 = \alpha t \implies \boxed{\omega = \omega_0 + \alpha t} $$
+                    <p class="mt-4">Selanjutnya, gunakan $ \omega = d\theta/dt $:</p>
+                    $$ \frac{d\theta}{dt} = \omega_0 + \alpha t \implies d\theta = (\omega_0 + \alpha t) \, dt $$
+                    <p>Integralkan lagi (dari $ t=0 $ dengan $ \theta = \theta_0 $ ke waktu $ t $ dengan $ \theta = \theta $ ):</p>
+                    $$ \int_{\theta_0}^{\theta} d\theta = \int_{0}^{t} (\omega_0 + \alpha t) \, dt \implies [\theta]_{\theta_0}^{\theta} = [\omega_0 t + \frac{1}{2}\alpha t^2]_{0}^{t} $$
+                    $$ \theta - \theta_0 = \omega_0 t + \frac{1}{2}\alpha t^2 \implies \boxed{\theta = \theta_0 + \omega_0 t + \frac{1}{2}\alpha t^2} $$
+                </div>
+            </div>
+            
+            <h2 class="h-subtitle">e. Contoh Aplikasi (Teknik Mesin)</h2>
+            <div class="content-card space-y-4 text-lg leading-relaxed">
+                <ul class="list-disc list-inside space-y-3">
+                    <li>
+                        <strong>Roda Gila (Flywheel):</strong> Ini adalah komponen mekanis berat dengan momen inersia besar ($I$ besar) yang digunakan untuk menyimpan energi kinetik rotasi ($ K_{rot} = \frac{1}{2} I \omega^2 $). Flywheel menahan perubahan kecepatan sudut (menurut $ \alpha = \tau / I $), sehingga membantu memperhalus keluaran daya pada mesin piston (seperti pada mesin mobil).
+                    </li>
+                    <li>
+                        <strong>Turbin (Uap, Gas, Air):</strong> Seluruh prinsip kerja turbin adalah mengubah energi fluida (linear) menjadi gerak rotasi poros. Analisis torsi pada sudu-sudu turbin adalah krusial dalam desainnya.
+                    </li>
+                    <li>
+                        <strong>Poros Engkol (Crankshaft):</strong> Pada mesin pembakaran dalam, crankshaft mengubah gerak translasi piston (naik-turun) menjadi gerak rotasi.
+                    </li>
+                    <li>
+                        <strong>Roda Gigi (Gears):</strong> Sistem roda gigi mentransmisikan torsi dan kecepatan sudut dari satu poros ke poros lainnya, memanfaatkan rasio $ \tau_1 / \tau_2 = \omega_2 / \omega_1 $.
+                    </li>
+                    <li>
+                        <strong>Sentrifugasi:</strong> Proses pemisahan material berdasarkan massa jenis menggunakan percepatan sentripetal ( $ a_c = \omega^2 r $ ) yang dihasilkan dari rotasi berkecepatan sangat tinggi.
+                    </li>
+                </ul>
+            </div>
+        </div> <div id="content-kesetimbangan" class="module-content">
+            <h1 class="h-title">Kesetimbangan Benda Tegar & Gravitasi</h1>
+            <p class="text-lg -mt-4 mb-6">Bahan kajian ini mencakup dua topik fundamental: (A) syarat-syarat benda tegar tetap diam (statis) di bawah pengaruh gaya dan torsi, dan (B) gaya fundamental yang mengatur interaksi antar massa di alam semesta.</p>
+
+            <h2 class="h-subtitle">Bagian A: Kesetimbangan Benda Tegar</h2>
+
+            <h3 class="h-subtitle-section">Simulasi 2a: Papan Torsi (Jungkat-Jungkit)</h3>
+            <div class="content-card">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <div class="lg:col-span-1 space-y-6">
+                        <div>
+                            <label for="eq-m1-slider" class="block mb-2 text-sm font-medium text-gray-200">Massa 1 ( $ m_1 $ ) <span id="eq-m1-value" class="font-bold text-blue-300">5.0</span> kg</label>
+                            <input id="eq-m1-slider" type="range" min="1" max="10" value="5" step="0.5" class="w-full">
+                        </div>
+                        <div>
+                            <label for="eq-x1-slider" class="block mb-2 text-sm font-medium text-gray-200">Posisi 1 ( $ x_1 $ ) <span id="eq-x1-value" class="font-bold text-blue-300">-2.0</span> m</label>
+                            <input id="eq-x1-slider" type="range" min="-5" max="5" value="-2" step="0.1" class="w-full">
+                        </div>
+                         <div>
+                            <label for="eq-m2-slider" class="block mb-2 text-sm font-medium text-gray-200">Massa 2 ( $ m_2 $ ) <span id="eq-m2-value" class="font-bold text-blue-300">10.0</span> kg</label>
+                            <input id="eq-m2-slider" type="range" min="1" max="10" value="10" step="0.5" class="w-full">
+                        </div>
+                        <div>
+                            <label for="eq-x2-slider" class="block mb-2 text-sm font-medium text-gray-200">Posisi 2 ( $ x_2 $ ) <span id="eq-x2-value" class="font-bold text-blue-300">1.0</span> m</label>
+                            <input id="eq-x2-slider" type="range" min="-5" max="5" value="1" step="0.1" class="w-full">
+                        </div>
+                        <p class="text-sm text-gray-400 text-center">Titik tumpu (pivot) berada di $ x = 0 $ m.</p>
+                    </div>
+
+                    <div class="lg:col-span-1 flex items-center justify-center py-8">
+                        <canvas id="equilibriumCanvas" width="400" height="250" class="bg-gray-900"></canvas>
+                    </div>
+
+                    <div class="lg:col-span-1 space-y-4 bg-gray-900 p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold text-white mb-4">Analisis Torsi</h3>
+                        <div class="data-output-grid">
+                            <span class="data-label">Torsi 1 ( $ \tau_1 $ ):</span>
+                            <span id="eq-tau1-output" class="data-value">0.00 N·m</span>
+                       
+                            <span class="data-label">Torsi 2 ( $ \tau_2 $ ):</span>
+                            <span id="eq-tau2-output" class="data-value">0.00 N·m</span>
+
+                            <span class="data-label">Torsi Total ( $ \Sigma \tau $ ):</span>
+                            <span id="eq-tauNet-output" class="font-mono text-xl text-blue-300 text-right">0.00 N·m</span>
+                        </div>
+                        <hr class="border-gray-700">
+                        <h3 class="text-xl font-semibold text-white mt-4 text-center" id="eq-status">
+                            ---
+                        </h3>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="h-subtitle-section">a. Konsep Teoritis</h3>
+            <div class="content-card space-y-4 text-lg leading-relaxed">
+                <p>
+                    <strong>Kesetimbangan Benda Tegar</strong> adalah kondisi di mana suatu benda tegar tidak mengalami percepatan linear maupun percepatan sudut. Benda yang berada dalam kesetimbangan bisa jadi sedang diam (<strong>kesetimbangan statis</strong>) atau bergerak lurus beraturan (translasi) dan berotasi dengan kecepatan sudut konstan (<strong>kesetimbangan dinamis</strong>).
+                </p>
+                <p>
+                    Dalam modul ini, kita fokus pada <strong>kesetimbangan statis</strong>, yang memiliki dua syarat utama:
+                </p>
+                <ol class="list-decimal list-inside space-y-2 mt-4">
+                    <li>Resultan gaya yang bekerja pada benda harus nol (Kesetimbangan Translasi).
+                        $$ \sum \vec{F} = 0 $$
+                        Ini menjamin tidak ada percepatan linear ($ a = 0 $).</li>
+                    <li>Resultan torsi yang bekerja pada benda terhadap titik poros <strong>sembarang</strong> harus nol (Kesetimbangan Rotasi).
+                        $$ \sum \vec{\tau} = 0 $$
+                        Ini menjamin tidak ada percepatan sudut ($ \alpha = 0 $).</li>
+                </ol>
+            </div>
+
+            <h3 class="h-subtitle-section">b. Penjabaran Fenomena Fisis</h3>
+            <div class="content-card space-y-4 text-lg leading-relaxed">
+                <p>
+                    <strong>Torsi (Momen Gaya)</strong>, seperti dibahas di modul Gerak Rotasi, adalah $ \vec{\tau} = \vec{r} \times \vec{F} $. Besarnya adalah $ \tau = r F \sin \phi $. Dalam kasus jungkat-jungkit, gaya gravitasi ($ F = mg $) bekerja tegak lurus ($ \sin 90^\circ = 1 $), sehingga $ \tau = r (mg) $.
+                </p>
+                 <p>
+                    Sebuah benda akan seimbang secara rotasi jika total torsi yang cenderung memutar searah jarum jam (CW, <strong>Clockwise</strong>, biasanya negatif) sama besar dengan total torsi yang cenderung memutar berlawanan arah jarum jam (CCW, <strong>Counter-Clockwise</strong>, biasanya positif).
+                    $$ \sum \tau = \sum \tau_{CCW} + \sum \tau_{CW} = 0 $$
+                    Dalam simulasi di atas (dengan $ g \approx 9.8 $ m/s² dan poros di $x=0$), $x_1$ negatif (CCW) dan $x_2$ positif (CW). Maka $ \tau_1 = (m_1 g) x_1 $ dan $ \tau_2 = (m_2 g) x_2 $. Kesetimbangan tercapai jika $ \tau_1 + \tau_2 = 0 $.
+                </p>
+            </div>
+
+            <h3 class="h-subtitle-section">e. Contoh Aplikasi (Teknik Mesin)</h3>
+            <div class="content-card space-y-4 text-lg leading-relaxed">
+                <ul class="list-disc list-inside space-y-3">
+                    <li>
+                        <strong>Struktur Rangka (Trusses):</strong> Desain jembatan, atap, dan <strong>crane</strong> (derek) sangat bergantung pada analisis kesetimbangan statis. Insinyur menggunakan "metode titik simpul" (method of joints) atau "metode potongan" (method of sections) untuk memastikan bahwa setiap komponen struktur mampu menahan gaya (tarik atau tekan) tanpa gagal.
+                    </li>
+                    <li>
+                        <strong>Analisis Stabilitas Kendaraan:</strong> Pusat gravitasi (CG) dari sebuah mobil atau truk sangat menentukan stabilitasnya. CG yang rendah dan jarak sumbu roda yang lebar (area tumpuan besar) membuat kendaraan lebih stabil dan tidak mudah terguling saat bermanuver.
+                    </li>
+                    <li>
+                        <strong>Desain Balok Kantilever (Cantilever Beams):</strong> Balkon, sayap pesawat, dan beberapa jenis jembatan adalah contoh balok kantilever (satu ujung terpasang, ujung lain bebas). Analisis torsi dan gaya internal sangat penting untuk mencegah kegagalan struktur di titik tumpuan.
+                    </li>
+                </ul>
+            </div>
+
+            <h2 class="h-subtitle">Bagian B: Gravitasi Universal</h2>
+
+             <h3 class="h-subtitle-section">Simulasi 2b: Orbit Satelit (Proyeksi 2.5D)</h3>
+            <div class="content-card">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <div class="lg:col-span-1 space-y-6">
+                        <div>
+                            <label for="grav-h-slider" class="block mb-2 text-sm font-medium text-gray-200">Ketinggian Awal ( $ h $ ) <span id="grav-h-value" class="font-bold text-blue-300">100</span> km</label>
+                            <input id="grav-h-slider" type="range" min="50" max="250" value="100" step="10" class="w-full">
+                        </div>
+                        <div>
+                            <label for="grav-v-slider" class="block mb-2 text-sm font-medium text-gray-200">Kecepatan Awal ( $ v_0 $ ) <span id="grav-v-value" class="font-bold text-blue-300">7.50</span> km/s</label>
+                            <input id="grav-v-slider" type="range" min="1" max="12" value="7.5" step="0.1" class="w-full">
+                        </div>
+                        <p class="text-sm text-gray-400">Parameter simulasi (Massa Bumi $M$, $G$, dan radius $R$) telah diskalakan. $R_{planet} \approx 60$ km (skala).</p>
+                        <div class="flex space-x-4">
+                            <button id="grav-startButton" class="flex-1 bg-blue-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all duration-200 hover:bg-blue-700 active:scale-95">
+                                Tembak
+                            </button>
+                            <button id="grav-resetButton" class="flex-1 bg-gray-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all duration-200 hover:bg-gray-700 active:scale-95">
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-1 flex items-center justify-center bg-gray-900 rounded-lg p-4">
+                        <canvas id="gravityCanvas" width="300" height="300" class="bg-black rounded-lg"></canvas>
+                    </div>
+
+                    <div class="lg:col-span-1 space-y-4 bg-gray-900 p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold text-white mb-4">Status Proyektil</h3>
+                        <div class="data-output-grid">
+                            <span class="data-label">Kecepatan ( $ v $ ):</span>
+                            <span id="grav-v-output" class="data-value">0.00 km/s</span>
+                       
+                            <span class="data-label">Ketinggian ( $ h $ ):</span>
+                            <span id="grav-h-output" class="data-value">100 km</span>
+
+                            <span class="data-label">Kecep. Orbit ( $v_{o}$ ):</span>
+                            <span id="grav-v-orbit" class="data-value">0.00 km/s</span>
+                            
+                            <span class="data-label">Kecep. Lepas ( $v_{l}$ ):</span>
+                            <span id="grav-v-escape" class="data-value">0.00 km/s</span>
+                        </div>
+                        <hr class="border-gray-700">
+                        <h3 class="text-xl font-semibold text-white mt-4 text-center" id="grav-status">
+                            Menunggu...
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="h-subtitle-section">c. Persamaan dan Parameter Terkait</h3>
+            <div class="content-card text-lg">
+                 <p class="mb-4">Konsep fundamental <strong>Gravitasi Universal Newton</strong>. Ini adalah gaya tarik-menarik antara dua benda bermassa.</p>
+                <ul class="list-none space-y-3">
+                    <li>$ F_g $ &nbsp;: <strong>Gaya Gravitasi</strong>, gaya tarik antara dua massa. Satuan SI: Newton (N).</li>
+                    <li>$ G $ &nbsp;&nbsp;&nbsp;: <strong>Konstanta Gravitasi Universal</strong>, $ G \approx 6.674 \times 10^{-11} $ N·m²/kg².</li>
+                    <li>$ m_1, m_2 $ : Massa dari kedua benda. Satuan SI: kilogram (kg).</li>
+                    <li>$ r $ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Jarak antara pusat massa kedua benda. Satuan SI: meter (m).</li>
+                </ul>
+            </div>
+            
+            <h3 class="h-subtitle-section">d. Rumus-Rumus Penting</h3>
+            <div class="content-card space-y-6 text-lg">
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-300 mb-2">Hukum Gravitasi Universal Newton</h3>
+                    <p>Besarnya gaya gravitasi antara dua benda adalah:</p>
+                    $$ F_g = G \frac{m_1 m_2}{r^2} $$
+                    <p class="mt-2">Gaya berat ( $ W = mg $ ) yang kita gunakan sehari-hari adalah bentuk sederhana dari hukum ini, di mana $ m_1 $ adalah massa benda dan $ m_2 $ adalah massa Bumi ($ M_{\oplus} $), dan $ r $ adalah radius Bumi ($ R_{\oplus} $).
+                    $$ F_g = \left( G \frac{M_{\oplus}}{R_{\oplus}^2} \right) m_1 $$
+                    Nilai dalam kurung adalah percepatan gravitasi di permukaan Bumi, $ g \approx 9.8 $ m/s².</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-300 mb-2">Kecepatan Orbit dan Lepas</h3>
+                    <p>Agar satelit dapat mengorbit lingkaran sempurna pada jarak $r$ dari pusat planet bermassa $M$, gaya gravitasi harus bertindak sebagai gaya sentripetal ($F_c = mv^2/r$):</p>
+                    $$ F_g = F_c \implies G \frac{M m}{r^2} = \frac{m v_{orbit}^2}{r} $$
+                    $$ \boxed{v_{orbit} = \sqrt{\frac{GM}{r}}} $$
+                    <p class="mt-2">Simulasi di atas menunjukkan: jika $v_0 < v_{orbit}$, satelit jatuh ke Bumi. Jika $v_0 = v_{orbit}$, orbitnya lingkaran. Jika $v_{orbit} < v_0 < v_{lepas}$, orbitnya elips. Jika $v_0 \ge v_{lepas}$, satelit akan "lepas" dari gravitasi Bumi.</p>
+                </div>
+            </div>
+        </div> <div id="content-fluida" class="module-content">
+            <h1 class="h-title">Fluida: Statis dan Dinamis</h1>
+            <p class="text-lg -mt-4 mb-6">Mekanika fluida adalah studi tentang bagaimana fluida (cairan dan gas) berperilaku saat diam (statis) dan saat bergerak (dinamis). Ini adalah pilar utama dalam teknik mesin.</p>
+
+            <h2 class="h-subtitle">Bagian A: Fluida Statis</h2>
+
+            <h3 class="h-subtitle-section">Simulasi 3a: Prinsip Archimedes (Gaya Apung)</h3>
+            <div class="content-card">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <div class="lg:col-span-1 space-y-6">
+                        <div>
+                            <label for="buoy-fluid-slider" class="block mb-2 text-sm font-medium text-gray-200">Massa Jenis Fluida ( $ \rho_f $ ) <span id="buoy-fluid-value" class="font-bold text-blue-300">1000</span> kg/m³</label>
+                            <input id="buoy-fluid-slider" type="range" min="100" max="2000" value="1000" step="10" class="w-full">
+                        </div>
+                        <div>
+                            <label for="buoy-block-slider" class="block mb-2 text-sm font-medium text-gray-200">Massa Jenis Balok ( $ \rho_b $ ) <span id="buoy-block-value" class="font-bold text-blue-300">500</span> kg/m³</label>
+                            <input id="buoy-block-slider" type="range" min="100" max="2000" value="500" step="10" class="w-full">
+                        </div>
+                         <div>
+                            <label for="buoy-vol-slider" class="block mb-2 text-sm font-medium text-gray-200">Volume Balok ( $ V_b $ ) <span id="buoy-vol-value" class="font-bold text-blue-300">1.0</span> m³</label>
+                            <input id="buoy-vol-slider" type="range" min="0.1" max="2.0" value="1.0" step="0.1" class="w-full">
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-1 flex items-center justify-center bg-gray-900 rounded-lg p-4">
+                        <canvas id="buoyancyCanvas" width="300" height="300"></canvas>
+                    </div>
+
+                    <div class="lg:col-span-1 space-y-4 bg-gray-900 p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold text-white mb-4">Analisis Gaya ( $g=9.8$ m/s² )</h3>
+                        <div class="data-output-grid">
+                            <span class="data-label">Berat Balok ( $ W_b $ ):</span>
+                            <span id="buoy-weight-output" class="data-value">0.0 N</span>
+                       
+                            <span class="data-label">Gaya Apung ( $ F_B $ ):</span>
+                            <span id="buoy-force-output" class="data-value">0.0 N</span>
+
+                            <span class="data-label">Volume Tercelup:</span>
+                            <span id="buoy-vol-output" class="data-value">0.00 m³</span>
+                        </div>
+                        <hr class="border-gray-700">
+                        <h3 class="text-xl font-semibold text-white mt-4 text-center" id="buoy-status">
+                            ---
+                        </h3>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="h-subtitle-section">a. Konsep Teoritis</h3>
+            <div class="content-card space-y-4 text-lg leading-relaxed">
+                <p><strong>Fluida Statis (Hidrostatika)</strong> mempelajari fluida dalam keadaan diam. Konsep kuncinya adalah <strong>tekanan</strong> ($P = F/A$), yaitu gaya per satuan luas.</p>
+                <p><strong>Tekanan Hidrostatis ($P_h$)</strong> adalah tekanan yang disebabkan oleh berat fluida itu sendiri pada kedalaman tertentu ($h$).</p>
+                $$ P_h = \rho g h $$
+                <p>di mana $ \rho $ adalah massa jenis fluida dan $ g $ adalah percepatan gravitasi. Tekanan total pada kedalaman $h$ adalah $ P = P_0 + \rho g h $, di mana $P_0$ adalah tekanan atmosfer di permukaan.</p>
+            </div>
+            
+            <h3 class="h-subtitle-section">d. Rumus-Rumus Penting</h3>
+            <div class="content-card space-y-6 text-lg">
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-300 mb-2">Prinsip Pascal</h3>
+                    <p>Menyatakan bahwa tekanan yang diberikan pada fluida tertutup akan diteruskan secara merata ke segala arah. Ini adalah dasar dari sistem hidrolik (misalnya dongkrak hidrolik).</p>
+                    $$ \frac{F_1}{A_1} = \frac{F_2}{A_2} $$
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-300 mb-2">Prinsip Archimedes</h3>
+                    <p>Menyatakan bahwa benda yang dicelupkan sebagian atau seluruhnya ke dalam fluida akan mengalami gaya apung (buoyancy, $F_B$) ke atas yang besarnya sama dengan berat fluida yang dipindahkannya.</p>
+                    $$ F_B = \rho_f g V_f $$
+                    <p class="mt-2">di mana $ \rho_f $ adalah massa jenis fluida dan $ V_f $ adalah volume fluida yang dipindahkan (atau volume benda yang tercelup).</p>
+                    <ul class="list-disc list-inside mt-2">
+                        <li>Jika $ W_b < F_B $ (atau $ \rho_b < \rho_f $), benda akan <strong>terapung</strong>.</li>
+                        <li>Jika $ W_b = F_B $ (atau $ \rho_b = \rho_f $), benda akan <strong>melayang</strong>.</li>
+                        <li>Jika $ W_b > F_B $ (atau $ \rho_b > \rho_f $), benda akan <strong>tenggelam</strong>.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2 class="h-subtitle">Bagian B: Fluida Dinamis</h2>
+            
+            <h3 class="h-subtitle-section">Simulasi 3b: Pipa Venturi (Prinsip Bernoulli)</h3>
+            <div class="content-card">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <div class="lg:col-span-1 space-y-6">
+                        <div>
+                            <label for="venturi-q-slider" class="block mb-2 text-sm font-medium text-gray-200">Debit Aliran ( $ Q $ ) <span id="venturi-q-value" class="font-bold text-blue-300">0.063</span> m³/s</label>
+                            <input id="venturi-q-slider" type="range" min="0.01" max="0.1" value="0.0628" step="0.001" class="w-full">
+                        </div>
+                        <div>
+                            <label for="venturi-a1-slider" class="block mb-2 text-sm font-medium text-gray-200">Radius 1 ( $ r_1 $ ) <span id="venturi-a1-value" class="font-bold text-blue-300">10.0</span> cm</label>
+                            <input id="venturi-a1-slider" type="range" min="5" max="15" value="10" step="0.5" class="w-full">
+                        </div>
+                        <div>
+                            <label for="venturi-a2-slider" class="block mb-2 text-sm font-medium text-gray-200">Radius 2 ( $ r_2 $ ) <span id="venturi-a2-value" class="font-bold text-blue-300">5.0</span> cm</label>
+                            <input id="venturi-a2-slider" type="range" min="2" max="15" value="5" step="0.5" class="w-full">
+                        </div>
+                        <p class="text-sm text-gray-400">Asumsi: Tekanan Referensi $P_1 = 300$ kPa, $\rho_{fluida} = 1000$ kg/m³.</p>
+                    </div>
+
+                    <div class="lg:col-span-1 flex items-center justify-center bg-gray-900 rounded-lg p-4">
+                        <canvas id="venturiCanvas" width="300" height="300"></canvas>
+                    </div>
+
+                    <div class="lg:col-span-1 space-y-4 bg-gray-900 p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold text-white mb-4">Analisis Aliran</h3>
+                        <div class="data-output-grid">
+                            <span class="data-label">Kecepatan 1 ( $ v_1 $ ):</span>
+                            <span id="venturi-v1-output" class="data-value">0.00 m/s</span>
+                       
+                            <span class="data-label">Kecepatan 2 ( $ v_2 $ ):</span>
+                            <span id="venturi-v2-output" class="data-value">0.00 m/s</span>
+                            
+                            <span class="data-label">Tekanan 1 ( $ P_1 $ ):</span>
+                            <span id="venturi-p1-output" class="data-value">300.0 kPa</span>
+                            
+                            <span class="data-label">Tekanan 2 ( $ P_2 $ ):</span>
+                            <span id="venturi-p2-output" class="data-value">0.0 kPa</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="h-subtitle-section">a. Konsep Teoritis</h3>
+            <div class="content-card space-y-4 text-lg leading-relaxed">
+                <p><strong>Fluida Dinamis</strong> mempelajari fluida yang bergerak. Kita sering mengasumsikan <strong>aliran ideal</strong>: tak-termampatkan (massa jenis $\rho$ konstan), non-viskos (tidak ada gesekan internal), dan alirannya stasioner (kecepatan di setiap titik konstan terhadap waktu).</p>
+                <p><strong>Debit (Flow Rate, $Q$)</strong> adalah volume fluida yang mengalir per satuan waktu ($Q = V/t$). Ini juga dapat dinyatakan sebagai $Q = A \cdot v$, di mana $A$ adalah luas penampang dan $v$ adalah kecepatan aliran.</p>
+            </div>
+
+            <h3 class="h-subtitle-section">d. Rumus-Rumus Penting</h3>
+            <div class="content-card space-y-6 text-lg">
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-300 mb-2">Persamaan Kontinuitas</h3>
+                    <p>Untuk fluida ideal, massa yang masuk ke suatu bagian pipa harus sama dengan massa yang keluar. Jika $\rho$ konstan, ini berarti debitnya konstan.</p>
+                    $$ Q_1 = Q_2 \implies A_1 v_1 = A_2 v_2 $$
+                    <p class="mt-2">Dalam simulasi di atas, $Q$ adalah input konstan. Kecepatan $v_1$ dan $v_2$ dihitung berdasarkan $Q$ dan luas penampang $A_1$ dan $A_2$ yang Anda atur:</p>
+                    $$ v_1 = \frac{Q}{A_1} \quad \text{dan} \quad v_2 = \frac{Q}{A_2} $$
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-300 mb-2">Prinsip Bernoulli</h3>
+                    <p>Ini adalah bentuk konservasi energi untuk fluida yang bergerak. Prinsip ini menyatakan bahwa jumlah dari tekanan, energi kinetik per volume, dan energi potensial per volume adalah konstan di sepanjang garis aliran.</p>
+                    $$ P + \frac{1}{2} \rho v^2 + \rho g h = \text{konstan} $$
+                    <p class="mt-2">Untuk pipa horizontal ($h_1 = h_2$), persamaan ini menjadi:</p>
+                    $$ P_1 + \frac{1}{2} \rho v_1^2 = P_2 + \frac{1}{2} \rho v_2^2 $$
+                    <p class="mt-2">Dengan $P_1$ sebagai tekanan referensi, kita dapat mencari $P_2$: $ P_2 = P_1 + \frac{1}{2} \rho (v_1^2 - v_2^2) $. Ini menunjukkan bahwa di mana fluida bergerak cepat ($v_2 > v_1$), tekanannya akan turun ($P_2 < P_1$).</p>
+                </div>
+            </div>
+
+            <h3 class="h-subtitle-section">e. Contoh Aplikasi (Teknik Mesin)</h3>
+            <div class="content-card space-y-4 text-lg leading-relaxed">
+                <ul class="list-disc list-inside space-y-3">
+                    <li><strong>Hidrolik (Statis):</strong> Penggunaan Prinsip Pascal pada dongkrak, rem hidrolik, dan aktuator mesin berat.</li>
+                    <li><strong>Aerodinamika (Dinamis):</strong> Prinsip Bernoulli menjelaskan bagaimana sayap pesawat menghasilkan gaya angkat (udara di atas bergerak lebih cepat, tekanan lebih rendah).</li>
+                    <li><strong>Venturi/Karburator (Dinamis):</strong> Karburator mesin menggunakan efek venturi untuk menghisap bahan bakar ke dalam aliran udara berkecepatan tinggi.</li>
+                    <li><strong>Perpipaan (Dinamis):</strong> Analisis aliran, tekanan, dan *head loss* (karena viskositas, non-ideal) sangat penting dalam desain sistem perpipaan di pabrik atau sistem pendingin mesin.</li>
+                </ul>
+            </div>
+
+        </div> <div id="content-periodik" class="module-content">
+            <h1 class="h-title">Gerak Periodik & Gelombang</h1>
+            <p class="text-lg -mt-4 mb-6">Modul ini membahas getaran (osilasi) dan perambatannya (gelombang). Memahami vibrasi sangat krusial dalam teknik mesin untuk mencegah kegagalan akibat resonansi.</p>
+
+            <h2 class="h-subtitle">Bagian A: Gerak Periodik (Osilasi)</h2>
+
+            <h3 class="h-subtitle-section">Simulasi 4a: Sistem Pegas-Massa (GHS)</h3>
+            <div class="content-card">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <div class="lg:col-span-1 space-y-6">
+                        <div>
+                            <label for="shm-m-slider" class="block mb-2 text-sm font-medium text-gray-200">Massa ( $ m $ ) <span id="shm-m-value" class="font-bold text-blue-300">1.0</span> kg</label>
+                            <input id="shm-m-slider" type="range" min="0.5" max="5" value="1" step="0.1" class="w-full">
+                        </div>
+                        <div>
+                            <label for="shm-k-slider" class="block mb-2 text-sm font-medium text-gray-200">Konstanta Pegas ( $ k $ ) <span id="shm-k-value" class="font-bold text-blue-300">10.0</span> N/m</label>
+                            <input id="shm-k-slider" type="range" min="1" max="50" value="10" step="0.5" class="w-full">
+                        </div>
+                        <div>
+                            <label for="shm-a-slider" class="block mb-2 text-sm font-medium text-gray-200">Amplitudo ( $ A $ ) <span id="shm-a-value" class="font-bold text-blue-300">0.8</span> m</label>
+                            <input id="shm-a-slider" type="range" min="0.1" max="1.0" value="0.8" step="0.1" class="w-full">
+                        </div>
+                        <div class="flex space-x-4">
+                            <button id="shm-startButton" class="flex-1 bg-blue-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all duration-200 hover:bg-blue-700 active:scale-95">
+                                Mulai
+                            </button>
+                            <button id="shm-resetButton" class="flex-1 bg-gray-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all duration-200 hover:bg-gray-700 active:scale-95">
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-1 flex items-center justify-center bg-gray-900 rounded-lg p-4">
+                        <canvas id="shmCanvas" width="300" height="300"></canvas>
+                    </div>
+
+                    <div class="lg:col-span-1 space-y-4 bg-gray-900 p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold text-white mb-4">Analisis Osilasi</h3>
+                        <div class="data-output-grid">
+                            <span class="data-label">Frekuensi Sudut ( $ \omega $ ):</span>
+                            <span id="shm-omega-output" class="data-value">0.00 rad/s</span>
+                       
+                            <span class="data-label">Periode ( $ T $ ):</span>
+                            <span id="shm-t-output" class="data-value">0.00 s</span>
+
+                            <span class="data-label">Simpangan ( $ x $ ):</span>
+                            <span id="shm-x-output" class="data-value">0.0 m</span>
+                            
+                            <span class="data-label">Kecepatan ( $ v $ ):</span>
+                            <span id="shm-v-output" class="data-value">0.0 m/s</span>
+                        </div>
+                        
+                        <hr class="border-gray-700 my-4">
+                        <h3 class="text-xl font-semibold text-white mb-3">Analisis Energi</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="text-sm font-medium text-green-300">Energi Kinetik (K)</label>
+                                <div class="progress-bar-bg">
+                                    <div id="shm-bar-k" class="progress-bar-fill-k" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-sm font-medium text-blue-300">Energi Potensial (U)</label>
+                                <div class="progress-bar-bg">
+                                    <div id="shm-bar-u" class="progress-bar-fill-u" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-sm font-medium text-gray-300">Energi Total (E)</label>
+                                <div class="progress-bar-bg">
+                                    <div id="shm-bar-e" class="progress-bar-fill-e" style="width: 100%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="h-subtitle-section">a. Konsep Teoritis</h3>
+            <div class="content-card space-y-4 text-lg leading-relaxed">
+                <p><strong>Gerak Periodik</strong> adalah gerak yang berulang dalam selang waktu yang sama (disebut <strong>Periode, $T$</strong>). <strong>Frekuensi ($f$)</strong> adalah jumlah getaran per detik ($f = 1/T$).</p>
+                <p><strong>Gerak Harmonik Sederhana (GHS)</strong> adalah jenis gerak periodik khusus di mana gaya pemulih ($F_p$) sebanding dengan simpangan ($x$) dari titik setimbang, dan arahnya selalu berlawanan dengan simpangan (menuju titik setimbang).</p>
+                $$ F_p = -k x $$
+                <p>Ini adalah <strong>Hukum Hooke</strong>, di mana $k$ adalah konstanta pegas. Menurut Hukum II Newton ($F=ma$), kita dapatkan:</p>
+                $$ -kx = m a \implies -kx = m \frac{d^2 x}{dt^2} $$
+                $$ \frac{d^2 x}{dt^2} + \left(\frac{k}{m}\right) x = 0 $$
+                <p>Ini adalah persamaan diferensial orde 2 yang mendefinisikan GHS.</p>
+            </div>
+            
+            <h3 class="h-subtitle-section">d. Rumus-Rumus Penting</h3>
+            <div class="content-card space-y-6 text-lg">
+                <p>Solusi dari persamaan diferensial GHS adalah fungsi sinusoidal:</p>
+                $$ x(t) = A \cos(\omega t + \phi) $$
+                <ul class="list-none space-y-3 mt-4">
+                    <li>$A$ &nbsp;: <strong>Amplitudo</strong>, simpangan maksimum.</li>
+                    <li>$\omega$ : <strong>Frekuensi Sudut</strong>, $ \omega = \sqrt{k/m} $. Satuan: rad/s.</li>
+                    <li>$\phi$ : <strong>Fase Awal</strong>, menentukan posisi awal pada $t=0$.</li>
+                </ul>
+                <p>Hubungan penting lainnya:</p>
+                $$ \omega = 2\pi f = \frac{2\pi}{T} $$
+                <p>Sehingga, Periode sistem pegas-massa adalah:</p>
+                $$ T = 2\pi \sqrt{\frac{m}{k}} $$
+                <p class="mt-4"><strong>Energi dalam GHS:</strong></p>
+                $$ K = \frac{1}{2}mv^2 \quad | \quad U = \frac{1}{2}kx^2 $$
+                $$ E_{Total} = K + U = \frac{1}{2}kA^2 = \text{Konstan} $$
+            </div>
+
+            <h2 class="h-subtitle">Bagian B: Gelombang Mekanik</h2>
+            
+            <h3 class="h-subtitle-section">Simulasi 4b: Gelombang Berdiri pada Tali</h3>
+            <div class="content-card">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <div class="lg:col-span-1 space-y-6">
+                        <div>
+                            <label for="wave-f-slider" class="block mb-2 text-sm font-medium text-gray-200">Frekuensi Osilator ( $ f $ ) <span id="wave-f-value" class="font-bold text-blue-300">1.00</span> Hz</label>
+                            <input id="wave-f-slider" type="range" min="0.5" max="10" value="1" step="0.05" class="w-full">
+                        </div>
+                        <p class="text-sm text-gray-400">Asumsi: Panjang Tali $L = 1.0$ m, Cepat Rambat $v = 2.0$ m/s.</p>
+                    </div>
+
+                    <div class="lg:col-span-1 flex items-center justify-center bg-gray-900 rounded-lg p-4">
+                        <canvas id="waveCanvas" width="400" height="200"></canvas>
+                    </div>
+
+                    <div class="lg:col-span-1 space-y-4 bg-gray-900 p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold text-white mb-4">Analisis Gelombang</h3>
+                        <div class="data-output-grid">
+                            <span class="data-label">Nada Dasar ( $ f_1 $ ):</span>
+                            <span id="wave-f1-output" class="data-value">0.00 Hz</span>
+                       
+                            <span class="data-label">Panjang Gel. ( $ \lambda $ ):</span>
+                            <span id="wave-lambda-output" class="data-value">0.00 m</span>
+                        </div>
+                        <hr class="border-gray-700">
+                        <h3 class="text-xl font-semibold text-white mt-4 text-center" id="wave-status">
+                            ---
+                        </h3>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="h-subtitle-section">Simulasi 4c: Interferensi Gelombang</h3>
+            <div class="content-card">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <div class="lg:col-span-1 space-y-6">
+                        <div>
+                            <label for="int-phase-slider" class="block mb-2 text-sm font-medium text-gray-200">Beda Fase ( $ \Delta\phi $ ) <span id="int-phase-value" class="font-bold text-blue-300">0</span>°</label>
+                            <input id="int-phase-slider" type="range" min="0" max="360" value="0" step="5" class="w-full">
+                        </div>
+                        <p class="text-sm text-gray-400">Amati gelombang superposisi ($y_1 + y_2$) saat Anda mengubah beda fase antara Gelombang 1 (biru) dan Gelombang 2 (merah).</p>
+                        <div class="bg-gray-900 p-4 rounded-lg text-center">
+                            <h3 class="text-xl font-semibold text-white mt-1" id="int-status">
+                                Interferensi Konstruktif Penuh
+                            </h3>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-2 space-y-4">
+                        <div>
+                            <label class="font-medium text-blue-300">Gelombang 1 ($y_1$)</label>
+                            <canvas id="intCanvas1" width="600" height="100" class="bg-gray-900 rounded-lg border border-gray-700"></canvas>
+                        </div>
+                         <div>
+                            <label class="font-medium text-red-300">Gelombang 2 ($y_2$)</label>
+                            <canvas id="intCanvas2" width="600" height="100" class="bg-gray-900 rounded-lg border border-gray-700"></canvas>
+                        </div>
+                         <div>
+                            <label class="font-medium text-purple-300">Superposisi ($y_1 + y_2$)</label>
+                            <canvas id="intCanvasSum" width="600" height="150" class="bg-gray-900 rounded-lg border border-gray-700"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <h3 class="h-subtitle-section">a. Konsep Teoritis</h3>
+            <div class="content-card space-y-4 text-lg leading-relaxed">
+                <p><strong>Gelombang</strong> adalah getaran (energi) yang merambat. <strong>Gelombang Mekanik</strong> (seperti gelombang tali, bunyi, air) memerlukan medium untuk merambat.</p>
+                <p>Hubungan fundamental gelombang adalah:</p>
+                $$ v = \lambda f $$
+                <p>di mana $v$ adalah cepat rambat gelombang, $\lambda$ adalah panjang gelombang, dan $f$ adalah frekuensi.</p>
+            </div>
+
+            <h3 class="h-subtitle-section">d. Rumus-Rumus Penting</h3>
+            <div class="content-card space-y-6 text-lg">
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-300 mb-2">Gelombang Berdiri (Standing Waves)</h3>
+                    <p>Terbentuk ketika gelombang yang merambat dipantulkan kembali dan berinterferensi dengan gelombang datang. Ini menciptakan pola gelombang yang tampak "diam", dengan titik-titik yang selalu diam (<strong>simpul</strong>) dan titik-titik dengan amplitudo maksimum (<strong>perut</strong>).</p>
+                    <p class="mt-2">Untuk tali dengan kedua ujung terikat (panjang $L$), gelombang berdiri hanya dapat terbentuk jika panjang tali adalah kelipatan bulat dari setengah panjang gelombang:</p>
+                    $$ L = n \left( \frac{\lambda_n}{2} \right) \quad \text{untuk } n = 1, 2, 3, \dots $$
+                    <p class="mt-2">Menggunakan $ f_n = v / \lambda_n $, kita dapatkan frekuensi-frekuensi yang diizinkan (frekuensi harmonik atau resonansi):</p>
+                    $$ f_n = n \left( \frac{v}{2L} \right) = n f_1 $$
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-300 mb-2">Prinsip Superposisi & Interferensi</h3>
+                    <p>Ketika dua gelombang atau lebih bertemu di titik yang sama pada medium yang sama, simpangan total medium pada titik tersebut adalah jumlah aljabar dari simpangan masing-masing gelombang.</p>
+                    $$ y_{total} = y_1 + y_2 $$
+                    <p class="mt-2">Fenomena ini disebut <strong>interferensi</strong>. Untuk dua gelombang dengan amplitudo $A$ yang sama:</p>
+                    <ul class="list-disc list-inside mt-2 space-y-2">
+                        <li>
+                            <strong>Interferensi Konstruktif:</strong> Terjadi ketika gelombang-gelombang yang bertemu 'se-fase' (beda fase $\Delta\phi = 0, 2\pi, 4\pi, ...$ rad atau $n \cdot 360^\circ$). Amplitudo akan saling menguatkan ($A_{total} = A + A = 2A$).
+                        </li>
+                        <li>
+                            <strong>Interferensi Destruktif:</strong> Terjadi ketika gelombang 'berlawanan fase' ($\Delta\phi = \pi, 3\pi, 5\pi, ...$ rad atau $(2n+1) \cdot 180^\circ$). Amplitudo akan saling melemahkan ($A_{total} = A - A = 0$).
+                        </li>
+                        <li>
+                            <strong>Interferensi Parsial:</strong> Terjadi untuk beda fase lainnya, menghasilkan amplitudo total antara 0 dan $2A$.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="h-subtitle-section">e. Contoh Aplikasi (Teknik Mesin)</h3>
+            <div class="content-card space-y-4 text-lg leading-relaxed">
+                <ul class="list-disc list-inside space-y-3">
+                    <li><strong>Analisis Vibrasi (Periodik):</strong> Ini adalah bidang *paling kritis*. Setiap mesin (mesin, turbin, motor) memiliki frekuensi alami ($f_n$). Jika gaya eksternal (misalnya dari ketidakseimbangan poros) bekerja pada frekuensi ini, terjadi <strong>resonansi</strong>, amplitudo getaran menjadi sangat besar dan dapat menghancurkan mesin.</li>
+                    <li><strong>Sistem Suspensi (Periodik):</strong> Suspensi mobil dirancang sebagai sistem pegas-massa (GHS) yang teredam untuk menyerap guncangan jalan.</li>
+                    <li><strong>Getaran pada Poros (Gelombang):</strong> Poros yang berputar pada kecepatan tertentu dapat mengalami getaran transversal yang berperilaku seperti gelombang berdiri, yang disebut "kecepatan kritis".</li>
+                     <li><strong>Active Noise Cancellation (Interferensi):</strong> Beberapa *headphone* canggih dan kabin mobil mewah menggunakan mikrofon untuk mendeteksi kebisingan, lalu menghasilkan gelombang bunyi "anti-kebisingan" yang berlawanan fase ($\Delta\phi = 180^\circ$) untuk menciptakan interferensi destruktif, sehingga kabin menjadi senyap.</li>
+                </ul>
+            </div>
+
+        </div> <div id="content-bunyi" class="module-content">
+            <h1 class="h-title">Gelombang Bunyi & Superposisi</h1>
+            <p class="text-lg -mt-4 mb-6">Modul ini membahas properti dasar gelombang bunyi, dan fenomena superposisi yang menghasilkan interferensi, khususnya fenomena Layanan (Beats).</p>
+
+            <h2 class="h-subtitle">Simulasi Virtual Lab: Superposisi & Layanan (Beats)</h2>
+            <div class="content-card">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <div class="lg:col-span-1 space-y-6">
+                        <div>
+                            <label for="beat-f1-slider" class="block mb-2 text-sm font-medium text-gray-200">Frekuensi 1 ( $ f_1 $ ) <span id="beat-f1-value" class="font-bold text-blue-300">10.0</span> Hz</label>
+                            <input id="beat-f1-slider" type="range" min="1" max="20" value="10" step="0.5" class="w-full">
+                        </div>
+                        <div>
+                            <label for="beat-f2-slider" class="block mb-2 text-sm font-medium text-gray-200">Frekuensi 2 ( $ f_2 $ ) <span id="beat-f2-value" class="font-bold text-blue-300">11.0</span> Hz</label>
+                            <input id="beat-f2-slider" type="range" min="1" max="20" value="11" step="0.5" class="w-full">
+                        </div>
+                        <p class="text-sm text-gray-400">Amati gelombang hasil penjumlahan ($y_1 + y_2$) ketika $f_1$ dan $f_2$ nilainya berdekatan.</p>
+                    </div>
+
+                    <div class="lg:col-span-2 space-y-4">
+                        <div>
+                            <label class="font-medium text-white">Gelombang 1 ($y_1$)</label>
+                            <canvas id="beatCanvas1" width="600" height="100" class="bg-gray-900 rounded-lg border border-gray-700"></canvas>
+                        </div>
+                         <div>
+                            <label class="font-medium text-white">Gelombang 2 ($y_2$)</label>
+                            <canvas id="beatCanvas2" width="600" height="100" class="bg-gray-900 rounded-lg border border-gray-700"></canvas>
+                        </div>
+                         <div>
+                            <label class="font-medium text-white">Superposisi ($y_1 + y_2$)</label>
+                            <canvas id="beatCanvasSum" width="600" height="150" class="bg-gray-900 rounded-lg border border-gray-700"></canvas>
+                        </div>
+                    </div>
+                </div>
+                 <div class="bg-gray-900 p-6 rounded-lg mt-6">
+                    <h3 class="text-xl font-semibold text-white mb-4">Analisis Frekuensi</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                        <div>
+                            <span class="data-label">Frekuensi 1 ($f_1$)</span>
+                            <span id="beat-f1-output" class="data-value block">10.0 Hz</span>
+                        </div>
+                        <div>
+                            <span class="data-label">Frekuensi 2 ($f_2$)</span>
+                            <span id="beat-f2-output" class="data-value block">11.0 Hz</span>
+                        </div>
+                        <div>
+                            <span class="data-label">Frekuensi Layanan ($f_{beat}$)</span>
+                            <span id="beat-f-beat-output" class="font-mono text-3xl text-blue-300 block">1.0 Hz</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="h-subtitle">a. Konsep Teoritis</h2>
+            <div class="content-card space-y-4 text-lg leading-relaxed">
+                <p>Bunyi adalah gelombang longitudinal, artinya partikel medium berosilasi sejajar dengan arah rambat gelombang, menciptakan area rapatan (tekanan tinggi) dan renggangan (tekanan rendah).</p>
+                <p><strong>Cepat Rambat Bunyi ($v$)</strong> bergantung pada sifat medium. Umumnya, $ v_{padat} > v_{cair} > v_{gas} $. Di udara, $v$ bergantung pada suhu, sekitar 343 m/s pada 20°C.</p>
+                <p><strong>Intensitas Bunyi ($I$)</strong> adalah daya (energi/waktu) yang dibawa gelombang per satuan luas ($ I = P/A $). Satuan: W/m².</p>
+            </div>
+
+            <h2 class="h-subtitle">d. Rumus-Rumus Penting & Penurunan</h2>
+            <div class="content-card space-y-6 text-lg">
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-300 mb-2">Taraf Intensitas (Desibel)</h3>
+                    <p>Telinga manusia mendeteksi intensitas secara logaritmik, bukan linear. Oleh karena itu, kita menggunakan skala <strong>Taraf Intensitas ($\beta$)</strong> dalam desibel (dB).</p>
+                    $$ \beta = (10 \, \text{dB}) \log_{10} \left( \frac{I}{I_0} \right) $$
+                    <p class="mt-2">di mana $ I_0 = 10^{-12} $ W/m² adalah ambang batas pendengaran manusia.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-300 mb-2">Superposisi & Layanan (Beats)</h3>
+                    <p>Ketika dua gelombang (misalnya bunyi) dengan frekuensi yang sedikit berbeda ($f_1$ dan $f_2$) bertemu, mereka berinterferensi. Menurut prinsip superposisi, simpangan total adalah $y = y_1 + y_2$.</p>
+                    <p class="mt-2">Interferensi ini bersifat konstruktif dan destruktif secara bergantian, menghasilkan variasi periodik pada amplitudo (keras-lemah-keras-lemah) yang disebut <strong>Layanan</strong> atau <strong>Beats</strong>.</p>
+                    <p class="mt-2">Frekuensi terdengarnya layanan (jumlah keras-lemah per detik) adalah:</p>
+                    $$ f_{beat} = |f_1 - f_2| $$
+                    <p class="mt-2">Simulasi di atas memvisualisasikan penjumlahan dua gelombang ($y_1 + y_2$) dan menunjukkan bagaimana amplop gelombang ($y_{sum}$) termodulasi pada frekuensi layanan tersebut.</p>
+                </div>
+            </div>
+            
+            <h2 class="h-subtitle">e. Contoh Aplikasi (Teknik Mesin)</h2>
+            <div class="content-card space-y-4 text-lg leading-relaxed">
+                <ul class="list-disc list-inside space-y-3">
+                    <li><strong>Penyetelan Instrumen (Tuning):</strong> Musisi menyetel gitar dengan membandingkan nada dari senar dengan nada referensi (garpu tala). Mereka mendengarkan "layanan" dan menyesuaikan tegangan senar hingga layanan menghilang ($f_1 = f_2$, sehingga $f_{beat} = 0$).</li>
+                    <li><strong>Kontrol Kebisingan (Acoustics):</strong> Mendesain *muffler* (knalpot) mobil untuk mengurangi kebisingan mesin melalui interferensi destruktif gelombang bunyi.</li>
+                    <li><strong>Non-Destructive Testing (NDT):</strong> Menggunakan gelombang ultrasonik (frekuensi sangat tinggi) untuk mendeteksi retakan internal atau cacat pada material (logam, las-lasan) tanpa merusaknya.</li>
+                </ul>
+            </div>
+        </div> <div id="content-kalor" class="module-content">
+            <h1 class="h-title">Suhu & Kalor</h1>
+            <p class="text-lg -mt-4 mb-6">Modul ini adalah pengantar ke **Termodinamika**, studi tentang energi, kalor, kerja, dan hubungannya. Ini adalah *jantung* dari teknik mesin, yang menggerakkan mesin panas, turbin, dan sistem pendingin.</p>
+
+            <h2 class="h-subtitle">Bagian A: Suhu dan Pemuaian Termal</h2>
+
+            <h3 class="h-subtitle-section">Simulasi 6a: Pemuaian Panjang</h3>
+            <div class="content-card">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <div class="lg:col-span-1 space-y-6">
+                        <div>
+                            <label for="temp-mat-select" class="block mb-2 text-sm font-medium text-gray-200">Material ( $ \alpha $ )</label>
+                            <select id="temp-mat-select" class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg p-2.5">
+                                <option value="1.7e-5">Tembaga (1.7 x 10⁻⁵ /°C)</option>
+                                <option value="2.3e-5">Aluminium (2.3 x 10⁻⁵ /°C)</option>
+                                <option value="1.2e-5">Baja (1.2 x 10⁻⁵ /°C)</option>
+                                <option value="0.9e-5">Kaca (0.9 x 10⁻⁵ /°C)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="temp-dt-slider" class="block mb-2 text-sm font-medium text-gray-200">Perubahan Suhu ( $ \Delta T $ ) <span id="temp-dt-value" class="font-bold text-blue-300">100</span> °C</label>
+                            <input id="temp-dt-slider" type="range" min="0" max="500" value="100" step="5" class="w-full">
+                        </div>
+                        <p class="text-sm text-gray-400">Asumsi: Panjang Awal $L_0 = 10.0$ m.</p>
+                    </div>
+
+                    <div class="lg:col-span-1 flex items-center justify-center bg-gray-900 rounded-lg p-4">
+                        <canvas id="expansionCanvas" width="400" height="200"></canvas>
+                    </div>
+
+                    <div class="lg:col-span-1 space-y-4 bg-gray-900 p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold text-white mb-4">Analisis Pemuaian</h3>
+                        <div class="data-output-grid">
+                            <span class="data-label">Perub. Panjang ( $ \Delta L $ ):</span>
+                            <span id="temp-dl-output" class="data-value">0.00 mm</span>
+                       
+                            <span class="data-label">Panjang Akhir ( $ L_f $ ):</span>
+                            <span id="temp-lf-output" class="data-value">10.000 m</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="h-subtitle-section">a. Konsep Teoritis</h3>
+            <div class="content-card space-y-4 text-lg leading-relaxed">
+                <p><strong>Suhu ($T$)</strong> adalah ukuran derajat panas atau dinginnya suatu benda, yang secara mikroskopis terkait dengan energi kinetik rata-rata partikel penyusunnya. <strong>Kalor ($Q$)</strong> adalah *transfer* energi termal antara dua sistem karena adanya perbedaan suhu.</p>
+                <p><strong>Hukum ke-Nol Termodinamika:</strong> Jika benda A berada dalam kesetimbangan termal dengan benda B, dan B dengan C, maka A juga berada dalam kesetimbangan termal dengan C. Ini mendefinisikan konsep suhu.</p>
+            </div>
+            
+            <h3 class="h-subtitle-section">d. Rumus-Rumus Penting</h3>
+            <div class="content-card space-y-6 text-lg">
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-300 mb-2">Pemuaian Termal</h3>
+                    <p>Kebanyakan zat akan memuai (bertambah besar ukurannya) ketika dipanaskan dan menyusut ketika didinginkan.</p>
+                    <ul class="list-none space-y-3 mt-4">
+                        <li><strong>Muai Panjang:</strong> $ \Delta L = \alpha L_0 \Delta T $</li>
+                        <li><strong>Muai Luas:</strong> $ \Delta A = \beta A_0 \Delta T $</li>
+                        <li><strong>Muai Volume:</strong> $ \Delta V = \gamma V_0 \Delta T $</li>
+                    </ul>
+                    <p class="mt-2">di mana $L_0, A_0, V_0$ adalah ukuran awal, $\Delta T$ adalah perubahan suhu, dan $\alpha, \beta, \gamma$ adalah koefisien muai. Untuk benda isotropik, $ \beta \approx 2\alpha $ dan $ \gamma \approx 3\alpha $.</p>
+                </div>
+            </div>
+
+            <h2 class="h-subtitle">Bagian B: Kalor dan Asas Black</h2>
+            
+            <h3 class="h-subtitle-section">Simulasi 6b: Asas Black (Kalorimeter)</h3>
+            <div class="content-card">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <div class="lg:col-span-1 space-y-6">
+                        <div>
+                            <label for="kalor-m-logam-slider" class="block mb-2 text-sm font-medium text-gray-200">Massa Logam ( $ m_l $ ) <span id="kalor-m-logam-value" class="font-bold text-blue-300">0.5</span> kg</label>
+                            <input id="kalor-m-logam-slider" type="range" min="0.1" max="2" value="0.5" step="0.1" class="w-full">
+                        </div>
+                        <div>
+                            <label for="kalor-t-logam-slider" class="block mb-2 text-sm font-medium text-gray-200">Suhu Logam ( $ T_l $ ) <span id="kalor-t-logam-value" class="font-bold text-blue-300">200</span> °C</label>
+                            <input id="kalor-t-logam-slider" type="range" min="100" max="500" value="200" step="10" class="w-full">
+                        </div>
+                        <div>
+                            <label for="kalor-m-air-slider" class="block mb-2 text-sm font-medium text-gray-200">Massa Air ( $ m_a $ ) <span id="kalor-m-air-value" class="font-bold text-blue-300">1.0</span> kg</label>
+                            <input id="kalor-m-air-slider" type="range" min="0.1" max="2" value="1.0" step="0.1" class="w-full">
+                        </div>
+                        <p class="text-sm text-gray-400">Asumsi: $T_{air} = 20°C$, $c_{air} = 4186$ J/kg°C, $c_{logam} = 900$ J/kg°C (Aluminium).</p>
+                    </div>
+
+                    <div class="lg:col-span-1 flex items-center justify-center bg-gray-900 rounded-lg p-4">
+                        <canvas id="kalorCanvas" width="300" height="300"></canvas>
+                    </div>
+
+                    <div class="lg:col-span-1 space-y-4 bg-gray-900 p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold text-white mb-4">Kesetimbangan Termal</h3>
+                        <div class="text-center">
+                            <span class="text-gray-400 text-lg">Suhu Akhir ( $ T_{akhir} $ )</span>
+                            <span id="kalor-t-final-output" class="block font-mono text-5xl text-blue-300 mt-4">0.0 °C</span>
+                        </div>
+                        <hr class="border-gray-700 mt-6">
+                        <div class="data-output-grid mt-4">
+                            <span class="data-label">Kalor Dilepas (Logam):</span>
+                            <span id="kalor-q-lepas-output" class="data-value">0.0 J</span>
+                       
+                            <span class="data-label">Kalor Diterima (Air):</span>
+                            <span id="kalor-q-terima-output" class="data-value">0.0 J</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="h-subtitle-section">a. Konsep Teoritis</h3>
+            <div class="content-card space-y-4 text-lg leading-relaxed">
+                <p><strong>Kalor Jenis ($c$)</strong> adalah jumlah kalor yang dibutuhkan untuk menaikkan suhu 1 kg zat sebesar 1°C (atau 1 K). Satuan: J/kg°C.</p>
+                $$ Q = m c \Delta T $$
+                <p><strong>Kalor Laten ($L$)</strong> adalah kalor yang dibutuhkan untuk mengubah fase 1 kg zat (misal dari padat ke cair, $L_f$, atau cair ke gas, $L_v$) *tanpa* perubahan suhu.</p>
+                $$ Q = m L $$
+            </div>
+
+            <h3 class="h-subtitle-section">d. Rumus-Rumus Penting</h3>
+            <div class="content-card space-y-6 text-lg">
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-300 mb-2">Asas Black (Kalorimetri)</h3>
+                    <p>Jika dua benda atau lebih dengan suhu berbeda dicampurkan dalam sistem yang terisolasi (kalorimeter), benda yang panas akan melepaskan kalor dan benda yang dingin akan menerima kalor, hingga tercapai suhu kesetimbangan termal ($T_{akhir}$).</p>
+                    <p>Menurut hukum kekekalan energi:</p>
+                    $$ Q_{\text{lepas}} = Q_{\text{terima}} $$
+                    <p class="mt-2">Untuk kasus di simulasi (logam panas dan air dingin):</p>
+                    $$ m_l c_l (T_l - T_{akhir}) = m_a c_a (T_{akhir} - T_a) $$
+                    <p class="mt-2">Simulasi di atas menghitung $T_{akhir}$ berdasarkan persamaan ini.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-300 mb-2">Perpindahan Kalor</h3>
+                    <p>Ada tiga mekanisme perpindahan kalor:</p>
+                    <ul class="list-disc list-inside mt-2">
+                        <li><strong>Konduksi:</strong> Transfer panas melalui kontak langsung (misal: ujung sendok logam dipanaskan).</li>
+                        <li><strong>Konveksi:</strong> Transfer panas melalui pergerakan fluida (misal: air mendidih, AC mendinginkan ruangan).</li>
+                        <li><strong>Radiasi:</strong> Transfer panas melalui gelombang elektromagnetik (misal: panas matahari, api unggun).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="h-subtitle-section">e. Contoh Aplikasi (Teknik Mesin)</h3>
+            <div class="content-card space-y-4 text-lg leading-relaxed">
+                <ul class="list-disc list-inside space-y-3">
+                    <li><strong>Mesin Kalor (Termodinamika):</strong> Mesin bensin, diesel, dan turbin uap beroperasi berdasarkan siklus termodinamika (Siklus Otto, Diesel, Rankine), mengubah kalor ($Q$) menjadi kerja ($W$).</li>
+                    <li><strong>Heat Exchanger (Perpindahan Kalor):</strong> Radiator mobil adalah *heat exchanger* yang memindahkan kalor dari mesin ke udara menggunakan konveksi (air) dan konduksi/radiasi (sirip radiator).</li>
+                    <li><strong>Thermal Stress (Pemuaian):</strong> Insinyur harus memperhitungkan pemuaian termal. Jembatan diberi celah muai, dan *bearing* mesin dipasang dengan toleransi ketat untuk mengakomodasi pemuaian saat mesin panas.</li>
+                </ul>
+            </div>
+        </div> </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // ===================================
+            // --- 1. LOGIKA NAVIGASI MODUL (SPA) ---
+            // ===================================
+            const navLinks = document.querySelectorAll('#sidebar-nav a');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.dataset.target;
+                    const targetElement = document.getElementById(targetId);
+
+                    const currentActiveElement = document.querySelector('.module-content.active');
+                    const currentActiveLink = document.querySelector('#sidebar-nav .sidebar-link-active');
+
+                    if (targetElement && targetElement !== currentActiveElement) {
+                        
+                        if (currentActiveElement) {
+                            currentActiveElement.classList.remove('active');
+                        }
+                        targetElement.classList.add('active');
+
+                        if (currentActiveLink) {
+                            currentActiveLink.classList.remove('sidebar-link-active');
+                            currentActiveLink.classList.add('sidebar-link');
+                        }
+                        link.classList.add('sidebar-link-active');
+                        link.classList.remove('sidebar-link');
+
+                        // (PENTING) Beri tahu MathJax untuk merender ulang persamaan
+                        // di dalam elemen target yang baru saja aktif.
+                        if (window.MathJax && window.MathJax.typesetPromise) {
+                            window.MathJax.typesetPromise([targetElement]).catch((err) => console.log('MathJax typeset error:', err));
+                        }
+                        
+                        window.scrollTo(0, 0);
+                    }
+                });
+            });
+
+            // --- Inisialisasi MathJax saat pertama kali memuat ---
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                window.MathJax.typesetPromise().catch((err) => console.log('MathJax initial typeset error:', err));
+            }
+
+
+            // ===================================
+            // --- 2. SIMULASI MODUL 1: GERAK ROTASI ---
+            // ===================================
+            const canvasRotasi = document.getElementById('simCanvas');
+            if (canvasRotasi) {
+                const ctxRotasi = canvasRotasi.getContext('2d');
+                const torqueSlider = document.getElementById('torqueSlider');
+                const inertiaSlider = document.getElementById('inertiaSlider');
+                const omegaSlider = document.getElementById('omegaSlider');
+                const startButton = document.getElementById('startButton');
+                const resetButton = document.getElementById('resetButton');
+                const torqueValue = document.getElementById('torqueValue');
+                const inertiaValue = document.getElementById('inertiaValue');
+                const omegaStartValue = document.getElementById('omegaStartValue');
+                const timeOutput = document.getElementById('timeOutput');
+                const alphaOutput = document.getElementById('alphaOutput');
+                const omegaOutput = document.getElementById('omegaOutput');
+                const thetaOutput = document.getElementById('thetaOutput');
+                const revOutput = document.getElementById('revOutput');
+
+                let isRunning = false;
+                let animationFrameId = null;
+                let torque = parseFloat(torqueSlider.value);
+                let inertia = parseFloat(inertiaSlider.value);
+                let omegaStart = parseFloat(omegaSlider.value);
+                let alpha = 0.0;
+                let omega = 0.0;
+                let theta = 0.0; 
+                let totalTime = 0.0;
+                let lastTimestamp = 0;
+
+                function updateParametersRotasi() {
+                    torque = parseFloat(torqueSlider.value);
+                    inertia = parseFloat(inertiaSlider.value);
+                    torqueValue.textContent = torque.toFixed(1);
+                    inertiaValue.textContent = inertia.toFixed(1);
+                    if (!isRunning) {
+                        omegaStart = parseFloat(omegaSlider.value);
+                        omegaStartValue.textContent = omegaStart.toFixed(1);
+                        omega = omegaStart;
+                    }
+                    alpha = torque / inertia;
+                    alphaOutput.textContent = `${alpha.toFixed(2)} rad/s²`;
+                    if (!isRunning) {
+                        omegaOutput.textContent = `${omega.toFixed(2)} rad/s`;
+                    }
+                }
+
+                function resetSimulationRotasi() {
+                    if (isRunning) {
+                        stopSimulationRotasi();
+                    }
+                    totalTime = 0.0;
+                    theta = 0.0;
+                    omegaStart = parseFloat(omegaSlider.value);
+                    omega = omegaStart;
+                    updateParametersRotasi();
+                    timeOutput.textContent = '0.00 s';
+                    thetaOutput.textContent = '0.00 rad';
+                    revOutput.textContent = '0.00';
+                    omegaOutput.textContent = `${omega.toFixed(2)} rad/s`;
+                    alphaOutput.textContent = `${alpha.toFixed(2)} rad/s²`;
+                    drawRotasi(); 
+                }
+
+                function startSimulationRotasi() {
+                    isRunning = true;
+                    startButton.textContent = 'Jeda Simulasi';
+                    startButton.classList.replace('bg-blue-600', 'bg-yellow-600');
+                    startButton.classList.replace('hover:bg-blue-700', 'hover:bg-yellow-700');
+                    torqueSlider.disabled = true;
+                    inertiaSlider.disabled = true;
+                    omegaSlider.disabled = true;
+                    lastTimestamp = performance.now();
+                    animationFrameId = requestAnimationFrame(gameLoopRotasi);
+                }
+
+                function stopSimulationRotasi() {
+                    isRunning = false;
+                    startButton.textContent = 'Lanjutkan Simulasi';
+                    startButton.classList.replace('bg-yellow-600', 'bg-blue-600');
+                    startButton.classList.replace('hover:bg-yellow-700', 'hover:bg-blue-700');
+                    torqueSlider.disabled = false;
+                    inertiaSlider.disabled = false;
+                    omegaSlider.disabled = false;
+                    if (animationFrameId) {
+                        cancelAnimationFrame(animationFrameId);
+                    }
+                }
+
+                function toggleSimulationRotasi() {
+                    if (isRunning) stopSimulationRotasi(); else startSimulationRotasi();
+                }
+                
+                function drawRotasi() {
+                    const width = canvasRotasi.width;
+                    const height = canvasRotasi.height;
+                    const cx = width / 2;
+                    const cy = height / 2;
+                    const radius = Math.min(width, height) * 0.45;
+                    ctxRotasi.clearRect(0, 0, width, height);
+                    ctxRotasi.beginPath();
+                    ctxRotasi.arc(cx, cy, radius, 0, 2 * Math.PI);
+                    ctxRotasi.fillStyle = '#4A5568';
+                    ctxRotasi.fill();
+                    ctxRotasi.strokeStyle = '#CBD5E0';
+                    ctxRotasi.lineWidth = 2;
+                    ctxRotasi.stroke();
+                    ctxRotasi.beginPath();
+                    ctxRotasi.moveTo(cx, cy);
+                    ctxRotasi.lineTo(cx + radius, cy);
+                    ctxRotasi.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+                    ctxRotasi.lineWidth = 1;
+                    ctxRotasi.setLineDash([2, 4]);
+                    ctxRotasi.stroke();
+                    ctxRotasi.setLineDash([]);
+                    const endX = cx + radius * Math.cos(theta);
+                    const endY = cy + radius * Math.sin(theta);
+                    ctxRotasi.beginPath();
+                    ctxRotasi.moveTo(cx, cy);
+                    ctxRotasi.lineTo(endX, endY);
+                    ctxRotasi.strokeStyle = '#63B3ED';
+                    ctxRotasi.lineWidth = 4;
+                    ctxRotasi.stroke();
+                    ctxRotasi.beginPath();
+                    ctxRotasi.arc(cx, cy, 4, 0, 2 * Math.PI);
+                    ctxRotasi.fillStyle = '#63B3ED';
+                    ctxRotasi.fill();
+                }
+
+                function gameLoopRotasi(timestamp) {
+                    if (!isRunning) return;
+                    const dt = (timestamp - lastTimestamp) / 1000;
+                    lastTimestamp = timestamp;
+                    
+                    // Semi-implicit Euler integration (lebih stabil)
+                    omega = omega + alpha * dt;
+                    theta = theta + omega * dt;
+                    
+                    totalTime += dt;
+                    timeOutput.textContent = `${totalTime.toFixed(2)} s`;
+                    omegaOutput.textContent = `${omega.toFixed(2)} rad/s`;
+                    thetaOutput.textContent = `${theta.toFixed(2)} rad`;
+                    revOutput.textContent = `${(theta / (2 * Math.PI)).toFixed(2)}`;
+                    drawRotasi();
+                    animationFrameId = requestAnimationFrame(gameLoopRotasi);
+                }
+
+                torqueSlider.addEventListener('input', updateParametersRotasi);
+                inertiaSlider.addEventListener('input', updateParametersRotasi);
+                omegaSlider.addEventListener('input', updateParametersRotasi);
+                startButton.addEventListener('click', toggleSimulationRotasi);
+                resetButton.addEventListener('click', resetSimulationRotasi);
+                resetSimulationRotasi();
+            }
+            
+
+            // ======================================================
+            // --- 3. SIMULASI MODUL 2a: KESETIMBANGAN BENDA TEGAR ---
+            // ======================================================
+            const canvasEq = document.getElementById('equilibriumCanvas');
+            if (canvasEq) {
+                const ctxEq = canvasEq.getContext('2d');
+                const m1Slider = document.getElementById('eq-m1-slider');
+                const x1Slider = document.getElementById('eq-x1-slider');
+                const m2Slider = document.getElementById('eq-m2-slider');
+                const x2Slider = document.getElementById('eq-x2-slider');
+                const m1Value = document.getElementById('eq-m1-value');
+                const x1Value = document.getElementById('eq-x1-value');
+                const m2Value = document.getElementById('eq-m2-value');
+                const x2Value = document.getElementById('eq-x2-value');
+                const tau1Output = document.getElementById('eq-tau1-output');
+                const tau2Output = document.getElementById('eq-tau2-output');
+                const tauNetOutput = document.getElementById('eq-tauNet-output');
+                const statusOutput = document.getElementById('eq-status');
+                const g = 9.81; 
+                let m1, x1, m2, x2, tau1, tau2, tauNet;
+
+                function updateEquilibrium() {
+                    m1 = parseFloat(m1Slider.value);
+                    x1 = parseFloat(x1Slider.value);
+                    m2 = parseFloat(m2Slider.value);
+                    x2 = parseFloat(x2Slider.value);
+                    m1Value.textContent = `${m1.toFixed(1)}`;
+                    x1Value.textContent = `${x1.toFixed(1)}`;
+                    m2Value.textContent = `${m2.toFixed(1)}`;
+                    x2Value.textContent = `${x2.toFixed(1)}`;
+                    tau1 = m1 * g * x1; 
+                    tau2 = m2 * g * x2;
+                    tauNet = tau1 + tau2;
+                    tau1Output.textContent = `${tau1.toFixed(2)} N·m`;
+                    tau2Output.textContent = `${tau2.toFixed(2)} N·m`;
+                    tauNetOutput.textContent = `${tauNet.toFixed(2)} N·m`;
+                    if (Math.abs(tauNet) < 0.1) {
+                        statusOutput.textContent = "SEIMBANG";
+                        statusOutput.className = "text-xl font-semibold text-green-400 mt-4 text-center";
+                    } else if (tauNet > 0) {
+                        statusOutput.textContent = "BERPUTAR CCW";
+                        statusOutput.className = "text-xl font-semibold text-yellow-400 mt-4 text-center";
+                    } else {
+                        statusOutput.textContent = "BERPUTAR CW";
+                        statusOutput.className = "text-xl font-semibold text-red-400 mt-4 text-center";
+                    }
+                    drawEquilibrium();
+                }
+
+                function drawEquilibrium() {
+                    const w = canvasEq.width;
+                    const h = canvasEq.height;
+                    const cx = w / 2; 
+                    const cy = h - 70; 
+                    const beamWidth = w * 0.9; 
+                    const beamHeight = 10;
+                    const scale = (beamWidth / 2) / 5; 
+                    ctxEq.clearRect(0, 0, w, h);
+                    let angle = tauNet * 0.005; 
+                    angle = Math.max(-Math.PI / 8, Math.min(Math.PI / 8, angle));
+                    ctxEq.beginPath();
+                    ctxEq.moveTo(cx - 20, h - 20);
+                    ctxEq.lineTo(cx, cy - 10); 
+                    ctxEq.lineTo(cx + 20, h - 20);
+                    ctxEq.closePath();
+                    ctxEq.fillStyle = '#9CA3AF'; 
+                    ctxEq.fill();
+                    ctxEq.save();
+                    ctxEq.translate(cx, cy - 10);
+                    ctxEq.rotate(angle);
+                    ctxEq.fillStyle = '#6B7280';
+                    ctxEq.fillRect(-beamWidth / 2, -beamHeight / 2, beamWidth, beamHeight);
+                    const m1Size = 15 + m1 * 1.5; 
+                    const x1Pos = x1 * scale; 
+                    ctxEq.fillStyle = 'rgba(96, 165, 250, 0.8)'; 
+                    ctxEq.strokeStyle = '#BFDBFE'; 
+                    ctxEq.lineWidth = 2;
+                    ctxEq.beginPath();
+                    ctxEq.rect(x1Pos - m1Size / 2, -beamHeight / 2 - m1Size, m1Size, m1Size);
+                    ctxEq.fill();
+                    ctxEq.stroke();
+                    ctxEq.fillStyle = '#FFF';
+                    ctxEq.fillText("m1", x1Pos - 5, -beamHeight/2 - m1Size/2 + 5);
+                    const m2Size = 15 + m2 * 1.5;
+                    const x2Pos = x2 * scale;
+                    ctxEq.fillStyle = 'rgba(248, 113, 113, 0.8)';
+                    ctxEq.strokeStyle = '#FECACA'; 
+                    ctxEq.lineWidth = 2;
+                    ctxEq.beginPath();
+                    ctxEq.rect(x2Pos - m2Size / 2, -beamHeight / 2 - m2Size, m2Size, m2Size);
+                    ctxEq.fill();
+                    ctxEq.stroke();
+                    ctxEq.fillStyle = '#FFF';
+                    ctxEq.fillText("m2", x2Pos - 5, -beamHeight/2 - m2Size/2 + 5);
+                    ctxEq.restore();
+                }
+
+                m1Slider.addEventListener('input', updateEquilibrium);
+                x1Slider.addEventListener('input', updateEquilibrium);
+                m2Slider.addEventListener('input', updateEquilibrium);
+                x2Slider.addEventListener('input', updateEquilibrium);
+                updateEquilibrium();
+            }
+            
+            // ======================================================
+            // --- 4. SIMULASI MODUL 2b: GRAVITASI (REVISI 2D TOP-DOWN) ---
+            // ======================================================
+            const canvasGrav = document.getElementById('gravityCanvas');
+            if (canvasGrav) {
+                const ctxGrav = canvasGrav.getContext('2d');
+                const hSlider = document.getElementById('grav-h-slider');
+                const vSlider = document.getElementById('grav-v-slider');
+                const hValue = document.getElementById('grav-h-value');
+                const vValue = document.getElementById('grav-v-value');
+                const startButton = document.getElementById('grav-startButton');
+                const resetButton = document.getElementById('grav-resetButton');
+                const vOutput = document.getElementById('grav-v-output');
+                const hOutput = document.getElementById('grav-h-output');
+                const vOrbitOutput = document.getElementById('grav-v-orbit');
+                const vEscapeOutput = document.getElementById('grav-v-escape');
+                const statusOutput = document.getElementById('grav-status');
+                
+                // --- Konstanta Simulasi 2D ---
+                const G = 1;
+                const M = 50000; // Massa planet (ditingkatkan untuk skala)
+                const R_PLANET = 40; // Radius planet (pixel)
+                const M_SAT = 0.01;
+                const V_SCALE = 3; // Pengali untuk slider kecepatan
+                const H_SCALE = 1/3; // Pembagi untuk slider ketinggian
+                
+                let hStart_val, vStart_val, hStart_scaled, vStart_scaled, R_START, vOrbit, vEscape;
+                let pos, vel, path;
+                let gravAnimId = null;
+                let isGravRunning = false;
+
+                function resetGrav() {
+                    if (gravAnimId) cancelAnimationFrame(gravAnimId);
+                    isGravRunning = false;
+                    
+                    // Baca nilai mentah dari slider
+                    hStart_val = parseFloat(hSlider.value);
+                    vStart_val = parseFloat(vSlider.value);
+                    
+                    // Skalakan nilai untuk simulasi
+                    hStart_scaled = hStart_val * H_SCALE;
+                    vStart_scaled = vStart_val * V_SCALE;
+                    
+                    R_START = R_PLANET + hStart_scaled; // Radius total dari pusat
+                    
+                    // Hitung fisika
+                    vOrbit = Math.sqrt(G * M / R_START);
+                    vEscape = Math.sqrt(2 * G * M / R_START);
+                    
+                    // Atur posisi 2D (tampak atas)
+                    pos = { x: 0, y: R_START }; // Mulai di "atas" planet
+                    vel = { x: vStart_scaled, y: 0 }; // Tembak ke "kanan"
+                    path = [];
+                    path.push({ ...pos });
+
+                    // Update UI
+                    hValue.textContent = hStart_val.toFixed(0);
+                    vValue.textContent = vStart_val.toFixed(2);
+                    vOutput.textContent = `${vStart_val.toFixed(2)} km/s`;
+                    hOutput.textContent = `${hStart_val.toFixed(0)} km`;
+                    
+                    // Tampilkan vOrbit/vEscape dalam skala slider (km/s)
+                    vOrbitOutput.textContent = (vOrbit / V_SCALE).toFixed(2);
+                    vEscapeOutput.textContent = (vEscape / V_SCALE).toFixed(2);
+                    
+                    statusOutput.textContent = "Menunggu...";
+                    statusOutput.className = "text-xl font-semibold text-white mt-4 text-center";
+                    
+                    startButton.disabled = false;
+                    vSlider.disabled = false;
+                    hSlider.disabled = false;
+                    drawGrav();
+                }
+
+                function startGrav() {
+                    if (isGravRunning) return;
+                    isGravRunning = true;
+                    startButton.disabled = true;
+                    vSlider.disabled = true;
+                    hSlider.disabled = true;
+                    
+                    // Cek status berdasarkan kecepatan
+                    if (vStart_scaled < vOrbit * 0.9) { // Beri toleransi
+                         statusOutput.textContent = "JATUH (Sub-orbital)";
+                         statusOutput.className = "text-xl font-semibold text-red-400 mt-4 text-center";
+                    } else if (vStart_scaled < vEscape) {
+                         statusOutput.textContent = "ORBIT (Elips/Lingkaran)";
+                         statusOutput.className = "text-xl font-semibold text-green-400 mt-4 text-center";
+                    } else {
+                         statusOutput.textContent = "LEPAS (Hiperbolik)";
+                         statusOutput.className = "text-xl font-semibold text-blue-400 mt-4 text-center";
+                    }
+                    
+                    gravAnimId = requestAnimationFrame(gameLoopGrav);
+                }
+
+                function drawGrav() {
+                    const w = canvasGrav.width;
+                    const h = canvasGrav.height;
+                    const cx = w / 2;
+                    const cy = h / 2;
+                    
+                    ctxGrav.clearRect(0, 0, w, h);
+                    
+                    // --- Gambar Garis Orbit Sempurna (Abu-abu) ---
+                    ctxGrav.strokeStyle = 'rgba(156, 163, 175, 0.5)';
+                    ctxGrav.lineWidth = 1;
+                    ctxGrav.setLineDash([2, 3]);
+                    ctxGrav.beginPath();
+                    ctxGrav.arc(cx, cy, R_START, 0, 2 * Math.PI);
+                    ctxGrav.stroke();
+                    ctxGrav.setLineDash([]);
+                    
+                    // --- Gambar Jejak Satelit (Kuning) ---
+                    ctxGrav.strokeStyle = 'rgba(255, 255, 0, 0.7)';
+                    ctxGrav.lineWidth = 2;
+                    ctxGrav.beginPath();
+                    if (path.length > 0) {
+                        // Konversi koordinat fisika (y ke atas) ke canvas (y ke bawah)
+                        ctxGrav.moveTo(cx + path[0].x, cy - path[0].y);
+                        for (let i = 1; i < path.length; i++) {
+                            ctxGrav.lineTo(cx + path[i].x, cy - path[i].y);
+                        }
+                    }
+                    ctxGrav.stroke();
+                    
+                    // --- Gambar Planet (Biru) ---
+                    ctxGrav.beginPath();
+                    ctxGrav.arc(cx, cy, R_PLANET, 0, 2 * Math.PI);
+                    ctxGrav.fillStyle = '#4A5568';
+                    ctxGrav.fill();
+                    ctxGrav.strokeStyle = '#63B3ED';
+                    ctxGrav.lineWidth = 1;
+                    ctxGrav.stroke();
+                    
+                    // --- Gambar Satelit (Merah) ---
+                    ctxGrav.beginPath();
+                    ctxGrav.arc(cx + pos.x, cy - pos.y, 4, 0, 2 * Math.PI);
+                    ctxGrav.fillStyle = '#F87171'; // red-400
+                    ctxGrav.fill();
+                }
+
+                function gameLoopGrav() {
+                    if (!isGravRunning) return;
+                    
+                    const dt = 0.05; // Timestep
+                    
+                    // Hitung fisika 2D
+                    const r_mag = Math.sqrt(pos.x**2 + pos.y**2);
+                    const Fg_mag_scaled = (-G * M * M_SAT) / (r_mag**3);
+                    const Fg_vec = { 
+                        x: pos.x * Fg_mag_scaled, 
+                        y: pos.y * Fg_mag_scaled 
+                    };
+                    const acc = { 
+                        x: Fg_vec.x / M_SAT, 
+                        y: Fg_vec.y / M_SAT 
+                    };
+                    
+                    // Integrasi Semi-Implicit Euler
+                    vel.x += acc.x * dt;
+                    vel.y += acc.y * dt;
+                    pos.x += vel.x * dt;
+                    pos.y += vel.y * dt;
+                    
+                    path.push({ ...pos });
+                    if (path.length > 1000) path.shift();
+                    
+                    // Update data real-time
+                    const v_mag_scaled = Math.sqrt(vel.x**2 + vel.y**2);
+                    const h_mag_scaled = r_mag - R_PLANET;
+                    
+                    vOutput.textContent = (v_mag_scaled / V_SCALE).toFixed(2);
+                    hOutput.textContent = (h_mag_scaled / H_SCALE).toFixed(0);
+
+                    drawGrav();
+                    
+                    // Cek kondisi berhenti
+                    if (r_mag < R_PLANET) {
+                        statusOutput.textContent = "JATUH (Menabrak)";
+                        statusOutput.className = "text-xl font-semibold text-red-600 mt-4 text-center";
+                        stopGrav();
+                    } else if (r_mag > (canvasGrav.width * 2)) { // Jika keluar layar
+                         statusOutput.textContent = "LEPAS (Keluar Jangkauan)";
+                         statusOutput.className = "text-xl font-semibold text-blue-600 mt-4 text-center";
+                         stopGrav();
+                    } else {
+                        gravAnimId = requestAnimationFrame(gameLoopGrav);
+                    }
+                }
+                
+                function stopGrav() {
+                    isGravRunning = false;
+                    if (gravAnimId) cancelAnimationFrame(gravAnimId);
+                    startButton.disabled = false;
+                    vSlider.disabled = false;
+                    hSlider.disabled = false;
+                }
+                
+                // Event Listeners
+                vSlider.addEventListener('input', () => { if (!isGravRunning) resetGrav(); });
+                hSlider.addEventListener('input', () => { if (!isGravRunning) resetGrav(); });
+                startButton.addEventListener('click', startGrav);
+                resetButton.addEventListener('click', resetGrav);
+                
+                resetGrav();
+            }
+
+            // ==========================================================
+            // --- 5. SIMULASI MODUL 3a: ARCHIMEDES (DIKEMBANGKAN) ---
+            // ==========================================================
+            const canvasBuoy = document.getElementById('buoyancyCanvas');
+            if (canvasBuoy) {
+                const ctxBuoy = canvasBuoy.getContext('2d');
+                const fluidSlider = document.getElementById('buoy-fluid-slider');
+                const blockSlider = document.getElementById('buoy-block-slider');
+                const volSlider = document.getElementById('buoy-vol-slider');
+                const fluidValue = document.getElementById('buoy-fluid-value');
+                const blockValue = document.getElementById('buoy-block-value');
+                const volValue = document.getElementById('buoy-vol-value');
+                const weightOutput = document.getElementById('buoy-weight-output');
+                const forceOutput = document.getElementById('buoy-force-output');
+                const volOutput = document.getElementById('buoy-vol-output');
+                const statusOutput = document.getElementById('buoy-status');
+                
+                const g = 9.8;
+
+                function updateBuoyancy() {
+                    const rho_f = parseFloat(fluidSlider.value);
+                    const rho_b = parseFloat(blockSlider.value);
+                    const V_block = parseFloat(volSlider.value);
+                    
+                    fluidValue.textContent = rho_f.toFixed(0);
+                    blockValue.textContent = rho_b.toFixed(0);
+                    volValue.textContent = V_block.toFixed(1);
+                    
+                    const W_b = rho_b * V_block * g;
+                    let F_B, V_submerged;
+                    
+                    if (rho_b > rho_f) { // Tenggelam
+                        V_submerged = V_block;
+                        F_B = rho_f * V_submerged * g;
+                        statusOutput.textContent = "TENGGELAM";
+                        statusOutput.className = "text-xl font-semibold text-red-400 mt-4 text-center";
+                    } else if (rho_b === rho_f) { // Melayang
+                        V_submerged = V_block;
+                        F_B = rho_f * V_submerged * g;
+                        statusOutput.textContent = "MELAYANG";
+                        statusOutput.className = "text-xl font-semibold text-yellow-400 mt-4 text-center";
+                    } else { // Terapung
+                        F_B = W_b; // F_B = W
+                        V_submerged = W_b / (rho_f * g);
+                        statusOutput.textContent = "TERAPUNG";
+                        statusOutput.className = "text-xl font-semibold text-green-400 mt-4 text-center";
+                    }
+                    
+                    weightOutput.textContent = `${W_b.toFixed(0)} N`;
+                    forceOutput.textContent = `${F_B.toFixed(0)} N`;
+                    volOutput.textContent = `${V_submerged.toFixed(2)} m³`;
+                    
+                    drawBuoyancy(rho_f, rho_b, V_submerged / V_block, V_block, W_b, F_B);
+                }
+
+                function drawBuoyancy(rho_f, rho_b, submerged_ratio, V_b, W_b, F_B) {
+                    const w = canvasBuoy.width;
+                    const h = canvasBuoy.height;
+                    ctxBuoy.clearRect(0, 0, w, h);
+                    
+                    const waterLevel = h * 0.4;
+                    ctxBuoy.fillStyle = `rgba(96, 165, 250, ${Math.min(0.2 + rho_f / 2000, 1.0)})`;
+                    ctxBuoy.fillRect(0, waterLevel, w, h - waterLevel);
+                    ctxBuoy.strokeStyle = '#BFDBFE';
+                    ctxBuoy.beginPath();
+                    ctxBuoy.moveTo(0, waterLevel);
+                    ctxBuoy.lineTo(w, waterLevel);
+                    ctxBuoy.stroke();
+                    
+                    const blockBaseSize = 60;
+                    const blockSide = blockBaseSize * Math.cbrt(V_b);
+                    const blockX = (w - blockSide) / 2;
+                    let blockY;
+
+                    if (rho_b > rho_f) {
+                        blockY = h - blockSide - 10;
+                    } else if (rho_b === rho_f) {
+                        blockY = (h - blockSide) / 2;
+                    } else {
+                        blockY = waterLevel - (blockSide * submerged_ratio);
+                    }
+                    
+                    ctxBuoy.fillStyle = `rgba(167, 139, 250, ${Math.min(0.4 + rho_b / 2000, 1.0)})`;
+                    ctxBuoy.strokeStyle = '#C4B5FD';
+                    ctxBuoy.lineWidth = 2;
+                    ctxBuoy.fillRect(blockX, blockY, blockSide, blockSide);
+                    ctxBuoy.strokeRect(blockX, blockY, blockSide, blockSide);
+                    
+                    const centerX = blockX + blockSide / 2;
+                    const centerY = blockY + blockSide / 2;
+                    const forceScale = 0.005; 
+                    
+                    const W_len = Math.max(10, W_b * forceScale);
+                    ctxBuoy.strokeStyle = '#F87171'; // red-400
+                    ctxBuoy.fillStyle = '#F87171';
+                    ctxBuoy.lineWidth = 3;
+                    drawArrow(ctxBuoy, centerX, centerY, centerX, centerY + W_len);
+                    ctxBuoy.fillText("W_b", centerX + 5, centerY + W_len / 2);
+                    
+                    const F_B_len = Math.max(10, F_B * forceScale);
+                    ctxBuoy.strokeStyle = '#60A5FA'; // blue-400
+                    ctxBuoy.fillStyle = '#60A5FA';
+                    ctxBuoy.lineWidth = 3;
+                    drawArrow(ctxBuoy, centerX, centerY, centerX, centerY - F_B_len);
+                    ctxBuoy.fillText("F_B", centerX + 5, centerY - F_B_len / 2);
+                }
+                
+                function drawArrow(ctx, fromx, fromy, tox, toy) {
+                    const headlen = 10;
+                    const dx = tox - fromx;
+                    const dy = toy - fromy;
+                    const angle = Math.atan2(dy, dx);
+                    ctx.beginPath();
+                    ctx.moveTo(fromx, fromy);
+                    ctx.lineTo(tox, toy);
+                    ctx.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
+                    ctx.moveTo(tox, toy);
+                    ctx.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
+                    ctx.stroke();
+                }
+
+                fluidSlider.addEventListener('input', updateBuoyancy);
+                blockSlider.addEventListener('input', updateBuoyancy);
+                volSlider.addEventListener('input', updateBuoyancy);
+                updateBuoyancy();
+            }
+
+            // ========================================================
+            // --- 6. SIMULASI MODUL 3b: VENTURI (DIKEMBANGKAN) ---
+            // ========================================================
+            const canvasVenturi = document.getElementById('venturiCanvas');
+            if (canvasVenturi) {
+                const ctxVenturi = canvasVenturi.getContext('2d');
+                // --- PENGEMBANGAN 2: Slider baru & slider r1 diaktifkan ---
+                const qSlider = document.getElementById('venturi-q-slider');
+                const r1Slider = document.getElementById('venturi-a1-slider');
+                const r2Slider = document.getElementById('venturi-a2-slider');
+                const qValue = document.getElementById('venturi-q-value');
+                const r1Value = document.getElementById('venturi-a1-value');
+                const r2Value = document.getElementById('venturi-a2-value');
+                
+                const v1Output = document.getElementById('venturi-v1-output');
+                const v2Output = document.getElementById('venturi-v2-output');
+                const p1Output = document.getElementById('venturi-p1-output');
+                const p2Output = document.getElementById('venturi-p2-output');
+
+                const P_ref = 300000; // 300 kPa
+                const rho = 1000; // kg/m³
+                const g = 9.8;
+                
+                let r1_cm, r2_cm, Q, v1, v2, P1, P2;
+                let particles = [];
+                let venturiAnimId = null;
+
+                function initParticles() {
+                    particles = [];
+                    for (let i = 0; i < 50; i++) {
+                        particles.push({
+                            x: Math.random() * canvasVenturi.width,
+                            y: canvasVenturi.height / 2 + (Math.random() - 0.5) * (10 * 2 * 10), // y awal
+                            r: Math.random() * 2 + 1
+                        });
+                    }
+                }
+                
+                function updateVenturiParams() {
+                    // --- PENGEMBANGAN 2: Baca Q dan r1 ---
+                    Q = parseFloat(qSlider.value);
+                    r1_cm = parseFloat(r1Slider.value);
+                    r2_cm = parseFloat(r2Slider.value);
+                    
+                    const r1 = r1_cm / 100;
+                    const r2 = r2_cm / 100;
+                    
+                    qValue.textContent = Q.toFixed(3);
+                    r1Value.textContent = r1_cm.toFixed(1);
+                    r2Value.textContent = r2_cm.toFixed(1);
+                    
+                    const A1 = Math.PI * r1**2;
+                    const A2 = Math.PI * r2**2;
+                    
+                    // --- PENGEMBANGAN 2: Hitung v1 dan v2 dari Q ---
+                    v1 = Q / A1;
+                    v2 = Q / A2;
+                    
+                    // --- PENGEMBANGAN 2: Hitung P2 relatif terhadap P1 ---
+                    P1 = P_ref; // P1 adalah tekanan referensi
+                    P2 = P1 + 0.5 * rho * (v1**2 - v2**2);
+                    
+                    v1Output.textContent = `${v1.toFixed(2)} m/s`;
+                    v2Output.textContent = `${v2.toFixed(2)} m/s`;
+                    p1Output.textContent = `${(P1 / 1000).toFixed(1)} kPa`;
+                    p2Output.textContent = `${(P2 / 1000).toFixed(1)} kPa`;
+                }
+                
+                function gameLoopVenturi() {
+                    const w = canvasVenturi.width;
+                    const h = canvasVenturi.height;
+                    // --- PENGEMBANGAN 2: Gunakan r1_cm ---
+                    const h1_px = (r1_cm / 15) * (h/3);
+                    const h2_px = (r2_cm / 15) * (h/3);
+                    const midY = h / 2;
+                    const midX = w * 0.4;
+                    const narrowX = w * 0.6;
+                    
+                    ctxVenturi.clearRect(0, 0, w, h);
+                    
+                    // --- PENGEMBANGAN 2: Manometer didasarkan pada P1 dan P2 yang dihitung ---
+                    // Skala ketinggian P = rho*g*h => h = P/(rho*g)
+                    // Kita skala-kan agar terlihat
+                    const pressureHeightScale = 0.0003; 
+                    const h_p1_px = P1 * pressureHeightScale;
+                    const h_p2_px = P2 * pressureHeightScale;
+                    
+                    ctxVenturi.fillStyle = 'rgba(96, 165, 250, 0.4)';
+                    // Riser 1
+                    ctxVenturi.fillRect(w * 0.2, midY - h1_px - h_p1_px, 15, h_p1_px);
+                    ctxVenturi.strokeStyle = '#BFDBFE';
+                    ctxVenturi.strokeRect(w * 0.2, midY - h1_px - h_p1_px, 15, h_p1_px);
+                    // Riser 2
+                    ctxVenturi.fillRect(w * 0.8, midY - h2_px - h_p2_px, 15, h_p2_px);
+                    ctxVenturi.strokeRect(w * 0.8, midY - h2_px - h_p2_px, 15, h_p2_px);
+
+                    // --- Gambar Pipa ---
+                    ctxVenturi.strokeStyle = '#BFDBFE';
+                    ctxVenturi.lineWidth = 3;
+                    // Atas
+                    ctxVenturi.beginPath();
+                    ctxVenturi.moveTo(0, midY - h1_px);
+                    ctxVenturi.lineTo(midX, midY - h1_px);
+                    ctxVenturi.lineTo(narrowX, midY - h2_px);
+                    ctxVenturi.lineTo(w, midY - h2_px);
+                    ctxVenturi.stroke();
+                    // Bawah
+                    ctxVenturi.beginPath();
+                    ctxVenturi.moveTo(0, midY + h1_px);
+                    ctxVenturi.lineTo(midX, midY + h1_px);
+                    ctxVenturi.lineTo(narrowX, midY + h2_px);
+                    ctxVenturi.lineTo(w, midY + h2_px);
+                    ctxVenturi.stroke();
+                    
+                    // --- PENGEMBANGAN 2: Kecepatan partikel dari v1 dan v2 ---
+                    const v1_px = v1 * 20;
+                    const v2_px = v2 * 20;
+                    ctxVenturi.fillStyle = 'rgba(255, 255, 255, 0.7)';
+                    particles.forEach(p => {
+                        let current_h, v_px;
+                        if (p.x < midX) {
+                            v_px = v1_px;
+                            current_h = h1_px;
+                        } else if (p.x >= midX && p.x < narrowX) {
+                            const t = (p.x - midX) / (narrowX - midX);
+                            v_px = v1_px + (v2_px - v1_px) * t;
+                            current_h = h1_px + (h2_px - h1_px) * t;
+                        } else {
+                            v_px = v2_px;
+                            current_h = h2_px;
+                        }
+                        
+                        p.x += v_px * 0.016;
+                        
+                        if (p.y > midY + current_h - p.r) p.y = midY + current_h - p.r;
+                        if (p.y < midY - current_h + p.r) p.y = midY - current_h + p.r;
+                        
+                        if (p.x > w) {
+                            p.x = 0;
+                            p.y = midY + (Math.random() - 0.5) * (h1_px * 1.8);
+                        }
+                        
+                        ctxVenturi.beginPath();
+                        ctxVenturi.arc(p.x, p.y, p.r, 0, 2 * Math.PI);
+                        ctxVenturi.fill();
+                    });
+                    
+                    venturiAnimId = requestAnimationFrame(gameLoopVenturi);
+                }
+
+                // --- PENGEMBANGAN 2: Tambah event listener ---
+                qSlider.addEventListener('input', updateVenturiParams);
+                r1Slider.addEventListener('input', updateVenturiParams);
+                r2Slider.addEventListener('input', updateVenturiParams);
+                updateVenturiParams();
+                initParticles();
+                gameLoopVenturi();
+            }
+
+            // ========================================================
+            // --- 7. SIMULASI MODUL 4a: GHS (PEGAS-MASSA) (DIKEMBANGKAN) ---
+            // ========================================================
+            const canvasSHM = document.getElementById('shmCanvas');
+            if (canvasSHM) {
+                const ctxSHM = canvasSHM.getContext('2d');
+                const mSlider = document.getElementById('shm-m-slider');
+                const kSlider = document.getElementById('shm-k-slider');
+                const aSlider = document.getElementById('shm-a-slider');
+                const mValue = document.getElementById('shm-m-value');
+                const kValue = document.getElementById('shm-k-value');
+                const aValue = document.getElementById('shm-a-value');
+                const startButton = document.getElementById('shm-startButton');
+                const resetButton = document.getElementById('shm-resetButton');
+                const omegaOutput = document.getElementById('shm-omega-output');
+                const tOutput = document.getElementById('shm-t-output');
+                const xOutput = document.getElementById('shm-x-output');
+                const vOutput = document.getElementById('shm-v-output');
+                const barK = document.getElementById('shm-bar-k');
+                const barU = document.getElementById('shm-bar-u');
+                const barE = document.getElementById('shm-bar-e');
+
+                let m, k, omega, T, A_meters, t;
+                let shmAnimId = null;
+                let isShmRunning = false;
+                
+                function updateSHMParams() {
+                    m = parseFloat(mSlider.value);
+                    k = parseFloat(kSlider.value);
+                    A_meters = parseFloat(aSlider.value);
+                    mValue.textContent = m.toFixed(1);
+                    kValue.textContent = k.toFixed(1);
+                    aValue.textContent = A_meters.toFixed(1);
+                    
+                    omega = Math.sqrt(k / m);
+                    T = 2 * Math.PI / omega;
+                    t = 0;
+
+                    omegaOutput.textContent = `${omega.toFixed(2)} rad/s`;
+                    tOutput.textContent = `${T.toFixed(2)} s`;
+                    
+                    if (!isShmRunning) {
+                         const x_meters = A_meters * Math.cos(0);
+                         const v_meters = -A_meters * omega * Math.sin(0);
+                         updateEnergyBars(x_meters, v_meters);
+                         drawSHM(x_meters);
+                    }
+                }
+                
+                function updateEnergyBars(x, v) {
+                    const K = 0.5 * m * v**2;
+                    const U = 0.5 * k * x**2;
+                    const E_total = 0.5 * k * A_meters**2;
+                    
+                    const k_perc = (E_total > 0) ? (K / E_total) * 100 : 0;
+                    const u_perc = (E_total > 0) ? (U / E_total) * 100 : 0;
+                    
+                    barK.style.width = `${k_perc}%`;
+                    barU.style.width = `${u_perc}%`;
+                    barE.style.width = '100%';
+                }
+
+                function resetSHM() {
+                    isShmRunning = false;
+                    if (shmAnimId) cancelAnimationFrame(shmAnimId);
+                    startButton.disabled = false;
+                    startButton.textContent = 'Mulai';
+                    mSlider.disabled = false;
+                    kSlider.disabled = false;
+                    aSlider.disabled = false;
+                    t = 0;
+                    updateSHMParams();
+                }
+                
+                function startSHM() {
+                    if (isShmRunning) return;
+                    isShmRunning = true;
+                    startButton.disabled = true;
+                    startButton.textContent = 'Berjalan...';
+                    mSlider.disabled = true;
+                    kSlider.disabled = true;
+                    aSlider.disabled = true;
+                    t = 0;
+                    shmAnimId = requestAnimationFrame(gameLoopSHM);
+                }
+
+                function drawSHM(x_meters) {
+                    const w = canvasSHM.width;
+                    const h = canvasSHM.height;
+                    const cx = w / 2;
+                    const cy = h / 2;
+                    const wallX = cx - 120;
+                    
+                    const scale = 100; // 100 pixels per meter
+                    const x_pixels = x_meters * scale;
+                    
+                    const blockW = 30 + m * 5;
+                    const blockH = 30 + m * 5;
+                    
+                    ctxSHM.clearRect(0, 0, w, h);
+                    
+                    ctxSHM.fillStyle = '#6B7280';
+                    ctxSHM.fillRect(wallX - 10, 0, 10, h);
+                    
+                    // Pegas
+                    ctxSHM.strokeStyle = '#9CA3AF';
+                    ctxSHM.lineWidth = 2 + (k / 50) * 3;
+                    ctxSHM.beginPath();
+                    ctxSHM.moveTo(wallX, cy);
+                    const springLength = cx + x_pixels - blockW/2 - wallX;
+                    const n_coils = 10;
+                    for (let i = 0; i < n_coils; i++) {
+                        ctxSHM.lineTo(wallX + (i+0.5)/n_coils * springLength, cy + ((i%2 === 0) ? -10 : 10));
+                    }
+                    ctxSHM.lineTo(cx + x_pixels - blockW/2, cy);
+                    ctxSHM.stroke();
+                    
+                    // Balok
+                    ctxSHM.fillStyle = 'rgba(96, 165, 250, 0.8)';
+                    ctxSHM.strokeStyle = '#BFDBFE';
+                    ctxSHM.lineWidth = 2;
+                    ctxSHM.fillRect(cx + x_pixels - blockW/2, cy - blockH/2, blockW, blockH);
+                    ctxSHM.strokeRect(cx + x_pixels - blockW/2, cy - blockH/2, blockW, blockH);
+                    
+                    // Garis setimbang
+                    ctxSHM.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+                    ctxSHM.setLineDash([2, 4]);
+                    ctxSHM.beginPath();
+                    ctxSHM.moveTo(cx, 0);
+                    ctxSHM.lineTo(cx, h);
+                    ctxSHM.stroke();
+                    ctxSHM.setLineDash([]);
+                }
+
+                function gameLoopSHM(timestamp) {
+                    if (!isShmRunning) return;
+                    
+                    t += 0.016; // Asumsi ~60 FPS
+                    
+                    const x_meters = A_meters * Math.cos(omega * t);
+                    const v_meters = -A_meters * omega * Math.sin(omega * t);
+                    
+                    xOutput.textContent = `${x_meters.toFixed(2)} m`;
+                    vOutput.textContent = `${v_meters.toFixed(2)} m/s`;
+                    
+                    drawSHM(x_meters);
+                    updateEnergyBars(x_meters, v_meters);
+                    
+                    shmAnimId = requestAnimationFrame(gameLoopSHM);
+                }
+
+                mSlider.addEventListener('input', updateSHMParams);
+                kSlider.addEventListener('input', updateSHMParams);
+                aSlider.addEventListener('input', updateSHMParams);
+                startButton.addEventListener('click', startSHM);
+                resetButton.addEventListener('click', resetSHM);
+                updateSHMParams();
+            }
+            
+            // ===================================
+            // --- 8. SIMULASI MODUL 4b: GELOMBANG BERDIRI ---
+            // ===================================
+            const canvasWave = document.getElementById('waveCanvas');
+            if (canvasWave) {
+                const ctxWave = canvasWave.getContext('2d');
+                const fSlider = document.getElementById('wave-f-slider');
+                const fValue = document.getElementById('wave-f-value');
+                const f1Output = document.getElementById('wave-f1-output');
+                const lambdaOutput = document.getElementById('wave-lambda-output');
+                const statusOutput = document.getElementById('wave-status');
+                
+                const L = 1.0; // m
+                const v = 2.0; // m/s
+                const f1 = v / (2 * L);
+                let t_wave = 0;
+                
+                f1Output.textContent = `${f1.toFixed(2)} Hz`;
+                
+                function updateWave() {
+                    const f = parseFloat(fSlider.value);
+                    const lambda = v / f;
+                    
+                    fValue.textContent = f.toFixed(2);
+                    lambdaOutput.textContent = `${lambda.toFixed(2)} m`;
+                    
+                    const n = f / f1;
+                    if (Math.abs(n - Math.round(n)) < 0.05) { 
+                        statusOutput.textContent = `RESONANSI (n = ${Math.round(n)})`;
+                        statusOutput.className = "text-xl font-semibold text-green-400 mt-4 text-center";
+                    } else {
+                        statusOutput.textContent = "Tidak Resonan";
+                        statusOutput.className = "text-xl font-semibold text-gray-400 mt-4 text-center";
+                    }
+                }
+                
+                function drawWaveLoop() {
+                    t_wave += 0.05;
+                    const f = parseFloat(fSlider.value);
+                    const lambda = v / f;
+                    const k = 2 * Math.PI / lambda;
+                    const omega = 2 * Math.PI * f;
+                    
+                    const w = canvasWave.width;
+                    const h = canvasWave.height;
+                    const cy = h / 2;
+                    const scaleX = w / L;
+                    
+                    const n = f / f1;
+                    const resonance_factor = 1 / (1 + (20 * Math.abs(n - Math.round(n)))**2);
+                    const A = (h / 2 * 0.8) * resonance_factor;
+                    
+                    ctxWave.clearRect(0, 0, w, h);
+                    ctxWave.strokeStyle = '#63B3ED';
+                    ctxWave.lineWidth = 3;
+                    
+                    ctxWave.beginPath();
+                    for (let x_px = 0; x_px <= w; x_px++) {
+                        const x = x_px / scaleX;
+                        const y = 2 * A * Math.sin(k * x) * Math.cos(omega * t_wave);
+                        ctxWave.lineTo(x_px, cy - y);
+                    }
+                    ctxWave.stroke();
+                    
+                    ctxWave.fillStyle = '#F87171';
+                    ctxWave.beginPath();
+                    ctxWave.arc(0, cy - (2 * A * Math.sin(k * 0) * Math.cos(omega * t_wave)), 5, 0, 2 * Math.PI);
+                    ctxWave.fill();
+                    ctxWave.fillStyle = '#9CA3AF';
+                    ctxWave.fillRect(w - 5, 0, 5, h);
+                    
+                    requestAnimationFrame(drawWaveLoop);
+                }
+
+                fSlider.addEventListener('input', updateWave);
+                updateWave();
+                drawWaveLoop();
+            }
+
+            // ========================================================
+            // --- 9. SIMULASI MODUL 5: SUPERPOSISI (BEATS) ---
+            // ========================================================
+            const canvasBeat1 = document.getElementById('beatCanvas1');
+            if (canvasBeat1) {
+                const ctx1 = canvasBeat1.getContext('2d');
+                const ctx2 = document.getElementById('beatCanvas2').getContext('2d');
+                const ctxSum = document.getElementById('beatCanvasSum').getContext('2d');
+                
+                const f1Slider = document.getElementById('beat-f1-slider');
+                const f2Slider = document.getElementById('beat-f2-slider');
+                const f1Value = document.getElementById('beat-f1-value');
+                const f2Value = document.getElementById('beat-f2-value');
+                const f1Output = document.getElementById('beat-f1-output');
+                const f2Output = document.getElementById('beat-f2-output');
+                const fBeatOutput = document.getElementById('beat-f-beat-output');
+
+                let t_beat = 0;
+                let f1, f2;
+
+                function updateBeatParams() {
+                    f1 = parseFloat(f1Slider.value);
+                    f2 = parseFloat(f2Slider.value);
+                    const f_beat = Math.abs(f1 - f2);
+                    
+                    f1Value.textContent = f1.toFixed(1);
+                    f2Value.textContent = f2.toFixed(1);
+                    f1Output.textContent = `${f1.toFixed(1)} Hz`;
+                    f2Output.textContent = `${f2.toFixed(1)} Hz`;
+                    fBeatOutput.textContent = `${f_beat.toFixed(1)} Hz`;
+                }
+
+                function drawBeatWaves() {
+                    t_beat += 0.005; // Kecepatan scroll
+                    
+                    drawSingleWave(ctx1, f1, t_beat, '#63B3ED', 0);
+                    drawSingleWave(ctx2, f2, t_beat, '#F87171', 0);
+                    drawSumWave(ctxSum, f1, f2, t_beat, '#A78BFA');
+                    
+                    requestAnimationFrame(drawBeatWaves);
+                }
+                
+                function drawSingleWave(ctx, f, t_offset, color, phi) {
+                    const w = ctx.canvas.width;
+                    const h = ctx.canvas.height;
+                    const cy = h / 2;
+                    const A = h * 0.4;
+                    const timeScale = 0.005;
+                    
+                    ctx.clearRect(0, 0, w, h);
+                    ctx.strokeStyle = color;
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    for (let x = 0; x < w; x++) {
+                        const t = x * timeScale + t_offset;
+                        const y = A * Math.cos(2 * Math.PI * f * t + phi);
+                        ctx.lineTo(x, cy - y);
+                    }
+                    ctx.stroke();
+                }
+                
+                function drawSumWave(ctx, f1, f2, t_offset, color) {
+                    const w = ctx.canvas.width;
+                    const h = ctx.canvas.height;
+                    const cy = h / 2;
+                    const A = h * 0.4 / 2; 
+                    const timeScale = 0.005;
+                    
+                    ctx.clearRect(0, 0, w, h);
+                    
+                    // Gambar amplop (envelope)
+                    const f_beat = Math.abs(f1 - f2);
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    for (let x = 0; x < w; x++) {
+                        const t = x * timeScale + t_offset;
+                        const y_env = 2 * A * Math.cos(2 * Math.PI * (f_beat/2) * t);
+                        ctx.lineTo(x, cy - y_env);
+                    }
+                    ctx.stroke();
+                    ctx.beginPath();
+                    for (let x = 0; x < w; x++) {
+                        const t = x * timeScale + t_offset;
+                        const y_env = -2 * A * Math.cos(2 * Math.PI * (f_beat/2) * t);
+                        ctx.lineTo(x, cy - y_env);
+                    }
+                    ctx.stroke();
+
+                    // Gambar gelombang utama
+                    ctx.strokeStyle = color;
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    for (let x = 0; x < w; x++) {
+                        const t = x * timeScale + t_offset;
+                        const y1 = A * Math.cos(2 * Math.PI * f1 * t);
+                        const y2 = A * Math.cos(2 * Math.PI * f2 * t);
+                        ctx.lineTo(x, cy - (y1 + y2));
+                    }
+                    ctx.stroke();
+                }
+
+                f1Slider.addEventListener('input', updateBeatParams);
+                f2Slider.addEventListener('input', updateBeatParams);
+                updateBeatParams();
+                drawBeatWaves();
+            }
+
+            // ========================================================
+            // --- 10. SIMULASI MODUL 4c: INTERFERENSI (BARU) ---
+            // ========================================================
+            const intCanvas1 = document.getElementById('intCanvas1');
+            if (intCanvas1) {
+                const ctxInt1 = intCanvas1.getContext('2d');
+                const ctxInt2 = document.getElementById('intCanvas2').getContext('2d');
+                const ctxIntSum = document.getElementById('intCanvasSum').getContext('2d');
+                
+                const phaseSlider = document.getElementById('int-phase-slider');
+                const phaseValue = document.getElementById('int-phase-value');
+                const intStatus = document.getElementById('int-status');
+                
+                let t_int = 0; // Waktu untuk animasi
+                let phi_rad = 0;
+
+                function updateInterferenceParams() {
+                    const phase_deg = parseFloat(phaseSlider.value);
+                    phi_rad = phase_deg * Math.PI / 180;
+                    phaseValue.textContent = phase_deg.toFixed(0);
+                    
+                    if (phase_deg === 0 || phase_deg === 360) {
+                        intStatus.textContent = "Interferensi Konstruktif Penuh";
+                        intStatus.className = "text-xl font-semibold text-green-400 mt-1";
+                    } else if (phase_deg === 180) {
+                        intStatus.textContent = "Interferensi Destruktif Penuh";
+                        intStatus.className = "text-xl font-semibold text-red-400 mt-1";
+                    } else {
+                        intStatus.textContent = "Interferensi Parsial";
+                        intStatus.className = "text-xl font-semibold text-yellow-400 mt-1";
+                    }
+                }
+
+                function drawInterferenceWaves() {
+                    t_int += 0.02; // Kecepatan animasi
+                    
+                    drawWaveSnapshot(ctxInt1, t_int, 0, '#63B3ED'); // Gelombang 1 (phi=0)
+                    drawWaveSnapshot(ctxInt2, t_int, phi_rad, '#F87171'); // Gelombang 2 (phi=phi_rad)
+                    drawSumWaveSnapshot(ctxIntSum, t_int, phi_rad, '#A78BFA'); // Gelombang Sum
+                    
+                    requestAnimationFrame(drawInterferenceWaves);
+                }
+                
+                function drawWaveSnapshot(ctx, t, phi, color) {
+                    const w = ctx.canvas.width;
+                    const h = ctx.canvas.height;
+                    const cy = h / 2;
+                    const A = h * 0.4;
+                    const lambda = 150; // Panjang gelombang (pixel)
+                    const k = 2 * Math.PI / lambda;
+                    const omega = 1.0; // Kecepatan sudut (untuk animasi)
+                    
+                    ctx.clearRect(0, 0, w, h);
+                    ctx.strokeStyle = color;
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    for (let x = 0; x < w; x++) {
+                        const y = A * Math.cos(k * x - omega * t + phi);
+                        ctx.lineTo(x, cy - y);
+                    }
+                    ctx.stroke();
+                }
+
+                function drawSumWaveSnapshot(ctx, t, phi, color) {
+                    const w = ctx.canvas.width;
+                    const h = ctx.canvas.height;
+                    const cy = h / 2;
+                    const A = h * 0.4 / 2; // Amplitudo 1 gelombang
+                    const lambda = 150;
+                    const k = 2 * Math.PI / lambda;
+                    const omega = 1.0;
+                    
+                    ctx.clearRect(0, 0, w, h);
+                    ctx.strokeStyle = color;
+                    ctx.lineWidth = 3; // Buat lebih tebal
+                    ctx.beginPath();
+                    for (let x = 0; x < w; x++) {
+                        const y1 = A * Math.cos(k * x - omega * t);
+                        const y2 = A * Math.cos(k * x - omega * t + phi);
+                        ctx.lineTo(x, cy - (y1 + y2));
+                    }
+                    ctx.stroke();
+                }
+                
+                phaseSlider.addEventListener('input', updateInterferenceParams);
+                updateInterferenceParams();
+                drawInterferenceWaves();
+            }
+
+
+            // ===================================
+            // --- 11. SIMULASI MODUL 6a: PEMUAIAN PANJANG ---
+            // ===================================
+            const canvasExp = document.getElementById('expansionCanvas');
+            if (canvasExp) {
+                const ctxExp = canvasExp.getContext('2d');
+                const matSelect = document.getElementById('temp-mat-select');
+                const dtSlider = document.getElementById('temp-dt-slider');
+                const dtValue = document.getElementById('temp-dt-value');
+                const dlOutput = document.getElementById('temp-dl-output');
+                const lfOutput = document.getElementById('temp-lf-output');
+                
+                const L0 = 10.0; // m
+                
+                function updateExpansion() {
+                    const alpha = parseFloat(matSelect.value);
+                    const dT = parseFloat(dtSlider.value);
+                    
+                    dtValue.textContent = dT.toFixed(0);
+                    
+                    const dL = alpha * L0 * dT;
+                    const Lf = L0 + dL;
+                    
+                    dlOutput.textContent = `${(dL * 1000).toFixed(2)} mm`; // m ke mm
+                    lfOutput.textContent = `${Lf.toFixed(3)} m`;
+                    
+                    drawExpansion(dL);
+                }
+                
+                function drawExpansion(dL) {
+                    const w = canvasExp.width;
+                    const h = canvasExp.height;
+                    const cy = h / 2;
+                    const h_rod = 40;
+                    
+                    const scale = 100 / (2.3e-5 * 10 * 500);
+                    const baseWidth = w - 150; 
+                    
+                    ctxExp.clearRect(0, 0, w, h);
+                    
+                    ctxExp.fillStyle = 'rgba(156, 163, 175, 0.5)';
+                    ctxExp.fillRect(50, cy - h_rod/2, baseWidth, h_rod);
+                    
+                    ctxExp.fillStyle = '#6B7280';
+                    ctxExp.fillRect(40, cy - h_rod, 10, h_rod*2);
+                    
+                    ctxExp.fillStyle = 'rgba(248, 113, 113, 0.7)';
+                    ctxExp.fillRect(50 + baseWidth, cy - h_rod/2, dL * scale, h_rod);
+                    
+                    ctxExp.strokeStyle = 'white';
+                    ctxExp.setLineDash([2, 2]);
+                    ctxExp.beginPath();
+                    ctxExp.moveTo(50, cy + 40);
+                    ctxExp.lineTo(50 + baseWidth, cy + 40);
+                    ctxExp.stroke();
+                    ctxExp.fillStyle = 'white';
+                    ctxExp.fillText("L₀", (baseWidth)/2 + 50, cy + 55);
+                    
+                    ctxExp.strokeStyle = '#F87171';
+                    ctxExp.beginPath();
+                    ctxExp.moveTo(50 + baseWidth, cy - 40);
+                    ctxExp.lineTo(50 + baseWidth + (dL*scale), cy - 40);
+                    ctxExp.stroke();
+                    ctxExp.fillStyle = '#F87171';
+                    ctxExp.fillText("ΔL", 50 + baseWidth + (dL*scale)/2 - 5, cy - 50);
+                    ctxExp.setLineDash([]);
+                }
+
+                matSelect.addEventListener('input', updateExpansion);
+                dtSlider.addEventListener('input', updateExpansion);
+                updateExpansion();
+            }
+
+            // ===================================
+            // --- 12. SIMULASI MODUL 6b: ASAS BLACK ---
+            // ===================================
+            const canvasKalor = document.getElementById('kalorCanvas');
+            if (canvasKalor) {
+                const ctxKalor = canvasKalor.getContext('2d');
+                const mLogamSlider = document.getElementById('kalor-m-logam-slider');
+                const tLogamSlider = document.getElementById('kalor-t-logam-slider');
+                const mAirSlider = document.getElementById('kalor-m-air-slider');
+                const mLogamValue = document.getElementById('kalor-m-logam-value');
+                const tLogamValue = document.getElementById('kalor-t-logam-value');
+                const mAirValue = document.getElementById('kalor-m-air-value');
+                const tFinalOutput = document.getElementById('kalor-t-final-output');
+                const qLepasOutput = document.getElementById('kalor-q-lepas-output');
+                const qTerimaOutput = document.getElementById('kalor-q-terima-output');
+                
+                const c_logam = 900; // J/kg°C (Aluminium)
+                const c_air = 4186; // J/kg°C
+                const T_air = 20.0; // °C
+                
+                function updateKalor() {
+                    const m_l = parseFloat(mLogamSlider.value);
+                    const T_l = parseFloat(tLogamSlider.value);
+                    const m_a = parseFloat(mAirSlider.value);
+                    
+                    mLogamValue.textContent = m_l.toFixed(1);
+                    tLogamValue.textContent = T_l.toFixed(0);
+                    mAirValue.textContent = m_a.toFixed(1);
+                    
+                    // Tf = (ml*cl*Tl + ma*ca*Ta) / (ma*ca + ml*cl)
+                    const Tf = (m_l * c_logam * T_l + m_a * c_air * T_air) / (m_a * c_air + m_l * c_logam);
+                    
+                    const Q_lepas = m_l * c_logam * (T_l - Tf);
+                    const Q_terima = m_a * c_air * (Tf - T_air);
+                    
+                    tFinalOutput.textContent = `${Tf.toFixed(1)} °C`;
+                    qLepasOutput.textContent = `${(Q_lepas/1000).toFixed(1)} kJ`;
+                    qTerimaOutput.textContent = `${(Q_terima/1000).toFixed(1)} kJ`;
+                    
+                    drawKalor(T_l, Tf);
+                }
+                
+                function drawKalor(T_l, Tf) {
+                    const w = canvasKalor.width;
+                    const h = canvasKalor.height;
+                    ctxKalor.clearRect(0, 0, w, h);
+                    
+                    const maxT = 500;
+                    const minT = 20;
+                    
+                    // Termometer Kiri (Logam)
+                    const temp_l_norm = (T_l - minT) / (maxT - minT);
+                    ctxKalor.fillStyle = 'rgba(156, 163, 175, 0.3)';
+                    ctxKalor.fillRect(w*0.2 - 10, h * 0.1, 20, h * 0.8);
+                    ctxKalor.fillStyle = `rgba(248, 113, 113, 0.8)`; // red
+                    ctxKalor.fillRect(w*0.2 - 10, h * (0.9 - 0.8 * temp_l_norm), 20, h * 0.8 * temp_l_norm);
+                    
+                    // Termometer Kanan (Air)
+                    const temp_a_norm = (T_air - minT) / (maxT - minT);
+                    ctxKalor.fillStyle = 'rgba(156, 163, 175, 0.3)';
+                    ctxKalor.fillRect(w*0.8 - 10, h * 0.1, 20, h * 0.8);
+                    ctxKalor.fillStyle = `rgba(96, 165, 250, 0.8)`; // blue
+                    ctxKalor.fillRect(w*0.8 - 10, h * (0.9 - 0.8 * temp_a_norm), 20, h * 0.8 * temp_a_norm);
+                    
+                    // Termometer Tengah (Hasil)
+                    const temp_f_norm = (Tf - minT) / (maxT - minT);
+                    ctxKalor.fillStyle = 'rgba(156, 163, 175, 0.3)';
+                    ctxKalor.fillRect(w*0.5 - 10, h * 0.1, 20, h * 0.8);
+                    ctxKalor.fillStyle = `rgba(167, 139, 250, 0.8)`; // purple
+                    ctxKalor.fillRect(w*0.5 - 10, h * (0.9 - 0.8 * temp_f_norm), 20, h * 0.8 * temp_f_norm);
+                    
+                    // Teks
+                    ctxKalor.fillStyle = 'white';
+                    ctxKalor.textAlign = 'center';
+                    ctxKalor.fillText("Logam (T_l)", w*0.2, h*0.9 + 15);
+                    ctxKalor.fillText("Air (T_a)", w*0.8, h*0.9 + 15);
+                    ctxKalor.fillText("Akhir (T_f)", w*0.5, h*0.9 + 15);
+                }
+
+                mLogamSlider.addEventListener('input', updateKalor);
+                tLogamSlider.addEventListener('input', updateKalor);
+                mAirSlider.addEventListener('input', updateKalor);
+                updateKalor();
+            }
+
+        });
+    </script>
+</body>
+</html>
