@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TM Unimal: Virtual Lab Fisika I</title>
-    
+    <link rel="icon" type="image/png" href="logo.png">
     <script src="https://cdn.tailwindcss.com"></script>
     
     <script>
@@ -108,57 +108,707 @@
 
     <aside class="fixed top-0 left-0 z-40 w-64 h-screen bg-gray-800 border-r border-gray-700 shadow-2xl">
         <div class="h-full px-3 py-6 overflow-y-auto">
-            <h2 class="text-2xl font-bold text-white px-2 mb-6 text-center">
-                Virtual Lab<span class="text-blue-400"> Fisika I</span>
-            </h2>
+            <div class="flex items-center px-2 mb-6">
+                <img src="logo.png" alt="Logo TM Unimal" class="h-16 w-auto flex-shrink-0">
+                <div class="ml-3 text-left">
+                    <h2 class="text-xl font-bold text-white leading-tight"> Virtual Lab<br> <span class="text-blue-400">Fisika I</span></h2>
+                </div>
+            </div>
             <nav>
                 <ul class="space-y-2" id="sidebar-nav">
-                    <li>
-                        <a href="#" class="sidebar-link-active" data-target="content-rotasi">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <span class="ml-3">Gerak Rotasi</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="sidebar-link" data-target="content-kesetimbangan">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3-1m0 0l3 1m-3-1v-2m0 2l3 9m-3-9l-3 9m6-9l3 1m6 0l-3 9m3-9l-3-1m0 0l-3 1m3-1V4m0 2L9 7m3 9l3-1m-3 1l-3 1m3-1v2m0-2l3-1m0 0l3 9m-3-9l-3 9"></path></svg>
-                            <span class="ml-3">Kesetimbangan Benda Tegar & Gravitasi</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="sidebar-link" data-target="content-fluida">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h6v6H9V7z"></path></svg>
-                            <span class="ml-3">Fluida: Statis & Dinamis</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="sidebar-link" data-target="content-periodik">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2.5m0 0V17m0-2.5a1.5 1.5 0 013 0v-6a1.5 1.5 0 01-3 0m3 6v-2.5m0 0a1.5 1.5 0 00-3 0m3 0a1.5 1.5 0 01-3 0m0 0V17m0-2.5a1.5 1.5 0 003 0v-6a1.5 1.5 0 00-3 0"></path></svg>
-                            <span class="ml-3">Gerak Periodik & Gelombang</span>
-                        </a>
-                    </li>
-                     <li>
-                        <a href="#" class="sidebar-link" data-target="content-bunyi">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .89-1.077 1.337-1.707.707L5.586 15z"></path></svg>
-                            <span class="ml-3">Gelombang Bunyi & Superposisi</span>
-                        </a>
-                    </li>
-                     <li>
-                        <a href="#" class="sidebar-link" data-target="content-kalor">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                            <span class="ml-3">Suhu & Kalor</span>
-                        </a>
-                    </li>
-                </ul>
+    
+    <li>
+        <a href="#" class="sidebar-link-active" data-target="content-pengukuran">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-8-8v8m-4-4h16"></path></svg>
+            <span class="ml-3">Pengukuran, Besaran & Vektor</span>
+        </a>
+    </li>
+    <li>
+        <a href="#" class="sidebar-link" data-target="content-gerak-lurus">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span class="ml-3">Gerak Lurus & Gerak 2D</span>
+        </a>
+    </li>
+    <li>
+        <a href="#" class="sidebar-link" data-target="content-gaya-tekanan">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657l-5.657-5.657l-5.657 5.657l-1.414-1.414l5.657-5.657l-5.657-5.657l1.414-1.414l5.657 5.657l5.657-5.657l1.414 1.414l-5.657 5.657l5.657 5.657z"></path></svg>
+            <span class="ml-3">Gaya & Tekanan</span>
+        </a>
+    </li>
+    <li>
+        <a href="#" class="sidebar-link" data-target="content-newton">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+            <span class="ml-3">Hukum Newton: I, II, III</span>
+        </a>
+    </li>
+    <li>
+        <a href="#" class="sidebar-link" data-target="content-energi">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+            <span class="ml-3">Energi, Momentum & Tumbukan</span>
+        </a>
+    </li>
+    <li>
+        <a href="#" class="sidebar-link" data-target="content-rotasi-gravitasi">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span class="ml-3">Gerak Rotasi & Gravitasi</span>
+        </a>
+    </li>
+    <li>
+        <a href="#" class="sidebar-link" data-target="content-kesetimbangan-tegar">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3-1m0 0l3 1m-3-1v-2m0 2l3 9m-3-9l-3 9m6-9l3 1m6 0l-3 9m3-9l-3-1m0 0l-3 1m3-1V4m0 2L9 7m3 9l3-1m-3 1l-3 1m3-1v2m0-2l3-1m0 0l3 9m-3-9l-3 9"></path></svg>
+            <span class="ml-3">Kesetimbangan Benda Tegar</span>
+        </a>
+    </li>
+    <li>
+        <a href="#" class="sidebar-link" data-target="content-fluida">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h6v6H9V7z"></path></svg>
+            <span class="ml-3">Fluida: Statis & Dinamis</span>
+        </a>
+    </li>
+    <li>
+        <a href="#" class="sidebar-link" data-target="content-periodik">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2.5m0 0V17m0-2.5a1.5 1.5 0 013 0v-6a1.5 1.5 0 01-3 0m3 6v-2.5m0 0a1.5 1.5 0 00-3 0m3 0a1.5 1.5 0 01-3 0m0 0V17m0-2.5a1.5 1.5 0 003 0v-6a1.5 1.5 0 00-3 0"></path></svg>
+            <span class="ml-3">Gerak Periodik & Gelombang</span>
+        </a>
+    </li>
+    <li>
+        <a href="#" class="sidebar-link" data-target="content-bunyi">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .89-1.077 1.337-1.707.707L5.586 15z"></path></svg>
+            <span class="ml-3">Gelombang Bunyi & Superposisi</span>
+        </a>
+    </li>
+    <li>
+        <a href="#" class="sidebar-link" data-target="content-kalor">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            <span class="ml-3">Suhu & Kalor</span>
+        </a>
+    </li>
+</ul>
             </nav>
         </div>
     </aside>
 
     <main class="ml-64 w-full min-h-screen relative">
-        
-        <div id="content-rotasi" class="module-content active">
-            <h1 class="h-title">Gerak Rotasi</h1>
+        <div id="content-pengukuran" class="module-content active">
+    <h1 class="h-title">Pengukuran, Besaran Satuan & Vektor</h1>
 
+    <h2 class="h-subtitle">Simulasi Virtual Lab: Penjumlahan Vektor 2D</h2>
+    <div class="content-card">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <div class="lg:col-span-1 space-y-4">
+                <h3 class="text-xl font-semibold text-blue-300">Vektor A (Biru)</h3>
+                <div>
+                    <label for="vecAx" class="block mb-2 text-sm font-medium text-gray-200">Komponen A_x: <span id="vecAxVal" class="font-bold text-blue-300">5</span></label>
+                    <input id="vecAx" type="range" min="-10" max="10" value="5" step="1" class="w-full">
+                </div>
+                <div>
+                    <label for="vecAy" class="block mb-2 text-sm font-medium text-gray-200">Komponen A_y: <span id="vecAyVal" class="font-bold text-blue-300">2</span></label>
+                    <input id="vecAy" type="range" min="-10" max="10" value="2" step="1" class="w-full">
+                </div>
+
+                <h3 class="text-xl font-semibold text-red-300 mt-4">Vektor B (Merah)</h3>
+                <div>
+                    <label for="vecBx" class="block mb-2 text-sm font-medium text-gray-200">Komponen B_x: <span id="vecBxVal" class="font-bold text-red-300">1</span></label>
+                    <input id="vecBx" type="range" min="-10" max="10" value="1" step="1" class="w-full">
+                </div>
+                <div>
+                    <label for="vecBy" class="block mb-2 text-sm font-medium text-gray-200">Komponen B_y: <span id="vecByVal" class="font-bold text-red-300">6</span></label>
+                    <input id="vecBy" type="range" min="-10" max="10" value="6" step="1" class="w-full">
+                </div>
+            </div>
+
+            <div class="lg:col-span-1 flex items-center justify-center bg-gray-900 rounded-lg p-4">
+                <canvas id="vectorCanvas" width="300" height="300" class="bg-gray-700"></canvas>
+            </div>
+
+            <div class="lg:col-span-1 space-y-4 bg-gray-900 p-6 rounded-lg">
+                <h3 class="text-xl font-semibold text-white mb-4">Vektor Resultan (R = A + B)</h3>
+                <div class="data-output-grid">
+                    <span class="data-label">Komponen R_x:</span>
+                    <span id="vecRx" class="data-value">0.0</span>
+                
+                    <span class="data-label">Komponen R_y:</span>
+                    <span id="vecRy" class="data-value">0.0</span>
+                    
+                    <span class="data-label">Magnitudo |R|:</span>
+                    <span id="vecMagR" class="data-value">0.00</span>
+                    
+                    <span class="data-label">Sudut ( $ \theta $ ):</span>
+                    <span id="vecAngR" class="data-value">0.0°</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="h-subtitle">a. Konsep Teoritis</h2>
+    <div class="content-card space-y-4 text-lg leading-relaxed">
+        <p><strong>Pengukuran</strong> adalah proses membandingkan suatu besaran dengan besaran lain yang sejenis yang ditetapkan sebagai <strong>satuan</strong>. Fisika didasarkan pada besaran-besaran yang dapat diukur.</p>
+        <p><strong>Besaran Pokok</strong> adalah besaran yang satuannya telah didefinisikan terlebih dahulu dan tidak diturunkan dari besaran lain. Terdapat 7 besaran pokok dalam Sistem Internasional (SI): Panjang (meter), Massa (kilogram), Waktu (sekon), Suhu (Kelvin), Kuat Arus (Ampere), Intensitas Cahaya (Kandela), dan Jumlah Zat (mol).</p>
+        <p><strong>Besaran Turunan</strong> adalah besaran yang diturunkan dari satu atau lebih besaran pokok, seperti Kecepatan (panjang/waktu) atau Gaya (massa * panjang / waktu²).</p>
+    </div>
+
+    <h2 class="h-subtitle">b. Penjabaran Fenomena Fisis (Skalar vs Vektor)</h2>
+    <div class="content-card space-y-4 text-lg leading-relaxed">
+        <p>Dalam fisika, besaran dibagi menjadi dua kategori utama:</p>
+        <ul class="list-disc list-inside space-y-2">
+            <li><strong>Skalar:</strong> Besaran yang hanya memiliki nilai (magnitudo) saja. Contoh: Massa (5 kg), Suhu (300 K), Waktu (10 s), Energi (100 J). Penjumlahannya menggunakan aljabar biasa (5 kg + 2 kg = 7 kg).</li>
+            <li><strong>Vektor:</strong> Besaran yang memiliki nilai (magnitudo) **dan arah**. Contoh: Kecepatan (10 m/s ke Timur), Gaya (5 N ke bawah), Perpindahan (2 m ke Utara). Penjumlahan vektor harus memperhitungkan arah.</li>
+        </ul>
+        <p>Penjumlahan vektor tidak bisa menggunakan aljabar biasa. Vektor $\vec{A}$ dengan gaya 5 N ke kanan dan Vektor $\vec{B}$ dengan gaya 5 N ke atas tidak menghasilkan 10 N, melainkan $\sqrt{5^2 + 5^2} = 7.07$ N ke arah Timur Laut.</p>
+    </div>
+    
+    <h2 class="h-subtitle">c. Persamaan dan Parameter Terkait</h2>
+    <div class="content-card text-lg">
+        <p>Sebuah vektor 2D $\vec{A}$ dapat diuraikan menjadi komponen-komponennya:</p>
+        $$ \vec{A} = A_x \hat{i} + A_y \hat{j} $$
+        <ul class="list-none space-y-3 mt-4">
+            <li>$ A_x $ : Komponen vektor pada sumbu-x. $A_x = |\vec{A}| \cos(\theta)$</li>
+            <li>$ A_y $ : Komponen vektor pada sumbu-y. $A_y = |\vec{A}| \sin(\theta)$</li>
+            <li>$ |\vec{A}| $ : Magnitudo (panjang) vektor. $ |\vec{A}| = \sqrt{A_x^2 + A_y^2} $</li>
+            <li>$ \theta $ : Sudut vektor terhadap sumbu-x positif. $ \theta = \arctan\left(\frac{A_y}{A_x}\right) $</li>
+        </ul>
+    </div>
+    
+    <h2 class="h-subtitle">d. Rumus-Rumus Penting (Penjumlahan Vektor)</h2>
+    <div class="content-card space-y-6 text-lg">
+        <p>Untuk menjumlahkan dua vektor $\vec{A}$ dan $\vec{B}$ untuk mendapatkan vektor resultan $\vec{R} = \vec{A} + \vec{B}$, metode paling efisien adalah menggunakan analisis komponen:</p>
+        <ol class="list-decimal list-inside space-y-2">
+            <li>Uraikan setiap vektor ke dalam komponen x dan y.
+                <br>$ \vec{A} = A_x \hat{i} + A_y \hat{j} $
+                <br>$ \vec{B} = B_x \hat{i} + B_y \hat{j} $
+            </li>
+            <li>Jumlahkan komponen-komponen yang sejenis.
+                <br>$ R_x = A_x + B_x $
+                <br>$ R_y = A_y + B_y $
+            </li>
+            <li>Hitung magnitudo dan arah dari resultan $\vec{R}$.
+                <br>$ |\vec{R}| = \sqrt{R_x^2 + R_y^2} $
+                <br>$ \theta_R = \arctan\left(\frac{R_y}{R_x}\right) $
+            </li>
+        </ol>
+        <p>Simulasi di atas melakukan perhitungan ini secara visual dan numerik.</p>
+    </div>
+    
+    <h2 class="h-subtitle">e. Contoh Aplikasi (Teknik Mesin)</h2>
+    <div class="content-card space-y-4 text-lg leading-relaxed">
+        <ul class="list-disc list-inside space-y-3">
+            <li><strong>Analisis Gaya (Statika):</strong> Saat menganalisis struktur rangka (truss), gaya-gaya pada setiap sambungan (joint) adalah vektor. Resultan gaya pada setiap joint harus nol agar struktur seimbang ($\Sigma \vec{F} = 0$).</li>
+            <li><strong>Mekanika Fluida:</strong> Kecepatan aliran fluida adalah medan vektor, di mana setiap titik dalam fluida memiliki vektor kecepatan.</li>
+            <li><strong>Robotika:</strong> Lengan robot diprogram menggunakan vektor untuk mendefinisikan posisi dan orientasi <i>end-effector</i> (genggaman) relatif terhadap basisnya.</li>
+        </ul>
+    </div>
+</div> <div id="content-gerak-lurus" class="module-content">
+    <h1 class="h-title">Gerak Lurus & Gerak Dalam Dua Dimensi</h1>
+    <p class="text-lg -mt-4 mb-6">Modul ini membahas Kinematika: studi tentang gerak tanpa memperdulikan penyebabnya. Kita akan fokus pada gerak lurus (1D) dan gerak parabola (2D).</p>
+
+    <h2 class="h-subtitle">Bagian A: Gerak Lurus (GLB & GLBB)</h2>
+
+    <h3 class="h-subtitle-section">Simulasi 2a: Gerak Lurus Berubah Beraturan (GLBB)</h3>
+    <div class="content-card">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <div class="lg:col-span-1 space-y-6">
+                <div>
+                    <label for="glbbV0" class="block mb-2 text-sm font-medium text-gray-200">Kecepatan Awal ( $ v_0 $ ) <span id="glbbV0Val" class="font-bold text-blue-300">0.0</span> m/s</label>
+                    <input id="glbbV0" type="range" min="-20" max="20" value="0" step="1" class="w-full">
+                </div>
+                <div>
+                    <label for="glbbA" class="block mb-2 text-sm font-medium text-gray-200">Percepatan ( $ a $ ) <span id="glbbAVal" class="font-bold text-blue-300">2.0</span> m/s²</label>
+                    <input id="glbbA" type="range" min="-5" max="5" value="2" step="0.2" class="w-full">
+                </div>
+                <div class="flex space-x-4">
+                    <button id="glbbStartButton" class="flex-1 bg-blue-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all duration-200 hover:bg-blue-700 active:scale-95">
+                        Mulai
+                    </button>
+                    <button id="glbbResetButton" class="flex-1 bg-gray-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all duration-200 hover:bg-gray-700 active:scale-95">
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <div class="lg:col-span-1 flex items-center justify-center bg-gray-900 rounded-lg p-4">
+                <canvas id="glbbCanvas" width="300" height="300"></canvas>
+            </div>
+
+            <div class="lg:col-span-1 space-y-4 bg-gray-900 p-6 rounded-lg">
+                <h3 class="text-xl font-semibold text-white mb-4">Data Real-Time</h3>
+                <div class="data-output-grid">
+                    <span class="data-label">Waktu ( $ t $ ):</span>
+                    <span id="glbbTime" class="data-value">0.0 s</span>
+                    <span class="data-label">Posisi ( $ x $ ):</span>
+                    <span id="glbbX" class="data-value">0.0 m</span>
+                    <span class="data-label">Kecepatan ( $ v $ ):</span>
+                    <span id="glbbV" class="data-value">0.0 m/s</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="h-subtitle">Bagian B: Gerak Dalam Dua Dimensi (Parabola)</h2>
+    
+    <h3 class="h-subtitle-section">Simulasi 2b: Gerak Parabola (Proyektil)</h3>
+    <div class="content-card">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <div class="lg:col-span-1 space-y-6">
+                <div>
+                    <label for="projV0" class="block mb-2 text-sm font-medium text-gray-200">Kecepatan Awal ( $ v_0 $ ) <span id="projV0Val" class="font-bold text-blue-300">50</span> m/s</label>
+                    <input id="projV0" type="range" min="10" max="100" value="50" step="1" class="w-full">
+                </div>
+                <div>
+                    <label for="projTheta" class="block mb-2 text-sm font-medium text-gray-200">Sudut Elevasi ( $ \theta $ ) <span id="projThetaVal" class="font-bold text-blue-300">45</span>°</label>
+                    <input id="projTheta" type="range" min="0" max="90" value="45" step="1" class="w-full">
+                </div>
+                <p class="text-sm text-gray-400">Asumsi: $ g = 9.8 $ m/s² dan hambatan udara diabaikan.</p>
+                <div class="flex space-x-4">
+                    <button id="projStartButton" class="flex-1 bg-blue-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all duration-200 hover:bg-blue-700 active:scale-95">
+                        Tembak
+                    </button>
+                    <button id="projResetButton" class="flex-1 bg-gray-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all duration-200 hover:bg-gray-700 active:scale-95">
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <div class="lg:col-span-1 flex items-center justify-center bg-gray-900 rounded-lg p-4">
+                <canvas id="projectileCanvas" width="300" height="300"></canvas>
+            </div>
+
+            <div class="lg:col-span-1 space-y-4 bg-gray-900 p-6 rounded-lg">
+                <h3 class="text-xl font-semibold text-white mb-4">Hasil Lintasan</h3>
+                <div class="data-output-grid">
+                    <span class="data-label">Waktu Tempuh ( $ t_{total} $ ):</span>
+                    <span id="projTime" class="data-value">0.0 s</span>
+                    <span class="data-label">Tinggi Maks. ( $ y_{max} $ ):</span>
+                    <span id="projYmax" class="data-value">0.0 m</span>
+                    <span class="data-label">Jangkauan ( $ x_{max} $ ):</span>
+                    <span id="projXmax" class="data-value">0.0 m</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="h-subtitle">d. Rumus-Rumus Penting</h2>
+    <div class="content-card space-y-6 text-lg">
+        <div>
+            <h3 class="text-xl font-semibold text-blue-300 mb-2">Kinematika 1D (Percepatan Konstan)</h3>
+            <p>Untuk gerak lurus dengan percepatan $a$ konstan (GLBB):</p>
+            <ul class="list-none space-y-2 mt-2 font-mono">
+                <li>$ v = v_0 + at $</li>
+                <li>$ x = x_0 + v_0 t + \frac{1}{2} a t^2 $</li>
+                <li>$ v^2 = v_0^2 + 2a(x - x_0) $</li>
+            </ul>
+            <p class="mt-2">Jika $a = 0$, maka gerak menjadi Gerak Lurus Beraturan (GLB) dengan $x = x_0 + v_0 t$.</p>
+        </div>
+        
+        <div>
+            <h3 class="text-xl font-semibold text-blue-300 mb-2">Kinematika 2D (Gerak Parabola)</h3>
+            <p>Gerak parabola adalah superposisi (gabungan) dari dua gerak independen:</p>
+            <ul class="list-disc list-inside space-y-2 mt-2">
+                <li><strong>Sumbu-x (Horizontal):</strong> Gerak Lurus Beraturan (GLB) karena $a_x = 0$.
+                    <br>$ v_{0x} = v_0 \cos(\theta) $
+                    <br>$ x(t) = v_{0x} t $
+                </li>
+                <li><strong>Sumbu-y (Vertikal):</strong> Gerak Lurus Berubah Beraturan (GLBB) karena $a_y = -g$.
+                    <br>$ v_{0y} = v_0 \sin(\theta) $
+                    <br>$ y(t) = v_{0y} t - \frac{1}{2} g t^2 $
+                </li>
+            </ul>
+            <p class="mt-4">Dari sini dapat diturunkan:</p>
+            <ul class="list-none space-y-2 mt-2 font-mono">
+                <li>$ y_{max} = \frac{(v_0 \sin\theta)^2}{2g} $ &nbsp;&nbsp; (Tinggi maksimum)</li>
+                <li>$ x_{max} = \frac{v_0^2 \sin(2\theta)}{g} $ &nbsp;&nbsp; (Jangkauan maksimum)</li>
+            </ul>
+        </div>
+    </div>
+    
+    <h2 class="h-subtitle">e. Contoh Aplikasi (Teknik Mesin)</h2>
+    <div class="content-card space-y-4 text-lg leading-relaxed">
+        <ul class="list-disc list-inside space-y-3">
+            <li><strong>Gerak Piston:</strong> Gerak naik-turun piston dalam silinder mesin adalah contoh gerak lurus 1D (meskipun bukan GLBB, melainkan lebih ke Gerak Harmonik).</li>
+            <li><strong>Sistem Konveyor:</strong> Benda yang bergerak di atas ban berjalan (conveyor belt) adalah aplikasi dari GLB.</li>
+            <li><strong>Analisis CAM:</strong> Profil CAM (bubungan) dirancang untuk menghasilkan profil gerak 1D (naik-turun) yang presisi bagi <i>follower</i>-nya.</li>
+            <li><strong>Nozzle Fluida:</strong> Aliran air yang menyemprot dari selang atau nozzle pemadam kebakaran mengikuti lintasan parabola (Gerak 2D).</li>
+        </ul>
+    </div>
+</div> <div id="content-gaya-tekanan" class="module-content">
+    <h1 class="h-title">Gaya & Tekanan</h1>
+    <p class="text-lg -mt-4 mb-6">Modul ini memperkenalkan konsep dasar Dinamika (penyebab gerak), yaitu Gaya. Kita juga akan membahas Tekanan, konsep gaya yang terdistribusi pada suatu luasan.</p>
+
+    <h2 class="h-subtitle">Bagian A: Gaya dan Gaya Gesek</h2>
+
+    <h3 class="h-subtitle-section">Simulasi 3a: Benda pada Bidang Miring (Gaya Gesek)</h3>
+    <div class="content-card">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <div class="lg:col-span-1 space-y-6">
+                <div>
+                    <label for="inclineM" class="block mb-2 text-sm font-medium text-gray-200">Massa Benda ( $ m $ ) <span id="inclineMVal" class="font-bold text-blue-300">5.0</span> kg</label>
+                    <input id="inclineM" type="range" min="1" max="20" value="5" step="0.5" class="w-full">
+                </div>
+                <div>
+                    <label for="inclineTheta" class="block mb-2 text-sm font-medium text-gray-200">Sudut Kemiringan ( $ \theta $ ) <span id="inclineThetaVal" class="font-bold text-blue-300">30</span>°</label>
+                    <input id="inclineTheta" type="range" min="0" max="60" value="30" step="1" class="w-full">
+                </div>
+                <div>
+                    <label for="inclineMu" class="block mb-2 text-sm font-medium text-gray-200">Koef. Gesek Kinetis ( $ \mu_k $ ) <span id="inclineMuVal" class="font-bold text-blue-300">0.2</span></label>
+                    <input id="inclineMu" type="range" min="0" max="1" value="0.2" step="0.05" class="w-full">
+                </div>
+                <div class="flex space-x-4 mt-4">
+                    <button id="inclineStartButton" class="flex-1 bg-blue-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all duration-200 hover:bg-blue-700 active:scale-95">
+                        Mulai
+                    </button>
+                    <button id="inclineResetButton" class="flex-1 bg-gray-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all duration-200 hover:bg-gray-700 active:scale-95">
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <div class="lg:col-span-1 flex items-center justify-center bg-gray-900 rounded-lg p-4">
+                <canvas id="inclineCanvas" width="300" height="300"></canvas>
+            </div>
+
+            <div class="lg:col-span-1 space-y-4 bg-gray-900 p-6 rounded-lg">
+                <h3 class="text-xl font-semibold text-white mb-4">Analisis Gaya ($g=9.8$)</h3>
+                <div class="data-output-grid">
+                    <span class="data-label">Gaya Normal ( $ N $ ):</span>
+                    <span id="inclineN" class="data-value">0.0 N</span>
+                    <span class="data-label">Gaya Gesek ( $ f_k $ ):</span>
+                    <span id="inclineFk" class="data-value">0.0 N</span>
+                    <span class="data-label">Gaya Pendorong ( $ W_x $ ):</span>
+                    <span id="inclineWx" class="data-value">0.0 N</span>
+                    <span class="data-label">Percepatan ( $ a $ ):</span>
+                    <span id="inclineA" class="data-value">0.0 m/s²</span>
+                </div>
+                <hr class="border-gray-700">
+                <h3 class="text-xl font-semibold text-white mt-4 text-center" id="inclineStatus">
+                    ---
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="h-subtitle">Bagian B: Tekanan</h2>
+    
+    <h3 class="h-subtitle-section">Simulasi 3b: Tekanan Hidrostatis</h3>
+    <div class="content-card">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <div class="lg:col-span-1 space-y-6">
+                <div>
+                    <label for="hydroH" class="block mb-2 text-sm font-medium text-gray-200">Kedalaman ( $ h $ ) <span id="hydroHVal" class="font-bold text-blue-300">10</span> m</label>
+                    <input id="hydroH" type="range" min="0" max="100" value="10" step="1" class="w-full">
+                </div>
+                <div>
+                    <label for="hydroRho" class="block mb-2 text-sm font-medium text-gray-200">Massa Jenis Fluida ( $ \rho $ ) <span id="hydroRhoVal" class="font-bold text-blue-300">1000</span> kg/m³</label>
+                    <input id="hydroRho" type="range" min="100" max="2000" value="1000" step="50" class="w-full">
+                </div>
+                <p class="text-sm text-gray-400">Asumsi: $ g = 9.8 $ m/s² dan $P_{atm} = 101325$ Pa.</p>
+            </div>
+
+            <div class="lg:col-span-1 flex items-center justify-center bg-gray-900 rounded-lg p-4">
+                <canvas id="hydroCanvas" width="300" height="300"></canvas>
+            </div>
+
+            <div class="lg:col-span-1 space-y-4 bg-gray-900 p-6 rounded-lg">
+                <h3 class="text-xl font-semibold text-white mb-4">Pengukur Tekanan</h3>
+                <div class="data-output-grid">
+                    <span class="data-label">Tekanan Hidrostatis ( $ P_h $ ):</span>
+                    <span id="hydroPh" class="data-value">0 Pa</span>
+                    <span class="data-label">Tekanan Total ( $ P_{total} $ ):</span>
+                    <span id="hydroPtot" class="data-value">0 Pa</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="h-subtitle">d. Rumus-Rumus Penting</h2>
+    <div class="content-card space-y-6 text-lg">
+        <div>
+            <h3 class="text-xl font-semibold text-blue-300 mb-2">Gaya Gesek</h3>
+            <p>Gaya gesek adalah gaya yang melawan gerak relatif antara dua permukaan yang bersentuhan.</p>
+            <ul class="list-disc list-inside space-y-2 mt-2">
+                <li><strong>Gaya Gesek Statis ( $f_s$ ):</strong> Mencegah benda mulai bergerak. Besarnya bervariasi dari 0 hingga nilai maksimum: $ f_{s, max} = \mu_s N $.</li>
+                <li><strong>Gaya Gesek Kinetis ( $f_k$ ):</strong> Melawan benda yang <strong>sedang</strong> bergerak. Besarnya konstan: $ f_k = \mu_k N $.</li>
+            </ul>
+            <p class="mt-2">Di mana $N$ adalah Gaya Normal (gaya kontak tegak lurus permukaan) dan $\mu$ adalah koefisien gesek.</p>
+            <p class="mt-2">Pada simulasi bidang miring: $ N = W_y = mg \cos(\theta) $ dan gaya pendorong adalah $ W_x = mg \sin(\theta) $.</p>
+        </div>
+        
+        <div>
+            <h3 class="text-xl font-semibold text-blue-300 mb-2">Tekanan</h3>
+            <p>Tekanan ($P$) adalah gaya ($F$) yang bekerja secara tegak lurus pada suatu permukaan, dibagi dengan luas ($A$) permukaan tersebut.</p>
+            $$ P = \frac{F}{A} $$
+            <p class="mt-2">Satuan SI untuk tekanan adalah Pascal (Pa), di mana $ 1 \, \text{Pa} = 1 \, \text{N/m}^2 $.</p>
+            <p class="mt-4"><strong>Tekanan Hidrostatis ($P_h$)</strong> adalah tekanan yang dialami oleh suatu titik di dalam fluida diam, yang disebabkan oleh berat fluida di atasnya.</p>
+            $$ P_h = \rho g h $$
+            <p class="mt-2">Di mana $\rho$ adalah massa jenis fluida, $g$ adalah percepatan gravitasi, dan $h$ adalah kedalaman.</p>
+            <p class="mt-2">Tekanan total (absolut) pada kedalaman $h$ adalah $ P_{total} = P_{atmosfer} + P_h $.</p>
+        </div>
+    </div>
+    
+    <h2 class="h-subtitle">e. Contoh Aplikasi (Teknik Mesin)</h2>
+    <div class="content-card space-y-4 text-lg leading-relaxed">
+        <ul class="list-disc list-inside space-y-3">
+            <li><strong>Gaya Gesek:</strong> Sangat krusial dalam desain rem (memaksimalkan gesekan), bantalan/bearing (meminimalkan gesekan), dan transmisi (kopling).</li>
+            <li><strong>Analisis Baut & Paku Keling:</strong> Sambungan mekanis dirancang berdasarkan gaya gesek statis yang dapat ditahannya sebelum selip (slip).</li>
+            <li><strong>Tekanan (Pneumatika & Hidrolika):</strong> Sistem hidrolik (dongkrak, rem, aktuator) menggunakan fluida tak-termampatkan (oli) untuk mentransmisikan tekanan (Prinsip Pascal). Sistem pneumatik melakukan hal yang sama dengan fluida termampatkan (udara).</li>
+            <li><strong>Perancangan Bejana Tekan:</strong> Mendesain tangki boiler, tangki scuba, atau reaktor kimia agar mampu menahan tekanan internal yang sangat tinggi tanpa meledak.</li>
+        </ul>
+    </div>
+</div> <div id="content-newton" class="module-content">
+    <h1 class="h-title">Hukum Newton: I, II, III</h1>
+    <p class="text-lg -mt-4 mb-6">Hukum Gerak Newton adalah fondasi dari mekanika klasik. Hukum-hukum ini menjelaskan hubungan antara gaya yang bekerja pada suatu benda dan gerak yang dihasilkannya.</p>
+
+    <h2 class="h-subtitle">Simulasi Virtual Lab: Mesin Atwood (Hukum II Newton)</h2>
+    <div class="content-card">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <div class="lg:col-span-1 space-y-6">
+                <div>
+                    <label for="atwoodM1" class="block mb-2 text-sm font-medium text-gray-200">Massa 1 ( $ m_1 $, Kiri) <span id="atwoodM1Val" class="font-bold text-blue-300">5.0</span> kg</label>
+                    <input id="atwoodM1" type="range" min="1" max="10" value="5" step="0.5" class="w-full">
+                </div>
+                <div>
+                    <label for="atwoodM2" class="block mb-2 text-sm font-medium text-gray-200">Massa 2 ( $ m_2 $, Kanan) <span id="atwoodM2Val" class="font-bold text-blue-300">7.0</span> kg</label>
+                    <input id="atwoodM2" type="range" min="1" max="10" value="7" step="0.5" class="w-full">
+                </div>
+                <p class="text-sm text-gray-400">Asumsi: Katrol dan tali ideal (tanpa massa dan gesekan).</p>
+                <div class="flex space-x-4">
+                    <button id="atwoodStartButton" class="flex-1 bg-blue-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all duration-200 hover:bg-blue-700 active:scale-95">
+                        Mulai
+                    </button>
+                    <button id="atwoodResetButton" class="flex-1 bg-gray-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all duration-200 hover:bg-gray-700 active:scale-95">
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <div class="lg:col-span-1 flex items-center justify-center bg-gray-900 rounded-lg p-4">
+                <canvas id="atwoodCanvas" width="300" height="300"></canvas>
+            </div>
+
+            <div class="lg:col-span-1 space-y-4 bg-gray-900 p-6 rounded-lg">
+                <h3 class="text-xl font-semibold text-white mb-4">Analisis Sistem ($g=9.8$)</h3>
+                <div class="data-output-grid">
+                    <span class="data-label">Percepatan ( $ a $ ):</span>
+                    <span id="atwoodA" class="data-value">0.00 m/s²</span>
+                    <span class="data-label">Tegangan Tali ( $ T $ ):</span>
+                    <span id="atwoodT" class="data-value">0.00 N</span>
+                    <span class="data-label">Waktu ( $ t $ ):</span>
+                    <span id="atwoodTime" class="data-value">0.0 s</span>
+                    <span class="data-label">Kecepatan ( $ v $ ):</span>
+                    <span id="atwoodV" class="data-value">0.0 m/s</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="h-subtitle">d. Rumus-Rumus Penting (Hukum Newton)</h2>
+    <div class="content-card space-y-6 text-lg">
+        <div>
+            <h3 class="text-xl font-semibold text-blue-300 mb-2">Hukum I Newton (Inersia)</h3>
+            <p>"Sebuah benda akan tetap dalam keadaan diam atau bergerak lurus beraturan (kecepatan konstan) kecuali jika ia dipaksa untuk mengubah keadaan tersebut oleh gaya-gaya yang bekerja padanya."</p>
+            $$ \sum \vec{F} = 0 \iff \vec{v} = \text{konstan} $$
+            <p class="mt-2">Ini adalah prinsip <strong>inersia</strong> (kelembaman). Ini juga mendefinisikan konsep kesetimbangan (dibahas di Modul 7).</p>
+        </div>
+        
+        <div>
+            <h3 class="text-xl font-semibold text-blue-300 mb-2">Hukum II Newton (Dinamika)</h3>
+            <p>"Percepatan ($\vec{a}$) sebuah benda berbanding lurus dengan resultan gaya ($\Sigma \vec{F}$) yang bekerja padanya dan berbanding terbalik dengan massanya ($m$)."</p>
+            $$ \sum \vec{F} = m \vec{a} $$
+            <p class="mt-2">Ini adalah hukum fundamental dinamika. Jika ada resultan gaya yang tidak nol, *pasti* ada percepatan.</p>
+            <p class="mt-2">Pada simulasi Mesin Atwood:
+            <br>$ \sum F_{sistem} = W_2 - W_1 = (m_2 - m_1)g $
+            <br>$ m_{total} = m_1 + m_2 $
+            <br>$ a = \frac{\sum F_{sistem}}{m_{total}} = \left( \frac{m_2 - m_1}{m_1 + m_2} \right) g $
+            <br>Untuk mencari Tegangan Tali ($T$), tinjau $m_1$: $ \sum F_1 = T - W_1 = m_1 a \implies T = m_1(g+a) $
+            </p>
+        </div>
+
+        <div>
+            <h3 class="text-xl font-semibold text-blue-300 mb-2">Hukum III Newton (Aksi-Reaksi)</h3>
+            <p>"Untuk setiap aksi, selalu ada reaksi yang sama besar dan berlawanan arah; atau, gaya interaksi timbal balik antara dua benda selalu sama besar dan berlawanan arah."</p>
+            $$ \vec{F}_{\text{A pada B}} = - \vec{F}_{\text{B pada A}} $$
+            <p class="mt-2">Penting: Pasangan aksi-reaksi bekerja pada <strong>dua benda yang berbeda</strong>. Contoh: Gaya berat Anda (gaya Bumi pada Anda) adalah aksi; reaksinya adalah gaya tarik Anda pada Bumi.</p>
+        </div>
+    </div>
+    
+    <h2 class="h-subtitle">e. Contoh Aplikasi (Teknik Mesin)</h2>
+    <div class="content-card space-y-4 text-lg leading-relaxed">
+        <ul class="list-disc list-inside space-y-3">
+            <li><strong>Hukum I:</strong> Analisis statika, kesetimbangan struktur, dan perancangan <i>flywheel</i> (roda gila) yang memanfaatkan inersia untuk menyimpan energi.</li>
+            <li><strong>Hukum II:</strong> Ini adalah dasar dari <strong>semua</strong> analisis dinamika mesin. Menghitung gaya yang dibutuhkan untuk menggerakkan piston, torsi yang dibutuhkan untuk memutar poros, dan gaya pada turbin.</li>
+            <li><strong>Hukum III:</strong> Prinsip propulsi (jet dan roket) yang mendorong massa ke belakang (aksi) untuk mendapatkan dorongan ke depan (reaksi). Juga penting dalam analisis kontak, seperti antara roda gigi atau roda pada rel.</li>
+        </ul>
+    </div>
+</div> <div id="content-energi" class="module-content">
+    <h1 class="h-title">Energi, Momentum, Impuls & Tumbukan</h1>
+    <p class="text-lg -mt-4 mb-6">Modul ini membahas dua prinsip konservasi (kekekalan) paling kuat dalam fisika: Kekekalan Energi dan Kekekalan Momentum. Ini adalah alat analisis alternatif yang seringkali lebih mudah daripada menggunakan Hukum Newton secara langsung.</p>
+
+    <h2 class="h-subtitle">Bagian A: Usaha dan Energi</h2>
+
+    <h3 class="h-subtitle-section">Simulasi 5a: Konservasi Energi Mekanik (Roller Coaster)</h3>
+    <div class="content-card">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <div class="lg:col-span-1 space-y-6">
+                <div>
+                    <label for="energyH" class="block mb-2 text-sm font-medium text-gray-200">Ketinggian Awal ( $ h $ ) <span id="energyHVal" class="font-bold text-blue-300">100</span> m</label>
+                    <input id="energyH" type="range" min="10" max="100" value="100" step="1" class="w-full">
+                </div>
+                <p class="text-sm text-gray-400">Lepaskan bola dari ketinggian $h$ (energi potensial) dan amati konversinya menjadi energi kinetik. Lintasan diasumsikan licin (tanpa gesekan).</p>
+                <div class="flex space-x-4">
+                    <button id="energyStartButton" class="flex-1 bg-blue-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all duration-200 hover:bg-blue-700 active:scale-95">
+                        Mulai
+                    </button>
+                    <button id="energyResetButton" class="flex-1 bg-gray-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all duration-200 hover:bg-gray-700 active:scale-95">
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <div class="lg:col-span-1 flex items-center justify-center bg-gray-900 rounded-lg p-4">
+                <canvas id="energyCanvas" width="300" height="300"></canvas>
+            </div>
+
+            <div class="lg:col-span-1 space-y-4 bg-gray-900 p-6 rounded-lg">
+                <h3 class="text-xl font-semibold text-white mb-4">Analisis Real-Time</h3>
+                <div class="data-output-grid mb-4">
+                    <span class="data-label">Waktu ( $ t $ ):</span>
+                    <span id="energyTime" class="data-value">0.0 s</span>
+                    <span class="data-label">Ketinggian ( $ h $ ):</span>
+                    <span id="energyCurrentH" class="data-value">0.0 m</span>
+                    <span class="data-label">Kecepatan ( $ v $ ):</span>
+                    <span id="energyCurrentV" class="data-value">0.0 m/s</span>
+                </div>
+
+                <hr class="border-gray-700 my-4">
+                <h3 class="text-xl font-semibold text-white mb-3">Energi</h3>
+                <div class="space-y-3">
+                    <div>
+                        <label class="text-sm font-medium text-green-300">Energi Kinetik (K)</label>
+                        <div class="progress-bar-bg">
+                            <div id="energyBarK" class="progress-bar-fill-k" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-blue-300">Energi Potensial (U)</label>
+                        <div class="progress-bar-bg">
+                            <div id="energyBarU" class="progress-bar-fill-u" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-300">Energi Mekanik (E)</label>
+                        <div class="progress-bar-bg">
+                            <div id="energyBarE" class="progress-bar-fill-e" style="width: 100%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="h-subtitle">Bagian B: Momentum, Impuls, dan Tumbukan</h2>
+    
+    <h3 class="h-subtitle-section">Simulasi 5b: Tumbukan 1D</h3>
+    <div class="content-card">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <div class="lg:col-span-1 space-y-4">
+                <h3 class="text-xl font-semibold text-blue-300">Benda 1 (Biru)</h3>
+                <label class="text-sm">Massa 1 ( $ m_1 $ ) <span id="colM1Val">2</span> kg</label>
+                <input id="colM1" type="range" min="1" max="10" value="2" step="1">
+                <label class="text-sm">Kecep. 1 ( $ v_{1i} $ ) <span id="colV1Val">10</span> m/s</label>
+                <input id="colV1" type="range" min="-20" max="20" value="10" step="1">
+                
+                <h3 class="text-xl font-semibold text-red-300 mt-2">Benda 2 (Merah)</h3>
+                <label class="text-sm">Massa 2 ( $ m_2 $ ) <span id="colM2Val">5</span> kg</label>
+                <input id="colM2" type="range" min="1" max="10" value="5" step="1">
+                <label class="text-sm">Kecep. 2 ( $ v_{2i} $ ) <span id="colV2Val">-5</span> m/s</label>
+                <input id="colV2" type="range" min="-20" max="20" value="-5" step="1">
+                
+                <h3 class="text-xl font-semibold text-white mt-2">Tumbukan</h3>
+                <label class="text-sm">Koef. Restitusi ( $ e $ ) <span id="colEVal">1.0</span></label>
+                <input id="colE" type="range" min="0" max="1" value="1" step="0.1">
+                
+                <div class="flex space-x-4 mt-2">
+                    <button id="colStartButton" class="flex-1 bg-blue-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all duration-200 hover:bg-blue-700 active:scale-95">
+                        Mulai
+                    </button>
+                    <button id="colResetButton" class="flex-1 bg-gray-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all duration-200 hover:bg-gray-700 active:scale-95">
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <div class="lg:col-span-1 flex items-center justify-center bg-gray-900 rounded-lg p-4">
+                <canvas id="collisionCanvas" width="300" height="300"></canvas>
+            </div>
+
+            <div class="lg:col-span-1 space-y-4 bg-gray-900 p-6 rounded-lg">
+                <h3 class="text-xl font-semibold text-white mb-4">Momentum Sistem</h3>
+                <div class="data-output-grid">
+                    <span class="data-label">$ p_{total} $ (Awal):</span>
+                    <span id="colPi" class="data-value">0.0</span>
+                    <span class="data-label">$ p_{total} $ (Akhir):</span>
+                    <span id="colPf" class="data-value">0.0</span>
+                </div>
+                <hr class="border-gray-700 my-2">
+                <h3 class="text-xl font-semibold text-white mb-4">Kecepatan Akhir</h3>
+                <div class="data-output-grid">
+                    <span class="data-label">$ v_{1f} $ (Biru):</span>
+                    <span id="colV1f" class="data-value">0.0</span>
+                    <span class="data-label">$ v_{2f} $ (Merah):</span>
+                    <span id="colV2f" class="data-value">0.0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="h-subtitle">d. Rumus-Rumus Penting</h2>
+    <div class="content-card space-y-6 text-lg">
+        <div>
+            <h3 class="text-xl font-semibold text-blue-300 mb-2">Usaha dan Energi Kinetik</h3>
+            <p><strong>Usaha ($W$)</strong> adalah energi yang ditransfer ke atau dari suatu benda melalui gaya yang bekerja padanya. $ W = F \cdot d \cos(\theta) $.</p>
+            <p><strong>Energi Kinetik ($K$)</strong> adalah energi yang dimiliki benda karena geraknya. $ K = \frac{1}{2} m v^2 $.</p>
+            <p><strong>Teorema Usaha-Energi:</strong> Usaha total yang dilakukan pada suatu benda sama dengan perubahan energi kinetiknya. $ W_{total} = \Delta K $.</p>
+            <p class="mt-2"><strong>Energi Potensial Gravitasi ($U_g$)</strong> adalah energi yang dimiliki benda karena posisinya dalam medan gravitasi. $ U_g = mgh $.</p>
+            <p class="mt-2"><strong>Hukum Kekekalan Energi Mekanik:</strong> Jika hanya gaya konservatif (seperti gravitasi, bukan gesekan) yang bekerja, total energi mekanik ($E_M = K + U_g$) sistem tetap konstan.
+            $ E_{M, awal} = E_{M, akhir} \implies K_i + U_i = K_f + U_f $</p>
+        </div>
+        
+        <div>
+            <h3 class="text-xl font-semibold text-blue-300 mb-2">Momentum, Impuls, dan Tumbukan</h3>
+            <p><strong>Momentum Linear ($\vec{p}$)</strong> adalah "ukuran gerak" suatu benda. $\vec{p} = m\vec{v}$.</p>
+            <p><strong>Impuls ($\vec{I}$)</strong> adalah perubahan momentum, yang disebabkan oleh gaya yang bekerja selama selang waktu $\Delta t$. $ \vec{I} = \vec{F}_{rata} \Delta t = \Delta\vec{p} $.</p>
+            <p class="mt-2"><strong>Hukum Kekekalan Momentum:</strong> Jika tidak ada gaya eksternal neto yang bekerja pada sistem, momentum total sistem tetap konstan. Ini <strong>selalu</strong> berlaku dalam tumbukan.</p>
+            $$ \vec{p}_{total, awal} = \vec{p}_{total, akhir} $$
+            $$ m_1 \vec{v}_{1i} + m_2 \vec{v}_{2i} = m_1 \vec{v}_{1f} + m_2 \vec{v}_{2f} $$
+            <p class="mt-2"><strong>Koefisien Restitusi ($e$)</strong> menentukan jenis tumbukan (kekekalan energi kinetik):</p>
+            $$ e = \frac{v_{2f} - v_{1f}}{v_{1i} - v_{2i}} $$
+            <ul class="list-disc list-inside mt-2">
+                <li>$ e = 1 $: Lenting Sempurna (Energi Kinetik kekal).</li>
+                <li>$ 0 < e < 1 $: Lenting Sebagian (Energi Kinetik hilang).</li>
+                <li>$ e = 0 $: Tidak Lenting Sama Sekali (Benda menempel setelah tumbukan, $v_{1f} = v_{2f}$).</li>
+            </ul>
+        </div>
+    </div>
+    
+    <h2 class="h-subtitle">e. Contoh Aplikasi (Teknik Mesin)</h2>
+    <div class="content-card space-y-4 text-lg leading-relaxed">
+        <ul class="list-disc list-inside space-y-3">
+            <li><strong>Energi:</strong> Menganalisis efisiensi mesin (rasio usaha keluaran terhadap energi masukan), dan desain turbin (mengubah energi kinetik fluida menjadi energi mekanik).</li>
+            <li><strong>Impuls & Momentum:</strong> Desain <i>impact testing</i> (Uji Tumbuk Charpy/Izod) untuk mengukur ketangguhan material.</li>
+            <li><strong>Tumbukan:</strong> Menganalisis gaya impulsif pada <i>bearing</i> (bantalan), perancangan palu (pile driver), dan <i>crash safety</i> (desain zona remuk pada mobil untuk memperpanjang waktu tumbukan $\Delta t$, sehingga mengurangi gaya $F_{rata}$).</li>
+        </ul>
+    </div>
+</div>
+        <div id="content-rotasi-gravitasi" class="module-content">
+            <h1 class="h-title">Gerak Rotasi & Gravitasi</h1>
+
+            <h2 class="h-subtitle">Bagian A: Gerak Rotasi</h2>
             <h2 class="h-subtitle">Simulasi Virtual Lab: Disk Berputar</h2>
             <div class="content-card">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -331,9 +981,92 @@
                     </li>
                 </ul>
             </div>
-        </div> <div id="content-kesetimbangan" class="module-content">
-            <h1 class="h-title">Kesetimbangan Benda Tegar & Gravitasi</h1>
-            <p class="text-lg -mt-4 mb-6">Bahan kajian ini mencakup dua topik fundamental: (A) syarat-syarat benda tegar tetap diam (statis) di bawah pengaruh gaya dan torsi, dan (B) gaya fundamental yang mengatur interaksi antar massa di alam semesta.</p>
+            <h2 class="h-subtitle">Bagian B: Gravitasi Universal</h2>
+
+             <h3 class="h-subtitle-section">Simulasi 2b: Orbit Satelit (Proyeksi 2.5D)</h3>
+            <div class="content-card">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <div class="lg:col-span-1 space-y-6">
+                        <div>
+                            <label for="grav-h-slider" class="block mb-2 text-sm font-medium text-gray-200">Ketinggian Awal ( $ h $ ) <span id="grav-h-value" class="font-bold text-blue-300">100</span> km</label>
+                            <input id="grav-h-slider" type="range" min="50" max="250" value="100" step="10" class="w-full">
+                        </div>
+                        <div>
+                            <label for="grav-v-slider" class="block mb-2 text-sm font-medium text-gray-200">Kecepatan Awal ( $ v_0 $ ) <span id="grav-v-value" class="font-bold text-blue-300">7.50</span> km/s</label>
+                            <input id="grav-v-slider" type="range" min="1" max="12" value="7.5" step="0.1" class="w-full">
+                        </div>
+                        <p class="text-sm text-gray-400">Parameter simulasi (Massa Bumi $M$, $G$, dan radius $R$) telah diskalakan. $R_{planet} \approx 60$ km (skala).</p>
+                        <div class="flex space-x-4">
+                            <button id="grav-startButton" class="flex-1 bg-blue-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all duration-200 hover:bg-blue-700 active:scale-95">
+                                Tembak
+                            </button>
+                            <button id="grav-resetButton" class="flex-1 bg-gray-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all duration-200 hover:bg-gray-700 active:scale-95">
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-1 flex items-center justify-center bg-gray-900 rounded-lg p-4">
+                        <canvas id="gravityCanvas" width="300" height="300" class="bg-black rounded-lg"></canvas>
+                    </div>
+
+                    <div class="lg:col-span-1 space-y-4 bg-gray-900 p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold text-white mb-4">Status Proyektil</h3>
+                        <div class="data-output-grid">
+                            <span class="data-label">Kecepatan ( $ v $ ):</span>
+                            <span id="grav-v-output" class="data-value">0.00 km/s</span>
+                       
+                            <span class="data-label">Ketinggian ( $ h $ ):</span>
+                            <span id="grav-h-output" class="data-value">100 km</span>
+
+                            <span class="data-label">Kecep. Orbit ( $v_{o}$ ):</span>
+                            <span id="grav-v-orbit" class="data-value">0.00 km/s</span>
+                            
+                            <span class="data-label">Kecep. Lepas ( $v_{l}$ ):</span>
+                            <span id="grav-v-escape" class="data-value">0.00 km/s</span>
+                        </div>
+                        <hr class="border-gray-700">
+                        <h3 class="text-xl font-semibold text-white mt-4 text-center" id="grav-status">
+                            Menunggu...
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="h-subtitle-section">c. Persamaan dan Parameter Terkait</h3>
+            <div class="content-card text-lg">
+                 <p class="mb-4">Konsep fundamental <strong>Gravitasi Universal Newton</strong>. Ini adalah gaya tarik-menarik antara dua benda bermassa.</p>
+                <ul class="list-none space-y-3">
+                    <li>$ F_g $ &nbsp;: <strong>Gaya Gravitasi</strong>, gaya tarik antara dua massa. Satuan SI: Newton (N).</li>
+                    <li>$ G $ &nbsp;&nbsp;&nbsp;: <strong>Konstanta Gravitasi Universal</strong>, $ G \approx 6.674 \times 10^{-11} $ N·m²/kg².</li>
+                    <li>$ m_1, m_2 $ : Massa dari kedua benda. Satuan SI: kilogram (kg).</li>
+                    <li>$ r $ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Jarak antara pusat massa kedua benda. Satuan SI: meter (m).</li>
+                </ul>
+            </div>
+            
+            <h3 class="h-subtitle-section">d. Rumus-Rumus Penting</h3>
+            <div class="content-card space-y-6 text-lg">
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-300 mb-2">Hukum Gravitasi Universal Newton</h3>
+                    <p>Besarnya gaya gravitasi antara dua benda adalah:</p>
+                    $$ F_g = G \frac{m_1 m_2}{r^2} $$
+                    <p class="mt-2">Gaya berat ( $ W = mg $ ) yang kita gunakan sehari-hari adalah bentuk sederhana dari hukum ini, di mana $ m_1 $ adalah massa benda dan $ m_2 $ adalah massa Bumi ($ M_{\oplus} $), dan $ r $ adalah radius Bumi ($ R_{\oplus} $).
+                    $$ F_g = \left( G \frac{M_{\oplus}}{R_{\oplus}^2} \right) m_1 $$
+                    Nilai dalam kurung adalah percepatan gravitasi di permukaan Bumi, $ g \approx 9.8 $ m/s².</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-300 mb-2">Kecepatan Orbit dan Lepas</h3>
+                    <p>Agar satelit dapat mengorbit lingkaran sempurna pada jarak $r$ dari pusat planet bermassa $M$, gaya gravitasi harus bertindak sebagai gaya sentripetal ($F_c = mv^2/r$):</p>
+                    $$ F_g = F_c \implies G \frac{M m}{r^2} = \frac{m v_{orbit}^2}{r} $$
+                    $$ \boxed{v_{orbit} = \sqrt{\frac{GM}{r}}} $$
+                    <p class="mt-2">Simulasi di atas menunjukkan: jika $v_0 < v_{orbit}$, satelit jatuh ke Bumi. Jika $v_0 = v_{orbit}$, orbitnya lingkaran. Jika $v_{orbit} < v_0 < v_{lepas}$, orbitnya elips. Jika $v_0 \ge v_{lepas}$, satelit akan "lepas" dari gravitasi Bumi.</p>
+                </div>
+            </div>
+        </div> <div id="content-kesetimbangan-tegar" class="module-content">
+            <h1 class="h-title">Kesetimbangan Benda Tegar</h1>
+            <p class="text-lg -mt-4 mb-6">Bahan kajian ini mencakup dua topik fundamental: syarat-syarat benda tegar tetap diam (statis) di bawah pengaruh gaya dan torsi</p>
 
             <h2 class="h-subtitle">Bagian A: Kesetimbangan Benda Tegar</h2>
 
@@ -428,90 +1161,6 @@
                         <strong>Desain Balok Kantilever (Cantilever Beams):</strong> Balkon, sayap pesawat, dan beberapa jenis jembatan adalah contoh balok kantilever (satu ujung terpasang, ujung lain bebas). Analisis torsi dan gaya internal sangat penting untuk mencegah kegagalan struktur di titik tumpuan.
                     </li>
                 </ul>
-            </div>
-
-            <h2 class="h-subtitle">Bagian B: Gravitasi Universal</h2>
-
-             <h3 class="h-subtitle-section">Simulasi 2b: Orbit Satelit (Proyeksi 2.5D)</h3>
-            <div class="content-card">
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    
-                    <div class="lg:col-span-1 space-y-6">
-                        <div>
-                            <label for="grav-h-slider" class="block mb-2 text-sm font-medium text-gray-200">Ketinggian Awal ( $ h $ ) <span id="grav-h-value" class="font-bold text-blue-300">100</span> km</label>
-                            <input id="grav-h-slider" type="range" min="50" max="250" value="100" step="10" class="w-full">
-                        </div>
-                        <div>
-                            <label for="grav-v-slider" class="block mb-2 text-sm font-medium text-gray-200">Kecepatan Awal ( $ v_0 $ ) <span id="grav-v-value" class="font-bold text-blue-300">7.50</span> km/s</label>
-                            <input id="grav-v-slider" type="range" min="1" max="12" value="7.5" step="0.1" class="w-full">
-                        </div>
-                        <p class="text-sm text-gray-400">Parameter simulasi (Massa Bumi $M$, $G$, dan radius $R$) telah diskalakan. $R_{planet} \approx 60$ km (skala).</p>
-                        <div class="flex space-x-4">
-                            <button id="grav-startButton" class="flex-1 bg-blue-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all duration-200 hover:bg-blue-700 active:scale-95">
-                                Tembak
-                            </button>
-                            <button id="grav-resetButton" class="flex-1 bg-gray-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all duration-200 hover:bg-gray-700 active:scale-95">
-                                Reset
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="lg:col-span-1 flex items-center justify-center bg-gray-900 rounded-lg p-4">
-                        <canvas id="gravityCanvas" width="300" height="300" class="bg-black rounded-lg"></canvas>
-                    </div>
-
-                    <div class="lg:col-span-1 space-y-4 bg-gray-900 p-6 rounded-lg">
-                        <h3 class="text-xl font-semibold text-white mb-4">Status Proyektil</h3>
-                        <div class="data-output-grid">
-                            <span class="data-label">Kecepatan ( $ v $ ):</span>
-                            <span id="grav-v-output" class="data-value">0.00 km/s</span>
-                       
-                            <span class="data-label">Ketinggian ( $ h $ ):</span>
-                            <span id="grav-h-output" class="data-value">100 km</span>
-
-                            <span class="data-label">Kecep. Orbit ( $v_{o}$ ):</span>
-                            <span id="grav-v-orbit" class="data-value">0.00 km/s</span>
-                            
-                            <span class="data-label">Kecep. Lepas ( $v_{l}$ ):</span>
-                            <span id="grav-v-escape" class="data-value">0.00 km/s</span>
-                        </div>
-                        <hr class="border-gray-700">
-                        <h3 class="text-xl font-semibold text-white mt-4 text-center" id="grav-status">
-                            Menunggu...
-                        </h3>
-                    </div>
-                </div>
-            </div>
-            
-            <h3 class="h-subtitle-section">c. Persamaan dan Parameter Terkait</h3>
-            <div class="content-card text-lg">
-                 <p class="mb-4">Konsep fundamental <strong>Gravitasi Universal Newton</strong>. Ini adalah gaya tarik-menarik antara dua benda bermassa.</p>
-                <ul class="list-none space-y-3">
-                    <li>$ F_g $ &nbsp;: <strong>Gaya Gravitasi</strong>, gaya tarik antara dua massa. Satuan SI: Newton (N).</li>
-                    <li>$ G $ &nbsp;&nbsp;&nbsp;: <strong>Konstanta Gravitasi Universal</strong>, $ G \approx 6.674 \times 10^{-11} $ N·m²/kg².</li>
-                    <li>$ m_1, m_2 $ : Massa dari kedua benda. Satuan SI: kilogram (kg).</li>
-                    <li>$ r $ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Jarak antara pusat massa kedua benda. Satuan SI: meter (m).</li>
-                </ul>
-            </div>
-            
-            <h3 class="h-subtitle-section">d. Rumus-Rumus Penting</h3>
-            <div class="content-card space-y-6 text-lg">
-                <div>
-                    <h3 class="text-xl font-semibold text-blue-300 mb-2">Hukum Gravitasi Universal Newton</h3>
-                    <p>Besarnya gaya gravitasi antara dua benda adalah:</p>
-                    $$ F_g = G \frac{m_1 m_2}{r^2} $$
-                    <p class="mt-2">Gaya berat ( $ W = mg $ ) yang kita gunakan sehari-hari adalah bentuk sederhana dari hukum ini, di mana $ m_1 $ adalah massa benda dan $ m_2 $ adalah massa Bumi ($ M_{\oplus} $), dan $ r $ adalah radius Bumi ($ R_{\oplus} $).
-                    $$ F_g = \left( G \frac{M_{\oplus}}{R_{\oplus}^2} \right) m_1 $$
-                    Nilai dalam kurung adalah percepatan gravitasi di permukaan Bumi, $ g \approx 9.8 $ m/s².</p>
-                </div>
-                
-                <div>
-                    <h3 class="text-xl font-semibold text-blue-300 mb-2">Kecepatan Orbit dan Lepas</h3>
-                    <p>Agar satelit dapat mengorbit lingkaran sempurna pada jarak $r$ dari pusat planet bermassa $M$, gaya gravitasi harus bertindak sebagai gaya sentripetal ($F_c = mv^2/r$):</p>
-                    $$ F_g = F_c \implies G \frac{M m}{r^2} = \frac{m v_{orbit}^2}{r} $$
-                    $$ \boxed{v_{orbit} = \sqrt{\frac{GM}{r}}} $$
-                    <p class="mt-2">Simulasi di atas menunjukkan: jika $v_0 < v_{orbit}$, satelit jatuh ke Bumi. Jika $v_0 = v_{orbit}$, orbitnya lingkaran. Jika $v_{orbit} < v_0 < v_{lepas}$, orbitnya elips. Jika $v_0 \ge v_{lepas}$, satelit akan "lepas" dari gravitasi Bumi.</p>
-                </div>
             </div>
         </div> <div id="content-fluida" class="module-content">
             <h1 class="h-title">Fluida: Statis dan Dinamis</h1>
@@ -1095,7 +1744,7 @@
             <div class="content-card space-y-4 text-lg leading-relaxed">
                 <p><strong>Kalor Jenis ($c$)</strong> adalah jumlah kalor yang dibutuhkan untuk menaikkan suhu 1 kg zat sebesar 1°C (atau 1 K). Satuan: J/kg°C.</p>
                 $$ Q = m c \Delta T $$
-                <p><strong>Kalor Laten ($L$)</strong> adalah kalor yang dibutuhkan untuk mengubah fase 1 kg zat (misal dari padat ke cair, $L_f$, atau cair ke gas, $L_v$) *tanpa* perubahan suhu.</p>
+                <p><strong>Kalor Laten ($L$)</strong> adalah kalor yang dibutuhkan untuk mengubah fase 1 kg zat (misal dari padat ke cair, $L_f$, atau cair ke gas, $L_v$) <strong>tanpa</strong> perubahan suhu.</p>
                 $$ Q = m L $$
             </div>
 
@@ -1125,19 +1774,1022 @@
             <div class="content-card space-y-4 text-lg leading-relaxed">
                 <ul class="list-disc list-inside space-y-3">
                     <li><strong>Mesin Kalor (Termodinamika):</strong> Mesin bensin, diesel, dan turbin uap beroperasi berdasarkan siklus termodinamika (Siklus Otto, Diesel, Rankine), mengubah kalor ($Q$) menjadi kerja ($W$).</li>
-                    <li><strong>Heat Exchanger (Perpindahan Kalor):</strong> Radiator mobil adalah *heat exchanger* yang memindahkan kalor dari mesin ke udara menggunakan konveksi (air) dan konduksi/radiasi (sirip radiator).</li>
-                    <li><strong>Thermal Stress (Pemuaian):</strong> Insinyur harus memperhitungkan pemuaian termal. Jembatan diberi celah muai, dan *bearing* mesin dipasang dengan toleransi ketat untuk mengakomodasi pemuaian saat mesin panas.</li>
+                    <li><strong>Heat Exchanger (Perpindahan Kalor):</strong> Radiator mobil adalah <i>heat exchanger</i> yang memindahkan kalor dari mesin ke udara menggunakan konveksi (air) dan konduksi/radiasi (sirip radiator).</li>
+                    <li><strong>Thermal Stress (Pemuaian):</strong> Insinyur harus memperhitungkan pemuaian termal. Jembatan diberi celah muai, dan <i>bearing</i> mesin dipasang dengan toleransi ketat untuk mengakomodasi pemuaian saat mesin panas.</li>
                 </ul>
             </div>
         </div> </main>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            
-            // ===================================
-            // --- 1. LOGIKA NAVIGASI MODUL (SPA) ---
-            // ===================================
+            // ==========================================================
+            // --- (BARU) SIMULASI MODUL 1: PENJUMLAHAN VEKTOR ---
+            // ==========================================================
+            const vectorCanvas = document.getElementById('vectorCanvas');
+            if (vectorCanvas) {
+                const ctx = vectorCanvas.getContext('2d');
+                const axSlider = document.getElementById('vecAx');
+                const aySlider = document.getElementById('vecAy');
+                const bxSlider = document.getElementById('vecBx');
+                const bySlider = document.getElementById('vecBy');
+                const axVal = document.getElementById('vecAxVal');
+                const ayVal = document.getElementById('vecAyVal');
+                const bxVal = document.getElementById('vecBxVal');
+                const byVal = document.getElementById('vecByVal');
+                const rxOut = document.getElementById('vecRx');
+                const ryOut = document.getElementById('vecRy');
+                const magOut = document.getElementById('vecMagR');
+                const angOut = document.getElementById('vecAngR');
+
+                const drawVector = (from, to, color) => {
+                    const headlen = 10;
+                    const dx = to.x - from.x;
+                    const dy = to.y - from.y;
+                    const angle = Math.atan2(dy, dx);
+                    ctx.strokeStyle = color;
+                    ctx.fillStyle = color;
+                    ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    ctx.moveTo(from.x, from.y);
+                    ctx.lineTo(to.x, to.y);
+                    ctx.lineTo(to.x - headlen * Math.cos(angle - Math.PI / 6), to.y - headlen * Math.sin(angle - Math.PI / 6));
+                    ctx.moveTo(to.x, to.y);
+                    ctx.lineTo(to.x - headlen * Math.cos(angle + Math.PI / 6), to.y - headlen * Math.sin(angle + Math.PI / 6));
+                    ctx.stroke();
+                };
+
+                const updateVectors = () => {
+                    const w = vectorCanvas.width;
+                    const h = vectorCanvas.height;
+                    const cx = w / 2;
+                    const cy = h / 2;
+                    const scale = 10; // 10 pixel per unit
+
+                    const ax = parseFloat(axSlider.value);
+                    const ay = parseFloat(aySlider.value);
+                    const bx = parseFloat(bxSlider.value);
+                    const by = parseFloat(bySlider.value);
+
+                    axVal.textContent = ax;
+                    ayVal.textContent = ay;
+                    bxVal.textContent = bx;
+                    byVal.textContent = by;
+
+                    const rx = ax + bx;
+                    const ry = ay + by;
+                    const mag = Math.sqrt(rx**2 + ry**2);
+                    const ang = Math.atan2(ry, rx) * 180 / Math.PI;
+
+                    rxOut.textContent = rx.toFixed(1);
+                    ryOut.textContent = ry.toFixed(1);
+                    magOut.textContent = mag.toFixed(2);
+                    angOut.textContent = `${ang.toFixed(1)}°`;
+
+                    ctx.clearRect(0, 0, w, h);
+                    
+                    // Grid
+                    ctx.strokeStyle = '#6B7280';
+                    ctx.lineWidth = 0.5;
+                    ctx.beginPath();
+                    ctx.moveTo(cx, 0); ctx.lineTo(cx, h); // Sumbu Y
+                    ctx.moveTo(0, cy); ctx.lineTo(w, cy); // Sumbu X
+                    ctx.stroke();
+                    
+                    const p0 = { x: cx, y: cy };
+                    const pA = { x: cx + ax * scale, y: cy - ay * scale };
+                    const pB = { x: pA.x + bx * scale, y: pA.y - by * scale };
+                    
+                    // Vektor A
+                    drawVector(p0, pA, '#63B3ED');
+                    // Vektor B (dimulai dari ujung A)
+                    drawVector(pA, pB, '#F87171');
+                    // Vektor Resultan R
+                    drawVector(p0, pB, '#A78BFA');
+                };
+
+                axSlider.addEventListener('input', updateVectors);
+                aySlider.addEventListener('input', updateVectors);
+                bxSlider.addEventListener('input', updateVectors);
+                bySlider.addEventListener('input', updateVectors);
+                updateVectors();
+            }
+
+            // ==========================================================
+            // --- (BARU) SIMULASI MODUL 2a: GERAK LURUS (GLBB) ---
+            // ==========================================================
+            const glbbCanvas = document.getElementById('glbbCanvas');
+            if (glbbCanvas) {
+                const ctx = glbbCanvas.getContext('2d');
+                const v0Slider = document.getElementById('glbbV0');
+                const aSlider = document.getElementById('glbbA');
+                const v0Val = document.getElementById('glbbV0Val');
+                const aVal = document.getElementById('glbbAVal');
+                const startBtn = document.getElementById('glbbStartButton');
+                const resetBtn = document.getElementById('glbbResetButton');
+                const timeOut = document.getElementById('glbbTime');
+                const xOut = document.getElementById('glbbX');
+                const vOut = document.getElementById('glbbV');
+
+                let v0, a, t, x, v, isRunning, animId;
+                const scale = 10; // 10 pixel per meter
+
+                const resetGLBB = () => {
+                    if (isRunning) cancelAnimationFrame(animId);
+                    isRunning = false;
+                    v0 = parseFloat(v0Slider.value);
+                    a = parseFloat(aSlider.value);
+                    t = 0;
+                    x = 0;
+                    v = v0;
+                    
+                    v0Val.textContent = v0.toFixed(1);
+                    aVal.textContent = a.toFixed(1);
+                    timeOut.textContent = '0.0 s';
+                    xOut.textContent = '0.0 m';
+                    vOut.textContent = v0.toFixed(1);
+                    
+                    v0Slider.disabled = false;
+                    aSlider.disabled = false;
+                    startBtn.disabled = false;
+
+                    drawGLBB();
+                };
+
+                const startGLBB = () => {
+                    if (isRunning) return;
+                    isRunning = true;
+                    v0Slider.disabled = true;
+                    aSlider.disabled = true;
+                    startBtn.disabled = true;
+                    animId = requestAnimationFrame(gameLoopGLBB);
+                };
+
+                const drawGLBB = () => {
+                    const w = glbbCanvas.width;
+                    const h = glbbCanvas.height;
+                    const cy = h / 2;
+                    const startX = w / 10;
+                    
+                    ctx.clearRect(0, 0, w, h);
+                    
+                    // Lintasan
+                    ctx.strokeStyle = '#6B7280';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(0, cy); ctx.lineTo(w, cy);
+                    ctx.stroke();
+                    
+                    // Benda
+                    const blockX = startX + x * scale;
+                    if (blockX < 0 || blockX > w) { // Hentikan jika keluar layar
+                        resetGLBB();
+                    }
+                    
+                    ctx.fillStyle = '#63B3ED';
+                    ctx.fillRect(blockX - 10, cy - 10, 20, 20);
+                };
+
+                const gameLoopGLBB = (timestamp) => {
+                    t += 0.016; // Asumsi 60fps
+                    x = v0 * t + 0.5 * a * t**2;
+                    v = v0 + a * t;
+
+                    timeOut.textContent = `${t.toFixed(1)} s`;
+                    xOut.textContent = `${x.toFixed(1)} m`;
+                    vOut.textContent = `${v.toFixed(1)} m/s`;
+                    
+                    drawGLBB();
+                    animId = requestAnimationFrame(gameLoopGLBB);
+                };
+
+                v0Slider.addEventListener('input', resetGLBB);
+                aSlider.addEventListener('input', resetGLBB);
+                startBtn.addEventListener('click', startGLBB);
+                resetBtn.addEventListener('click', resetGLBB);
+                resetGLBB();
+            }
+
+            // ==========================================================
+            // --- (BARU) SIMULASI MODUL 2b: GERAK PARABOLA ---
+            // ==========================================================
+            const projectileCanvas = document.getElementById('projectileCanvas');
+            if (projectileCanvas) {
+                const ctx = projectileCanvas.getContext('2d');
+                const v0Slider = document.getElementById('projV0');
+                const thetaSlider = document.getElementById('projTheta');
+                const v0Val = document.getElementById('projV0Val');
+                const thetaVal = document.getElementById('projThetaVal');
+                const startBtn = document.getElementById('projStartButton');
+                const resetBtn = document.getElementById('projResetButton');
+                const timeOut = document.getElementById('projTime');
+                const yMaxOut = document.getElementById('projYmax');
+                const xMaxOut = document.getElementById('projXmax');
+
+                let v0, theta_rad, v0x, v0y, t, x, y, y_max, isRunning, animId;
+                const g = 9.8;
+                const scale = 1.0; // Disesuaikan agar pas
+
+                const resetProj = () => {
+                    if (isRunning) cancelAnimationFrame(animId);
+                    isRunning = false;
+                    v0 = parseFloat(v0Slider.value);
+                    theta_rad = parseFloat(thetaSlider.value) * Math.PI / 180;
+                    v0x = v0 * Math.cos(theta_rad);
+                    v0y = v0 * Math.sin(theta_rad);
+                    t = 0;
+                    x = 0;
+                    y = 0;
+                    y_max = 0;
+                    
+                    v0Val.textContent = v0;
+                    thetaVal.textContent = (theta_rad * 180 / Math.PI).toFixed(0);
+                    timeOut.textContent = '0.0 s';
+                    yMaxOut.textContent = '0.0 m';
+                    xMaxOut.textContent = '0.0 m';
+                    
+                    v0Slider.disabled = false;
+                    thetaSlider.disabled = false;
+                    startBtn.disabled = false;
+                    ctx.clearRect(0, 0, 300, 300);
+                    drawProj();
+                };
+
+                const startProj = () => {
+                    if (isRunning) return;
+                    isRunning = true;
+                    v0Slider.disabled = true;
+                    thetaSlider.disabled = true;
+                    startBtn.disabled = true;
+                    ctx.beginPath(); // Mulai rekam jejak
+                    ctx.moveTo(10, 290);
+                    ctx.strokeStyle = '#63B3ED';
+                    ctx.lineWidth = 2;
+                    animId = requestAnimationFrame(gameLoopProj);
+                };
+
+                const drawProj = (isFiring = false) => {
+                    const w = 300, h = 300;
+                    const originX = 10, originY = h - 10;
+                    
+                    if (!isFiring) { // Gambar ulang
+                        ctx.clearRect(0, 0, w, h);
+                        // Tanah
+                        ctx.strokeStyle = '#9CA3AF';
+                        ctx.lineWidth = 2;
+                        ctx.beginPath();
+                        ctx.moveTo(0, originY); ctx.lineTo(w, originY);
+                        ctx.stroke();
+                    }
+                    
+                    // Bola
+                    ctx.fillStyle = '#F87171';
+                    ctx.beginPath();
+                    ctx.arc(originX + x*scale, originY - y*scale, 5, 0, 2*Math.PI);
+                    ctx.fill();
+                };
+
+                const gameLoopProj = (timestamp) => {
+                    t += 0.05; // Timestep
+                    x = v0x * t;
+                    y = v0y * t - 0.5 * g * t**2;
+                    
+                    if (y > y_max) y_max = y;
+
+                    if (y < 0) { // Menabrak tanah
+                        isRunning = false;
+                        cancelAnimationFrame(animId);
+                        const t_total = v0y * 2 / g;
+                        const x_max_calc = v0x * t_total;
+                        const y_max_calc = (v0y**2) / (2*g);
+                        timeOut.textContent = `${t_total.toFixed(1)} s`;
+                        yMaxOut.textContent = `${y_max_calc.toFixed(1)} m`;
+                        xMaxOut.textContent = `${x_max_calc.toFixed(1)} m`;
+                        return;
+                    }
+
+                    // Gambar jejak
+                    ctx.lineTo(10 + x*scale, 290 - y*scale);
+                    ctx.stroke();
+                    
+                    drawProj(true); // Gambar bola (tanpa hapus)
+                    animId = requestAnimationFrame(gameLoopProj);
+                };
+
+                v0Slider.addEventListener('input', resetProj);
+                thetaSlider.addEventListener('input', resetProj);
+                startBtn.addEventListener('click', startProj);
+                resetBtn.addEventListener('click', resetProj);
+                resetProj();
+            }
+
+            // ==========================================================
+            // --- (FIX BUTTON BUG) SIMULASI MODUL 3a: BIDANG MIRING ---
+            // ==========================================================
+            const inclineCanvas = document.getElementById('inclineCanvas');
+            if (inclineCanvas) {
+                const ctx = inclineCanvas.getContext('2d');
+                const mSlider = document.getElementById('inclineM');
+                const thetaSlider = document.getElementById('inclineTheta');
+                const muSlider = document.getElementById('inclineMu');
+                const mVal = document.getElementById('inclineMVal');
+                const thetaVal = document.getElementById('inclineThetaVal');
+                const muVal = document.getElementById('inclineMuVal');
+
+                // --- PERBAIKAN UTAMA: Dapatkan tombol dari HTML, jangan buat baru ---
+                // Pastikan ID tombol di HTML Anda cocok dengan ini ('inclineStartButton' & 'inclineResetButton')
+                const startBtn = document.getElementById('inclineStartButton');
+                const resetBtn = document.getElementById('inclineResetButton');
+
+                // --- Tambahkan pengecekan jika tombol tidak ditemukan ---
+                if (!startBtn || !resetBtn) {
+                    console.error("Kesalahan Kritis: Tombol Start/Reset (#inclineStartButton / #inclineResetButton) untuk Simulasi Bidang Miring tidak ditemukan di HTML!");
+                    // Anda bisa menghentikan inisialisasi lebih lanjut jika tombol krusial
+                    // return; // atau tangani error dengan cara lain
+                }
+                // --- Akhir Perbaikan Tombol ---
+
+                // Output Data
+                const nOut = document.getElementById('inclineN');
+                const fkOut = document.getElementById('inclineFk');
+                const wxOut = document.getElementById('inclineWx');
+                const aOut = document.getElementById('inclineA');
+                const statusOut = document.getElementById('inclineStatus');
+
+                let m, theta_rad, mu_k, a; // Parameter fisika
+                let s, v_block; // State animasi (posisi pixel, kecepatan pixel/detik)
+                let isRunning = false; // Status animasi
+                let animId = null; // ID untuk requestAnimationFrame
+                let lastTimestamp = 0; // Untuk menghitung dt
+
+                const g = 9.8;
+                const incline_length_pixels = 250; // Panjang bidang miring di canvas
+                const visual_scale_factor = 50; // Pengali percepatan untuk visualisasi (pixel/s^2 per m/s^2)
+
+                const calculatePhysics = () => {
+                    m = parseFloat(mSlider.value);
+                    const theta_deg = parseFloat(thetaSlider.value);
+                    theta_rad = theta_deg * Math.PI / 180;
+                    mu_k = parseFloat(muSlider.value);
+
+                    // Update tampilan nilai slider (selalu lakukan ini)
+                    mVal.textContent = m.toFixed(1);
+                    thetaVal.textContent = theta_deg;
+                    muVal.textContent = mu_k.toFixed(2);
+
+                    const W = m * g;
+                    const N = W * Math.cos(theta_rad);
+                    const Wx = W * Math.sin(theta_rad);
+                    const mu_s = mu_k + 0.1; // Asumsi mu_s sedikit > mu_k
+                    const fs_max = mu_s * N;
+                    const fk = mu_k * N;
+
+                    let current_a; // Percepatan (m/s^2)
+                    let friction_display;
+                    let status_text;
+                    let status_class;
+
+                    // Cek apakah Wx cukup untuk mengatasi gesekan statis MAKSIMUM
+                    // Juga, jika sudut 0, pasti diam.
+                    if (Wx <= fs_max || theta_deg === 0) {
+                        current_a = 0;
+                        // Gaya gesek statis akan menyeimbangkan Wx, hingga fs_max
+                        friction_display = `${Math.min(Wx, fs_max).toFixed(1)} N (statis)`;
+                        status_text = "DIAM";
+                        status_class = "text-xl font-semibold text-yellow-400 mt-4 text-center";
+                    } else { // Benda bergerak, gunakan gesekan kinetis
+                        const F_net = Wx - fk;
+                        current_a = F_net / m;
+                        friction_display = `${fk.toFixed(1)} N (kinetis)`;
+                        status_text = "MELUNCUR";
+                        status_class = "text-xl font-semibold text-green-400 mt-4 text-center";
+                    }
+
+                    // Update output fisika
+                    nOut.textContent = `${N.toFixed(1)} N`;
+                    wxOut.textContent = `${Wx.toFixed(1)} N`;
+                    fkOut.textContent = friction_display;
+                    aOut.textContent = `${current_a.toFixed(2)} m/s²`;
+                    statusOut.textContent = status_text;
+                    statusOut.className = status_class;
+
+                    return current_a; // Kembalikan percepatan (m/s^2)
+                };
+
+                const resetIncline = () => {
+                    // 1. Hentikan loop animasi jika sedang berjalan
+                    if (isRunning) {
+                        cancelAnimationFrame(animId);
+                        animId = null; // Reset ID
+                    }
+                    isRunning = false; // Set status tidak berjalan
+
+                    // 2. Reset state simulasi
+                    s = 0; // Posisi awal (pixel) di puncak
+                    v_block = 0; // Kecepatan awal visual (pixel/detik)
+                    lastTimestamp = 0; // Reset timestamp untuk dt
+
+                    // 3. Hitung ulang fisika & update UI (nilai slider sudah dibaca di calculatePhysics)
+                    a = calculatePhysics();
+
+                    // 4. Gambar posisi awal
+                    drawIncline(theta_rad, s);
+
+                    // 5. Aktifkan kembali kontrol (aman walau tombol null krn ada cek di awal)
+                    mSlider.disabled = false;
+                    thetaSlider.disabled = false;
+                    muSlider.disabled = false;
+                    if (startBtn) {
+                       startBtn.disabled = false;
+                       startBtn.textContent = 'Mulai';
+                    }
+                };
+
+                const startIncline = () => {
+                    // Hanya mulai jika belum berjalan DAN ada percepatan DAN tombol ada
+                    if (isRunning || a <= 0 || !startBtn) return;
+
+                    // Reset state sebelum memulai (penting untuk run ke-2 dst)
+                    s = 0;
+                    v_block = 0;
+                    lastTimestamp = 0; // Reset timestamp agar dt benar di frame pertama
+                    isRunning = true;
+
+                    // Nonaktifkan kontrol
+                    mSlider.disabled = true;
+                    thetaSlider.disabled = true;
+                    muSlider.disabled = true;
+                    startBtn.disabled = true;
+                    startBtn.textContent = 'Berjalan...';
+
+                    // Mulai loop animasi
+                    animId = requestAnimationFrame(gameLoopIncline);
+                };
+
+                const drawIncline = (theta, current_s) => {
+                    const w = 300, h = 300;
+                    const len = incline_length_pixels;
+                    const h_base = len * Math.sin(theta);
+                    const w_base = len * Math.cos(theta);
+                    const p1 = { x: (w - w_base) / 2, y: h - (h - h_base) / 2 - 10 };
+                    const p2 = { x: p1.x + w_base, y: p1.y };
+                    const p3 = { x: p1.x, y: p1.y - h_base };
+
+                    ctx.clearRect(0, 0, w, h);
+
+                    ctx.fillStyle = '#4A5568';
+                    ctx.beginPath();
+                    ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.lineTo(p3.x, p3.y);
+                    ctx.closePath();
+                    ctx.fill();
+
+                    const block_x_rel = current_s * Math.cos(theta);
+                    const block_y_rel = current_s * Math.sin(theta);
+                    const blockSize = 20;
+
+                    ctx.save();
+                    ctx.translate(p3.x + block_x_rel, p3.y + block_y_rel);
+                    ctx.rotate(theta);
+                    // Kondisi warna: Bergerak? Biru. Diam tapi bisa gerak? Abu terang. Diam total? Abu gelap.
+                    ctx.fillStyle = isRunning ? '#63B3ED' : (a > 0 ? '#A0AEC0' : '#9CA3AF');
+                    ctx.fillRect(-blockSize / 2, -blockSize, blockSize, blockSize);
+                    ctx.restore();
+                };
+
+                 const gameLoopIncline = (timestamp) => {
+                     if (!isRunning) return; // Keluar jika reset dipanggil
+
+                     if (lastTimestamp === 0) {
+                         lastTimestamp = timestamp;
+                         animId = requestAnimationFrame(gameLoopIncline);
+                         return;
+                     }
+                     const dt = (timestamp - lastTimestamp) / 1000.0;
+                     lastTimestamp = timestamp;
+
+                     const a_visual = a * visual_scale_factor;
+                     v_block += a_visual * dt;
+                     s += v_block * dt; // Gunakan kecepatan saat ini untuk update posisi
+
+                     s = Math.min(s, incline_length_pixels); // Batasi di ujung
+
+                     drawIncline(theta_rad, s);
+
+                     if (s >= incline_length_pixels) {
+                         isRunning = false;
+                         cancelAnimationFrame(animId);
+                         animId = null;
+                         // Aktifkan kontrol setelah jeda
+                         setTimeout(() => {
+                            // Cek lagi isRunning, karena user bisa klik reset lagi
+                            if (!isRunning && startBtn) {
+                                mSlider.disabled = false;
+                                thetaSlider.disabled = false;
+                                muSlider.disabled = false;
+                                startBtn.disabled = false;
+                                startBtn.textContent = 'Mulai';
+                            }
+                         }, 100);
+                     } else {
+                         animId = requestAnimationFrame(gameLoopIncline);
+                     }
+                 };
+
+                // --- Event Listeners ---
+                // Tambahkan listener hanya jika tombol ditemukan
+                if (startBtn && resetBtn) {
+                    mSlider.addEventListener('input', resetIncline);
+                    thetaSlider.addEventListener('input', resetIncline);
+                    muSlider.addEventListener('input', resetIncline);
+                    startBtn.addEventListener('click', startIncline);
+                    resetBtn.addEventListener('click', resetIncline);
+
+                    // Inisialisasi Awal setelah listener ditambahkan
+                    resetIncline();
+                } else {
+                     // Jika tombol tidak ada, setidaknya hitung fisika awal
+                     calculatePhysics();
+                     drawIncline(theta_rad, 0); // Gambar posisi awal
+                     console.warn("Simulasi bidang miring tidak interaktif karena tombol tidak ditemukan.");
+                }
+            }
+
+            // ==========================================================
+            // --- (BARU) SIMULASI MODUL 3b: TEKANAN HIDROSTATIS ---
+            // ==========================================================
+            const hydroCanvas = document.getElementById('hydroCanvas');
+            if (hydroCanvas) {
+                const ctx = hydroCanvas.getContext('2d');
+                const hSlider = document.getElementById('hydroH');
+                const rhoSlider = document.getElementById('hydroRho');
+                const hVal = document.getElementById('hydroHVal');
+                const rhoVal = document.getElementById('hydroRhoVal');
+                const phOut = document.getElementById('hydroPh');
+                const ptotOut = document.getElementById('hydroPtot');
+                
+                const g = 9.8;
+                const P_atm = 101325;
+                const h_max = 100;
+                const w = 300, h_can = 300;
+
+                const updateHydro = () => {
+                    const h_depth = parseFloat(hSlider.value);
+                    const rho = parseFloat(rhoSlider.value);
+                    
+                    hVal.textContent = h_depth;
+                    rhoVal.textContent = rho;
+                    
+                    const P_h = rho * g * h_depth;
+                    const P_total = P_atm + P_h;
+                    
+                    phOut.textContent = `${P_h.toFixed(0)} Pa`;
+                    ptotOut.textContent = `${P_total.toFixed(0)} Pa`;
+                    
+                    drawHydro(h_depth, rho);
+                };
+
+                const drawHydro = (h_depth, rho) => {
+                    ctx.clearRect(0, 0, w, h_can);
+                    
+                    // Air
+                    const fluidOpacity = 0.4 + (rho / 2000) * 0.4;
+                    ctx.fillStyle = `rgba(96, 165, 250, ${fluidOpacity})`;
+                    ctx.fillRect(50, 50, 200, 200);
+                    
+                    // Permukaan
+                    ctx.strokeStyle = '#BFDBFE';
+                    ctx.beginPath();
+                    ctx.moveTo(50, 50); ctx.lineTo(250, 50);
+                    ctx.stroke();
+                    
+                    // Gauge (Pengukur)
+                    const y_pos = 50 + (h_depth / h_max) * 200;
+                    ctx.fillStyle = '#F87171';
+                    ctx.fillRect(140, y_pos - 5, 20, 10);
+                    ctx.strokeStyle = 'white';
+                    ctx.beginPath();
+                    ctx.moveTo(150, 50); ctx.lineTo(150, y_pos);
+                    ctx.stroke();
+                };
+
+                hSlider.addEventListener('input', updateHydro);
+                rhoSlider.addEventListener('input', updateHydro);
+                updateHydro();
+            }
+
+            // ==========================================================
+            // --- (BARU) SIMULASI MODUL 4: MESIN ATWOOD ---
+            // ==========================================================
+            const atwoodCanvas = document.getElementById('atwoodCanvas');
+            if (atwoodCanvas) {
+                const ctx = atwoodCanvas.getContext('2d');
+                const m1Slider = document.getElementById('atwoodM1');
+                const m2Slider = document.getElementById('atwoodM2');
+                const m1Val = document.getElementById('atwoodM1Val');
+                const m2Val = document.getElementById('atwoodM2Val');
+                const startBtn = document.getElementById('atwoodStartButton');
+                const resetBtn = document.getElementById('atwoodResetButton');
+                const aOut = document.getElementById('atwoodA');
+                const tOut = document.getElementById('atwoodT');
+                const timeOut = document.getElementById('atwoodTime');
+                const vOut = document.getElementById('atwoodV');
+                
+                let m1, m2, a, T, t, v, y1, y2, isRunning, animId;
+                const g = 9.8;
+                const y_start = 150;
+                const y_max = 280;
+
+                const resetAtwood = () => {
+                    if (isRunning) cancelAnimationFrame(animId);
+                    isRunning = false;
+                    m1 = parseFloat(m1Slider.value);
+                    m2 = parseFloat(m2Slider.value);
+                    
+                    a = g * (m2 - m1) / (m1 + m2);
+                    T = m1 * (g + a); // Tinjau m1
+                    t = 0;
+                    v = 0;
+                    y1 = y_start;
+                    y2 = y_start;
+                    
+                    m1Val.textContent = m1.toFixed(1);
+                    m2Val.textContent = m2.toFixed(1);
+                    aOut.textContent = `${a.toFixed(2)} m/s²`;
+                    tOut.textContent = `${T.toFixed(2)} N`;
+                    timeOut.textContent = '0.0 s';
+                    vOut.textContent = '0.0 m/s';
+                    
+                    m1Slider.disabled = false;
+                    m2Slider.disabled = false;
+                    startBtn.disabled = false;
+                    drawAtwood();
+                };
+
+                const startAtwood = () => {
+                    if (isRunning) return;
+                    isRunning = true;
+                    m1Slider.disabled = true;
+                    m2Slider.disabled = true;
+                    startBtn.disabled = true;
+                    animId = requestAnimationFrame(gameLoopAtwood);
+                };
+                
+                const drawAtwood = () => {
+                    const w = 300, h = 300;
+                    const cx = w / 2;
+                    const r_pulley = 20;
+                    
+                    ctx.clearRect(0, 0, w, h);
+                    
+                    // Katrol
+                    ctx.strokeStyle = '#9CA3AF';
+                    ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    ctx.arc(cx, 50, r_pulley, 0, 2*Math.PI);
+                    ctx.stroke();
+                    
+                    // Tali
+                    ctx.beginPath();
+                    ctx.moveTo(cx - r_pulley, 50);
+                    ctx.lineTo(cx - r_pulley, y1);
+                    ctx.moveTo(cx + r_pulley, 50);
+                    ctx.lineTo(cx + r_pulley, y2);
+                    ctx.stroke();
+                    
+                    // Massa 1 (Biru)
+                    ctx.fillStyle = '#63B3ED';
+                    ctx.fillRect(cx - r_pulley - 10, y1, 20, 20);
+                    // Massa 2 (Merah)
+                    ctx.fillStyle = '#F87171';
+                    ctx.fillRect(cx + r_pulley - 10, y2, 20, 20);
+                };
+                
+                const gameLoopAtwood = () => {
+                    t += 0.016;
+                    v = a * t;
+                    const dy = 0.5 * a * t**2 * 10; // *10 skala
+                    
+                    y1 = y_start - dy; // m1 naik (y berkurang)
+                    y2 = y_start + dy; // m2 turun (y bertambah)
+                    
+                    if (y1 < 70 || y2 > y_max) { // Hentikan
+                        resetAtwood();
+                        return;
+                    }
+                    
+                    timeOut.textContent = `${t.toFixed(1)} s`;
+                    vOut.textContent = `${v.toFixed(1)} m/s`;
+                    
+                    drawAtwood();
+                    animId = requestAnimationFrame(gameLoopAtwood);
+                };
+                
+                m1Slider.addEventListener('input', resetAtwood);
+                m2Slider.addEventListener('input', resetAtwood);
+                startBtn.addEventListener('click', startAtwood);
+                resetBtn.addEventListener('click', resetAtwood);
+                resetAtwood();
+            }
+
+            // ==========================================================
+            // --- (BARU & REVISI LAGI) SIMULASI MODUL 5a: JATUH BEBAS & ENERGI ---
+            // ==========================================================
+            const energyCanvas = document.getElementById('energyCanvas');
+            if (energyCanvas) {
+                const ctx = energyCanvas.getContext('2d');
+                const hSlider = document.getElementById('energyH');
+                const hVal = document.getElementById('energyHVal');
+                const startBtn = document.getElementById('energyStartButton');
+                const resetBtn = document.getElementById('energyResetButton');
+                // Output Data
+                const timeOut = document.getElementById('energyTime');
+                const currentHOut = document.getElementById('energyCurrentH');
+                const currentVOut = document.getElementById('energyCurrentV');
+                // Energy Bars
+                const barK = document.getElementById('energyBarK');
+                const barU = document.getElementById('energyBarU');
+                const barE = document.getElementById('energyBarE');
+
+                let h_start_meters, E_total, // Energi total (Joule)
+                    t, // Waktu (s)
+                    y_pos_meters, // Posisi vertikal saat ini (meter dari tanah)
+                    v_current, // Kecepatan saat ini (m/s)
+                    isRunning, animId;
+
+                const g = 9.8;
+                const m = 1; // Massa bola (kg, bisa diabaikan karena a=g)
+                const w_pixels = 300, h_pixels = 300;
+                const ground_y_pixel = h_pixels - 20; // Posisi y tanah di canvas
+                const top_y_pixel = 20; // Posisi y atas di canvas
+                const max_h_meters = 100; // Ketinggian maksimum sesuai slider
+                const scale_y = (ground_y_pixel - top_y_pixel) / max_h_meters; // Pixel per meter
+
+                const resetEnergy = () => {
+                    if (isRunning) cancelAnimationFrame(animId);
+                    isRunning = false;
+                    h_start_meters = parseFloat(hSlider.value);
+                    E_total = m * g * h_start_meters; // Energi awal = U awal
+
+                    t = 0;
+                    y_pos_meters = h_start_meters; // Mulai dari atas
+                    v_current = 0; // Kecepatan awal 0
+
+                    hVal.textContent = h_start_meters.toFixed(0);
+                    updateOutputsAndBars(t, y_pos_meters, v_current); // Update UI awal
+
+                    hSlider.disabled = false;
+                    startBtn.disabled = false;
+                    startBtn.textContent = 'Mulai';
+                    drawEnergy();
+                };
+
+                const startEnergy = () => {
+                    if (isRunning || y_pos_meters <= 0) return; // Jangan mulai jika sudah di tanah
+                    isRunning = true;
+                    hSlider.disabled = true;
+                    startBtn.disabled = true;
+                    startBtn.textContent = 'Berjalan...';
+                    animId = requestAnimationFrame(gameLoopEnergy);
+                };
+
+                // Fungsi terpisah untuk update UI
+                const updateOutputsAndBars = (time, height, velocity) => {
+                    // Update Teks
+                    timeOut.textContent = `${time.toFixed(1)} s`;
+                    currentHOut.textContent = `${Math.max(0, height).toFixed(1)} m`; // Pastikan tidak negatif
+                    currentVOut.textContent = `${velocity.toFixed(1)} m/s`;
+
+                    // Update Energi
+                    const U = m * g * Math.max(0, height);
+                    const K = E_total - U; // Energi kinetik dari konservasi
+
+                    const k_perc = (E_total > 0) ? Math.min(100, Math.max(0, (K / E_total) * 100)) : 0;
+                    const u_perc = (E_total > 0) ? Math.min(100, Math.max(0, (U / E_total) * 100)) : 0;
+                    barK.style.width = `${k_perc}%`;
+                    barU.style.width = `${u_perc}%`;
+                    barE.style.width = '100%';
+                };
+
+
+                const drawEnergy = () => {
+                    ctx.clearRect(0, 0, w_pixels, h_pixels);
+                    const cx = w_pixels / 2; // Posisi x bola
+
+                    // Gambar Tanah
+                    ctx.strokeStyle = '#9CA3AF';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(0, ground_y_pixel);
+                    ctx.lineTo(w_pixels, ground_y_pixel);
+                    ctx.stroke();
+
+                    // Gambar Bola
+                    // Konversi y_pos_meters ke pixel (y=0 meter ada di ground_y_pixel)
+                    const ball_py = ground_y_pixel - y_pos_meters * scale_y;
+                    ctx.fillStyle = '#63B3ED';
+                    ctx.beginPath();
+                    // Pastikan bola tidak melewati tanah secara visual
+                    ctx.arc(cx, Math.min(ball_py, ground_y_pixel - 7), 7, 0, 2 * Math.PI);
+                    ctx.fill();
+                };
+
+                const gameLoopEnergy = () => {
+                    const dt = 0.03; // Timestep simulasi (lebih kecil agar halus)
+                    t += dt;
+
+                    // 1. Hitung posisi baru menggunakan GLBB: y = h0 - 0.5*g*t^2
+                    y_pos_meters = h_start_meters - 0.5 * g * t**2;
+
+                    // 2. Hitung kecepatan baru menggunakan GLBB: v = g*t (arah ke bawah)
+                    // Atau dari konservasi energi: K = E_total - U => 0.5*m*v^2 = E_total - m*g*y
+                    // v = sqrt(2 * (E_total/m - g*y))
+                    v_current = Math.sqrt(Math.max(0, 2 * g * (h_start_meters - y_pos_meters))); // Kecepatan selalu positif (laju)
+
+                    // 3. Cek jika menyentuh tanah
+                    if (y_pos_meters <= 0) {
+                        y_pos_meters = 0;
+                        v_current = Math.sqrt(2 * g * h_start_meters); // Kecepatan maks saat menyentuh tanah
+                        updateOutputsAndBars(t, y_pos_meters, v_current);
+                        drawEnergy(); // Gambar posisi akhir
+                        isRunning = false; // Hentikan loop
+                        cancelAnimationFrame(animId);
+                        // Aktifkan kembali kontrol setelah berhenti
+                        hSlider.disabled = false;
+                        startBtn.disabled = false;
+                        startBtn.textContent = 'Mulai';
+                        return; // Keluar dari loop
+                    }
+
+                    // 4. Update UI (Teks & Bar Energi)
+                    updateOutputsAndBars(t, y_pos_meters, v_current);
+
+                    // 5. Gambar Ulang
+                    drawEnergy();
+
+                    // Lanjutkan loop
+                    animId = requestAnimationFrame(gameLoopEnergy);
+                };
+
+                hSlider.addEventListener('input', resetEnergy);
+                startBtn.addEventListener('click', startEnergy);
+                resetBtn.addEventListener('click', resetEnergy);
+                resetEnergy(); // Initial setup
+            }
+            // ==========================================================
+            // --- (BARU & REVISI) SIMULASI MODUL 5b: TUMBUKAN 1D ---
+            // ==========================================================
+            const collisionCanvas = document.getElementById('collisionCanvas');
+            if (collisionCanvas) {
+                const ctx = collisionCanvas.getContext('2d');
+                const m1Slider = document.getElementById('colM1');
+                const v1Slider = document.getElementById('colV1');
+                const m2Slider = document.getElementById('colM2');
+                const v2Slider = document.getElementById('colV2');
+                const eSlider = document.getElementById('colE');
+                const m1Val = document.getElementById('colM1Val');
+                const v1Val = document.getElementById('colV1Val');
+                const m2Val = document.getElementById('colM2Val');
+                const v2Val = document.getElementById('colV2Val');
+                const eVal = document.getElementById('colEVal');
+                const startBtn = document.getElementById('colStartButton');
+                const resetBtn = document.getElementById('colResetButton');
+                const piOut = document.getElementById('colPi');
+                const pfOut = document.getElementById('colPf');
+                const v1fOut = document.getElementById('colV1f');
+                const v2fOut = document.getElementById('colV2f');
+
+                let m1, v1i, m2, v2i, e, v1f, v2f;
+                let x1_pos, x2_pos, // Posisi (pixel)
+                    v1_current, v2_current, // Kecepatan saat ini (pixel/frame)
+                    r1, r2, // Radius (pixel)
+                    isRunning, animId, hasCollided;
+
+                const w_pixels = 300, h_pixels = 300;
+                const time_scale = 0.5; // Pengali kecepatan untuk visualisasi
+
+                const resetCollision = () => {
+                    if (isRunning) cancelAnimationFrame(animId);
+                    isRunning = false;
+                    hasCollided = false;
+
+                    m1 = parseFloat(m1Slider.value);
+                    v1i = parseFloat(v1Slider.value);
+                    m2 = parseFloat(m2Slider.value);
+                    v2i = parseFloat(v2Slider.value);
+                    e = parseFloat(eSlider.value);
+
+                    m1Val.textContent = m1;
+                    v1Val.textContent = v1i;
+                    m2Val.textContent = m2;
+                    v2Val.textContent = v2i;
+                    eVal.textContent = e.toFixed(1);
+
+                    const pi_total = m1 * v1i + m2 * v2i;
+
+                    // Rumus Tumbukan 1D (Tetap sama)
+                    v1f = (e * m2 * (v2i - v1i) + m1 * v1i + m2 * v2i) / (m1 + m2);
+                    v2f = e * (v1i - v2i) + v1f;
+
+                    const pf_total = m1 * v1f + m2 * v2f;
+
+                    // Update UI Hasil
+                    piOut.textContent = pi_total.toFixed(1);
+                    // Tampilkan momentum akhir yang dihitung, bukan saat simulasi
+                    pfOut.textContent = pf_total.toFixed(1);
+                    v1fOut.textContent = v1f.toFixed(2);
+                    v2fOut.textContent = v2f.toFixed(2);
+
+                    // Atur posisi & kecepatan awal visual
+                    r1 = 10 + m1 * 1.5; // Radius berdasarkan massa
+                    r2 = 10 + m2 * 1.5;
+                    x1_pos = r1 + 30; // Mulai dari kiri
+                    x2_pos = w_pixels - r2 - 30; // Mulai dari kanan
+                    v1_current = v1i * time_scale; // Kecepatan awal visual
+                    v2_current = v2i * time_scale; // Kecepatan awal visual
+
+                    startBtn.disabled = false;
+                    [m1Slider, v1Slider, m2Slider, v2Slider, eSlider].forEach(s => s.disabled = false);
+                    drawCollision();
+                };
+
+                const startCollision = () => {
+                    if (isRunning) return;
+                    // Pastikan benda tidak tumpang tindih di awal
+                    if (x1_pos + r1 >= x2_pos - r2) {
+                        alert("Posisi awal benda tumpang tindih. Geser kecepatan atau massa.");
+                        return;
+                    }
+                    isRunning = true;
+                    startBtn.disabled = true;
+                    [m1Slider, v1Slider, m2Slider, v2Slider, eSlider].forEach(s => s.disabled = true);
+                    animId = requestAnimationFrame(gameLoopCollision);
+                };
+
+                const drawCollision = () => {
+                    ctx.clearRect(0, 0, w_pixels, h_pixels);
+                    const cy = h_pixels / 2; // Tengah vertikal
+
+                    // Gambar Benda 1
+                    ctx.fillStyle = '#63B3ED';
+                    ctx.beginPath();
+                    ctx.arc(x1_pos, cy, r1, 0, 2 * Math.PI);
+                    ctx.fill();
+
+                    // Gambar Benda 2
+                    ctx.fillStyle = '#F87171';
+                    ctx.beginPath();
+                    ctx.arc(x2_pos, cy, r2, 0, 2 * Math.PI);
+                    ctx.fill();
+                };
+
+                const gameLoopCollision = () => {
+                    // Update posisi berdasarkan kecepatan saat ini
+                    x1_pos += v1_current;
+                    x2_pos += v2_current;
+
+                    // Deteksi Tumbukan (jarak antar pusat < jumlah radius)
+                    const distance = x2_pos - x1_pos;
+                    if (!hasCollided && distance <= r1 + r2) {
+                        hasCollided = true;
+
+                        // Koreksi posisi agar tepat bersentuhan (opsional tapi bagus)
+                        const overlap = (r1 + r2) - distance;
+                        // Geser proporsional dengan massa (benda berat lebih sedikit bergeser)
+                        const shift1 = overlap * (m2 / (m1 + m2));
+                        const shift2 = overlap * (m1 / (m1 + m2));
+                        x1_pos -= shift1;
+                        x2_pos += shift2;
+
+
+                        // Langsung GANTI kecepatan ke kecepatan akhir (v_f)
+                        v1_current = v1f * time_scale;
+                        v2_current = v2f * time_scale;
+                    }
+
+                    // Gambar ulang
+                    drawCollision();
+
+                    // Cek batas layar untuk menghentikan simulasi
+                    if (x1_pos - r1 < 0 || x1_pos + r1 > w_pixels || x2_pos - r2 < 0 || x2_pos + r2 > w_pixels) {
+                         // Berhenti sedikit setelah keluar layar agar terlihat jelas
+                         setTimeout(() => {
+                            if (isRunning) resetCollision(); // Hanya reset jika masih berjalan
+                         }, 100); // Tunda reset
+                    } else {
+                        animId = requestAnimationFrame(gameLoopCollision);
+                    }
+                };
+
+                // Event Listeners
+                [m1Slider, v1Slider, m2Slider, v2Slider, eSlider].forEach(s => s.addEventListener('input', resetCollision));
+                startBtn.addEventListener('click', startCollision);
+                resetBtn.addEventListener('click', resetCollision);
+                resetCollision(); // Initial setup
+            }
+            // ==========================================================
+            // --- (REVISI BUG NAVIGASI) 1. LOGIKA NAVIGASI MODUL (SPA) ---
+            // ==========================================================
             const navLinks = document.querySelectorAll('#sidebar-nav a');
+            const moduleContents = document.querySelectorAll('.module-content'); // Ambil semua elemen modul sekali
 
             navLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
@@ -1145,33 +2797,69 @@
                     const targetId = link.dataset.target;
                     const targetElement = document.getElementById(targetId);
 
-                    const currentActiveElement = document.querySelector('.module-content.active');
-                    const currentActiveLink = document.querySelector('#sidebar-nav .sidebar-link-active');
+                    // --- Perbaikan Utama: Eksplisit Deaktivasi Semua ---
+                    // 1. Deaktivasi SEMUA konten modul
+                    moduleContents.forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    // 2. Deaktivasi SEMUA link sidebar
+                    navLinks.forEach(navLink => {
+                        navLink.classList.remove('sidebar-link-active');
+                        navLink.classList.add('sidebar-link');
+                    });
+                    // --- Akhir Perbaikan Utama ---
 
-                    if (targetElement && targetElement !== currentActiveElement) {
-                        
-                        if (currentActiveElement) {
-                            currentActiveElement.classList.remove('active');
-                        }
+                    // 3. Aktivasi target yang diklik (jika ditemukan)
+                    if (targetElement) {
+                        // Aktifkan konten modul yang dituju
                         targetElement.classList.add('active');
 
-                        if (currentActiveLink) {
-                            currentActiveLink.classList.remove('sidebar-link-active');
-                            currentActiveLink.classList.add('sidebar-link');
-                        }
-                        link.classList.add('sidebar-link-active');
+                        // Aktifkan link sidebar yang diklik
                         link.classList.remove('sidebar-link');
+                        link.classList.add('sidebar-link-active');
 
-                        // (PENTING) Beri tahu MathJax untuk merender ulang persamaan
-                        // di dalam elemen target yang baru saja aktif.
+                        // Render ulang MathJax untuk modul yang baru aktif
                         if (window.MathJax && window.MathJax.typesetPromise) {
-                            window.MathJax.typesetPromise([targetElement]).catch((err) => console.log('MathJax typeset error:', err));
+                            // Bungkus dalam try-catch untuk keamanan tambahan jika MathJax error
+                            try {
+                                window.MathJax.typesetPromise([targetElement]).catch((err) => console.error('MathJax typeset error:', err));
+                            } catch (mathJaxError) {
+                                console.error("Error calling MathJax:", mathJaxError);
+                            }
+                        } else {
+                             console.warn("MathJax not ready or loaded.");
                         }
-                        
-                        window.scrollTo(0, 0);
+
+
+                        window.scrollTo(0, 0); // Gulir ke atas halaman
+                    } else {
+                        console.error("Target element not found for ID:", targetId);
                     }
                 });
             });
+
+            // --- Inisialisasi MathJax saat pertama kali memuat (Tetap sama) ---
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                 try {
+                    window.MathJax.typesetPromise().catch((err) => console.log('MathJax initial typeset error:', err));
+                 } catch(mathJaxError) {
+                     console.error("Error initial MathJax:", mathJaxError);
+                 }
+            } else {
+                // Tambahkan listener jika MathJax dimuat secara asynchronous
+                 if (document.getElementById('MathJax-script')) {
+                     document.getElementById('MathJax-script').addEventListener('load', () => {
+                         try {
+                            window.MathJax.typesetPromise().catch((err) => console.log('MathJax delayed typeset error:', err));
+                         } catch (mathJaxError) {
+                             console.error("Error initial delayed MathJax:", mathJaxError);
+                         }
+                     });
+                 } else {
+                      console.warn("MathJax script tag not found.");
+                 }
+            }
+            // --- Akhir Revisi Blok Navigasi ---
 
             // --- Inisialisasi MathJax saat pertama kali memuat ---
             if (window.MathJax && window.MathJax.typesetPromise) {
